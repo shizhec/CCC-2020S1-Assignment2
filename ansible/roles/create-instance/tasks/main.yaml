@@ -20,20 +20,3 @@
     msg: "Instance {{ item.openstack.name }} has been created. IP address is {{ item.openstack.public_v4 }}"
   loop: '{{ os_instance.results }}'
   when: item.openstack is defined
-
-- name: Wait for connection
-  wait_for:
-    host: "{{ item.openstack.public_v4 }}"
-    port: 22
-    timeout: 120
-    search_regex: OpenSSH
-  loop: '{{ os_instance.results }}'
-  when: item.openstack is defined
-
-# Add hosts to Ansible in-memory inventory
-- name: Add host
-  add_host:
-    name: '{{ item.openstack.public_v4 }}'
-    groups: COMP90024
-  loop: '{{ os_instance.results }}'
-  when: item.openstack is defined

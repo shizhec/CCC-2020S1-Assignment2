@@ -2,19 +2,23 @@
 availability_zone: melbourne-qh2-uom
 instance_image: 45225edb-66d8-4fd0-bf41-132a31a18166 # Ubuntu 18.04 LTS
 instance_key_name: CCC-Nectar-Group
-instance_flavor: uom.general.2c8g
+instance_flavor: uom.mse.2c9g
 
 
 # Instance
 instances:
   - name: instance1
     volumes: ['instance1-volume']
+    security_groups: ['default_instance_security_group']
   - name: instance2
     volumes: ['instance2-volume']
+    security_groups: ['default_instance_security_group']
   - name: instance3
     volumes: ['instance3-volume']
+    security_groups: ['default_instance_security_group']
   - name: instance4
     volumes: ['instance4-volume']
+    security_groups: ['default_instance_security_group']
 
 # Volume
 volumes:
@@ -47,4 +51,3 @@ security_groups:
     port_range_min: 80
     port_range_max: 80
     remote_ip_prefix: 0.0.0.0/0
-
