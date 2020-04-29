@@ -3,6 +3,9 @@ availability_zone: melbourne-qh2-uom
 instance_image: 45225edb-66d8-4fd0-bf41-132a31a18166 # Ubuntu 18.04 LTS
 instance_key_name: CCC-Nectar-Group
 instance_flavor: uom.mse.2c9g
+network_provider: qh2-uom-internal
+project_directory:  ~/Desktop/COMP90024 CCC/Assignment 2/CCC-2020S1-Assignment2
+http_proxy: http://wwwproxy.unimelb.edu.au:8000/
 
 
 # Instance
@@ -24,12 +27,20 @@ instances:
 volumes:
   - vol_name: instance1-volume
     vol_size: 80
+    device: /dev/vdb
+    mountpoint: /data
   - vol_name: instance2-volume
     vol_size: 80
+    device: /dev/vdb
+    mountpoint: /data
   - vol_name: instance3-volume
     vol_size: 80
+    device: /dev/vdb
+    mountpoint: /data
   - vol_name: instance4-volume
     vol_size: 10
+    device: /dev/vdb
+    mountpoint: /data
 
 # Security group
 security_groups:

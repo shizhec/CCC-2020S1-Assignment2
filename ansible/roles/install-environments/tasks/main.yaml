@@ -1,0 +1,43 @@
+---
+- name: Gather facts of remote host
+  setup:
+    gather_subset: all
+
+- name: add proxy to enviroments
+  become: yes
+  lineinfile:
+    line: "http_proxy=\"{{ http_proxy }}\"\nhttps_proxy=\"{{ http_proxy }}\"\nftp_proxy=\"{{ http_proxy }}\"\nno_proxy=\"localhost,127.0.0.1,localaddress,172.16.0.0/12,.melbourne.rc.nectar.org.au,.storage.unimelb.edu.au,.cloud.unimelb.edu.au\"\n"
+    dest: /etc/environment
+
+- name: make proxy available for current session
+  become: yes
+  shell: echo 'add proxy configuration success'
+  environment:
+    http_proxy: "{{ http_proxy }}"
+    https_proxy: "{{ http_proxy }}"
+    ftp_proxy: "{{ http_proxy }}"
+    no_proxy: "localhost,127.0.0.1,localaddress,172.16.0.0/12,.melbourne.rc.nectar.org.au,.storage.unimelb.edu.au,.cloud.unimelb.edu.au"
+
+# - name: reboot machine
+#   become: yes
+#   reboot:
+
+- name: update apt
+  become: yes
+  apt:
+    upgrade: yes
+    update_cache: yes
+
+- name: Install dependencies
+  tags: always
+  become: yes
+  apt:
+    name: ['xfsprogs', 'apt-transport-https', 'build-essential',
+     'ca-certificates', 'curl', 'git', 'python3-dev', 'python3-pip', 'python3-setuptools',
+     'software-properties-common', 'unzip', 'vim', 'zip']
+    state: latest
+    install_recommends: no
+    update_cache: yes
+
+
+- include_tasks: docker.yaml

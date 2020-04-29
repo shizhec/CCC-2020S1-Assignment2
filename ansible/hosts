@@ -1,0 +1,17 @@
+[all:vars]
+ansible_python_interpreter=/usr/bin/python3
+ansible_user=ubuntu
+ansible_ssh_private_key_file=~/.ssh/CCC-Nectar-Group.pem
+ansible_ssh_common_args='-o StrictHostKeyChecking=no'
+
+[instance1]
+172.26.130.162
+
+[instance2]
+172.26.130.251
+
+[instance3]
+172.26.132.37
+
+[instance4]
+172.26.132.136
