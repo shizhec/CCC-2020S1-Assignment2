@@ -3,12 +3,14 @@
   setup:
     gather_subset: all
 
-- name: add proxy to enviroments
+# add proxy variables to the instance environments
+- name: add proxy to environments
   become: yes
   lineinfile:
     line: "http_proxy=\"{{ http_proxy }}\"\nhttps_proxy=\"{{ http_proxy }}\"\nftp_proxy=\"{{ http_proxy }}\"\nno_proxy=\"localhost,127.0.0.1,localaddress,172.16.0.0/12,.melbourne.rc.nectar.org.au,.storage.unimelb.edu.au,.cloud.unimelb.edu.au\"\n"
     dest: /etc/environment
 
+# add the environments
 - name: make proxy available for current session
   become: yes
   shell: echo 'add proxy configuration success'

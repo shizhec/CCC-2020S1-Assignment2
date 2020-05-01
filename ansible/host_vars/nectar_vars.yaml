@@ -6,6 +6,8 @@ instance_flavor: uom.mse.2c9g
 network_provider: qh2-uom-internal
 project_directory:  ~/Desktop/COMP90024 CCC/Assignment 2/CCC-2020S1-Assignment2
 http_proxy: http://wwwproxy.unimelb.edu.au:8000/
+docker_service_directory: /etc/systemd/system/docker.service.d
+docer_proxy_configure_file: http-proxy.conf
 
 
 # Instance
