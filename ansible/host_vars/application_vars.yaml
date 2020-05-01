@@ -1,2 +1,5 @@
 # couchdb vars
-couchdb_directory: 
+couchdb_directory: couchdb
+couchdb_name: couchdb
+couchdb_user: admin
+couchdb_passward: passward
