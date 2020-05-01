@@ -4,6 +4,11 @@ ansible_user=ubuntu
 ansible_ssh_private_key_file=~/.ssh/CCC-Nectar-Group.pem
 ansible_ssh_common_args='-o StrictHostKeyChecking=no'
 
+[couchdb]
+172.26.130.162
+172.26.130.251
+172.26.132.37
+
 [instance1]
 172.26.130.162
 

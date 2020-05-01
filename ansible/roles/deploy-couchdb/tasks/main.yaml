@@ -4,8 +4,8 @@
   become: yes
   file:
     path: "{{ couchdb_directory }}"
-    owner: "{{ ansible_user }} "
-    group: "{{ ansible_user }}"
+    owner: ubuntu
+    group: ubuntu
     recurse: yes
     state: directory
 
@@ -14,14 +14,14 @@
   become: yes
   template:
     src: docker-compose-couchdb.yaml.j2
-    dest: "{{ couchdb_directory}}/docker-compose-couchdb.yaml.j2"
-    owner: "{{ ansible_user }}"
-    group: "{{ ansible_user }}"
+    dest: "{{ couchdb_directory }}/docker-compose.yaml"
+    owner: ubuntu
+    group: ubuntu
 
 - name: Run docker compose
   tags: "couchdb"
   become: yes
-  docker_service:
+  docker_compose:
     project_src: "{{ couchdb_directory }}"
     pull: yes
     state: present
