@@ -40,13 +40,6 @@
 
 
 # configure docker proxy service
-- name: Checking folders
-  tags: 'docker'
-  become: yes
-  stat:
-    path: "{{ docker_service_directory }}"
-  register: docker_directory_stats
-
 - name: Create directory
   tags: 'docker'
   become: yes
@@ -54,19 +47,22 @@
     path: "{{ docker_service_directory }}"
     recurse: yes
     state: directory
-  when: item.stat.exists == false
-  with_items:
-    - "{{ docker_directory_stats.results }}"
 
 - name: create docker proxy file
   tags: 'docker'
   become: yes
   copy:
-    content: "[Service]"
-    path: "{{ docker_service_directory }}/{{ docer_proxy_configure_file }}"
+    content: "[Service]\n"
+    dest: "{{ docker_service_directory }}/{{ docer_proxy_configure_file }}"
 
 - name: add proxy to docker service
   become: yes
   lineinfile:
     line: "Environment=\"HTTP_PROXY={{ http_proxy }}\"\nEnvironment=\"HTTPS_PROXY={{ http_proxy }}\"\nEnvironment=\"NO_PROXY=localhost,127.0.0.1,localaddress,172.16.0.0/12,.melbourne.rc.nectar.org.au,.storage.unimelb.edu.au,.cloud.unimelb.edu.au\"\n"
     dest: "{{ docker_service_directory }}/{{ docer_proxy_configure_file }}"
+
+# - name: reload daemond and restart docker
+#   systemd:
+#     name: docker
+#     state: restarted
+#     daemon_reload: yes
