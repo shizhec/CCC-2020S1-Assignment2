@@ -8,6 +8,8 @@ services:
       - 5000:5000
     env_file:
       - ./Web/.env
+    expose:
+      - 5000
 #     depends_on:
 #       - couchdb
 #   db:
@@ -16,6 +18,12 @@ services:
 #       - postgres_data:/var/lib/postgresql/data/
 #     env_file:
 #       - ./.env.prod.db
+  nginx:
+    build: ./Docker/services/nginx
+    ports:
+      - 1337:80
+    depends_on:
+      - web
 
 volumes:
   postgres_data:
