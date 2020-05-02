@@ -1,0 +1,4 @@
+flask
+couchdb
+gunicorn
+gevent

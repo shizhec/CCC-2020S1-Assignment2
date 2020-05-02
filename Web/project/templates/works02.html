@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Works - COMP90024 Team 35</title>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <meta content="" name="keywords">
+  <meta content="" name="description">
+
+  <!-- Map View-->
+  <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+
+  <!-- Mapbox API -->
+  <script src='https://api.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.js'></script>
+  <link href='https://api.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.css' rel='stylesheet' />
+
+  <!-- HighCharts API -->
+  <script src="https://code.highcharts.com/highcharts.js"></script>
+  <script src="https://code.highcharts.com/modules/exporting.js"></script>
+  <script src="https://code.highcharts.com/modules/export-data.js"></script>
+
+  <!-- Page Icons  -->
+  <link href="../static/img/unimelb.jpg" rel="icon">
+  <link href="../static/img/unimelb.jpg" rel="unimelb-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,700" rel="stylesheet">
+
+  <!-- Bootstrap CSS File -->
+  <link href="../static/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Libraries CSS Files -->
+  <link href="../static/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+
+  <!-- Main Stylesheet File -->
+  <link href="../static/css/style.css" rel="stylesheet">
+
+
+  <!-- Body & Map Style -->
+  <style>
+    body { margin:0; padding:0; }
+    #map { position:absolute; top:0; bottom:40px; width:100%; }
+  </style>
+
+  <!-- =======================================================
+    Web Name: Instant
+    Web URL: https://templatemag.com/instant-bootstrap-personal-template/
+    Author: TemplateMag.com
+    License: https://templatemag.com/license/
+  ======================================================= -->
+</head>
+
+<body>
+
+<!-- Static navbar -->
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index">COMP90024 - Team35</a>
+    </div>
+    <div class="navbar-collapse collapse">
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="index">Home</a></li>
+        <li><a href="team">Team</a></li>
+        <li class="active"><a href="works" class="smoothscroll">Works</a></li>
+        <li><a href="contact" class="smoothscroll">Contact</a></li>
+      </ul>
+    </div>
+    <!--/.nav-collapse -->
+  </div>
+</div>
+
+
+<div id="workwrap">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-6 col-lg-offset-3">
+        <h4>NEW WEBSITE FOR</h4>
+        <h1>INSTANT</h1>
+        <h4>ROLE: LEAD DESIGNER</h4>
+      </div>
+    </div>
+  </div>
+  <!-- /container -->
+</div>
+
+
+<div id='map'></div>
+<!-- Map Information Board-->
+<div class='map-overlay' id='features'><h2>Unemployment Rate</h2><div id='pd'><p>Hover over a region!</p></div></div>
+<!-- Map Legend-->
+<div class='map-overlay' id='legend'>
+  <div class="dropdown">
+    <button type="button" class="btn dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown">
+      <h6>Unemploy</h6>
+    </button>
+    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+      <li role="presentation">
+        <a role="menuitem" tabindex="-1" href="works"><h6>Angry</h6></a>
+      </li>
+      <li role="presentation">
+        <a role="menuitem" tabindex="-1" href="works01"><h6>Income</h6></a>
+      </li>
+      <li role="presentation">
+        <a role="menuitem" tabindex="-1" href="works03"><h6>Age</h6></a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<!-- Map Display Style -->
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+  }
+
+  h2,
+  h3 {
+    margin: 10px;
+    font-size: 1.2em;
+  }
+
+  h3 {
+    font-size: 1em;
+  }
+
+  p {
+    font-size: 0.85em;
+    margin: 10px;
+    text-align: left;
+  }
+
+  /**
+  * Create a position for the map
+  * on the page. */
+  #map {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+  }
+
+  /**
+  * Set rules for how the map overlays
+  * (information box and legend) will be displayed
+  * on the page. */
+  .map-overlay {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background: rgba(255, 255, 255, 0.8);
+    margin-right: 20px;
+    font-family: Arial, sans-serif;
+    overflow: auto;
+    border-radius: 3px;
+  }
+
+  #features {
+    top: 40px;
+    height: 100px;
+    margin-top: 20px;
+    width: 250px;
+  }
+
+  #legend {
+    padding: 10px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    line-height: 25px;
+    height: 220px;
+    margin-bottom: 40px;
+    width: 100px;
+  }
+
+  .legend-key {
+    display: inline-block;
+    border-radius: 20%;
+    width: 10px;
+    height: 10px;
+    margin-right: 5px;
+  }
+</style>
+
+
+<script>
+    // Mapbox Access Token
+    mapboxgl.accessToken = 'pk.eyJ1IjoieWV5MTEiLCJhIjoiY2p2NWNqcndxMzBlMTN5bGFxaXN2emNjYyJ9.F3qEnnxwuo3OfkbBXodGWQ';
+    // Create a new map
+    var map = new mapboxgl.Map({
+        container: 'map', // container id
+        style: 'mapbox://styles/yey11/cjvl93dci29lk1cqlkb9p30dt',  // Load map style
+        center: [134.326164, -27.397418],  // Default center point
+        zoom: 3.5,                         // Default zoom value
+        doubleClickZoom: false,			   // Forbid double-click to zoom
+        pitchWithRotate: false,			   // Forbid pitch with rotate
+        attributionControl: false   	   // Hide attribution information
+    });
+
+    // Set zoom threshold, cities information will show only when the zoom above this value.
+    const zoomThreshold = 4.8;
+    map.on('zoom', function() {
+        if (map.getZoom() > zoomThreshold) {
+            map.setLayoutProperty('cities_unemployment', 'visibility', 'visible');
+        } else {
+            map.setLayoutProperty('cities_unemployment', 'visibility', 'none');
+            map.setLayoutProperty('states_unemployment', 'visibility', 'visible');
+        }
+    });
+
+    // Set up legend color
+    map.on('load', function() {
+        var layers_unemployment = ['7.5 %', '6.0 %', '4.5 %', '3.0 %', '1.5 %', '0'];
+        var colors_unemployment = ['#F39C12', '#F5B041', '#F8C471', '#FAD7A0', '#FDEBD0', '#FEF5E7'];
+        /*
+        layers_angry = ['75', '60', '45', '30', '15', '0'];
+        colors_angry = ['#E74C3C', '#EC7063', '#F1948A', '#F5B7B1', '#FADBD8', '#FDEDEC'];
+
+        layers_income = ['75000', '60000', '45000', '30000', '15000', '0'];
+        colors_income = ['#3498DB', '#5DADE2', '#85C1E9', '#AED6F1', '#D6EAF8', '#EBF5FB'];
+
+        layers_age = ['> 42', '36 - 42', '30 - 36', '24 - 30', '18 - 24', '< 18'];
+        colors_age = ['#2ECC71', '#58D68D', '#82E0AA', '#ABEBC6', '#D5F5E3', '#EAFAF1'];
+        */
+        for (i = 0; i < layers_unemployment.length; i++) {
+            var layer = layers_unemployment[i];
+            var color = colors_unemployment[i];
+            var item = document.createElement('div');
+            var key = document.createElement('span');
+            key.className = 'legend-key';
+            key.style.backgroundColor = color;
+
+            var value = document.createElement('span');
+            value.innerHTML = layer;
+            item.appendChild(key);
+            item.appendChild(value);
+            legend.appendChild(item);
+        }
+    });
+
+    // When move mouse onto a region, show the information on the information board.
+    map.on('mousemove', function(e) {
+        // Obtain the features of states layer and cities layer.
+        var states = map.queryRenderedFeatures(e.point, {layers: ['states_unemployment']});
+        var cities = map.queryRenderedFeatures(e.point, {layers: ['cities_unemployment']});
+        // Make the cities to be prior to states while selecting.
+        if (cities.length > 0) {
+            // Check whether the relevant data exists or not.
+            if(cities[0].properties.unemployment_rate !== 1) {
+                document.getElementById('pd').innerHTML = '<h3><strong>' +
+                    cities[0].properties.city + '</strong></h3><p><strong><em>' +
+                    cities[0].properties.unemployment_rate + '</strong> % </em></p>';
+            }
+            else{
+                document.getElementById('pd').innerHTML = '<h3><strong>' +
+                    cities[0].properties.city + '</strong></h3><p><strong><em>' + '</strong> No data </em></p>';
+            }
+        } else if (states.length > 0) {
+            document.getElementById('pd').innerHTML = '<h3><strong>' +
+                states[0].properties.STATE_NAME + '</strong></h3><p><strong><em>'
+                + states[0].properties.unemployment_rate + '</strong> % </em></p>';
+        } else{
+            document.getElementById('pd').innerHTML = '<p>Hover over a region!</p>';
+        }
+    });
+
+    map.getCanvas().style.cursor = 'default';
+</script>
+
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<section id="works"></section>
+<div class="container">
+  <div class="row centered mt mb">
+    <div class="col-lg-8 col-lg-offset-2">
+      <h4>Statistical Analysis</h4>
+      <p style="text-align:justify">As our project targets on analysing the relationship between work pace level of each
+        city and its corresponding anger value, and the big cities usually come with faster work pace and higher working
+        pressure. Due to the limited space, we chose the top5 cities in the histogram, according to its populations and
+        total numbers of tweets that can be trace back to, and compare the angry value with its Median Annually Income
+        and Unemployment Rate. From the chart, Sydney has the highest median income and highest anger value and Melbourne
+        has the lowest personal median income and almost the lowest anger value. However. Brisbane also has high median
+        income but the lowest angry value. Hence, high income doesn’t necessarily lead to higher angry value and it
+        seems that there is no obvious correlation between the unemployment rate and the angry value.</p>
+    <br>
+    </div>
+
+    <!-- Bar Chart -->
+    <div id="container" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"></div>
+    <div id="barchart">
+      <script>
+        var cities_data = [{
+          color:'#EC7063',
+          name: 'Angry Value',
+          data: [55.03, 45.46, 52.49, 45.35, 45.51]
+        }, {
+          color:'#5DADE2',
+          name: 'Median Income',
+          data: [87.24, 17.25, 61.3, 70.61, 41.75]
+        }, {
+          color:'#F5B041',
+          name: 'Unemployment Rate',
+          data: [21.14, 84.00, 42.86, 31.43, 82.29]
+        }]
+
+        new Highcharts.chart('container', {
+          chart: {
+            type: 'bar'
+          },
+          title: {
+            text: 'Statistics of Top 5 Cities in Australia'
+          },
+          subtitle: {
+            text: '(Source: data from tweets and AURIN database.)'
+          },
+          xAxis: {
+            categories: ['Sydney', 'Melbourne', 'Perth', 'Brisbane', 'Adelaide'],
+            title: {
+              text: null
+            }
+          },
+          yAxis: {
+            min: 0,
+            title: {
+              text: 'Score',
+              align: 'high'
+            },
+            labels: {
+              overflow: 'justify'
+            }
+          },
+          tooltip: {
+            valueSuffix: ' score'
+          },
+          plotOptions: {
+            bar: {
+              dataLabels: {
+                enabled: true
+              }
+            }
+          },
+          legend: {
+            layout: 'vertical',
+            align: 'right',
+            verticalAlign: 'top',
+            x: 0,
+            y: 235,
+            floating: true,
+            borderWidth: 1,
+            backgroundColor: ((Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'),
+            shadow: true
+              },
+          credits: {
+            enabled: false
+          },
+          series: cities_data
+        });
+      </script>
+    </div>
+
+    <!--Linear Regression -->
+    <div class="col-lg-8 col-lg-offset-2">
+      <br>
+      <br>
+      <h4> Linear Regression Models</h4>
+        <p style="text-align:justify">In statistics, linear regression is a linear approach to modelling the relationship between a
+          scalar response (or dependent variable) and one or more explanatory variables (or independent variables).
+          From the scatter plot, we can see there is a potentially positive correlation between the angry values of
+          each city and its median personal income, although there is still a few outliers lie beyond. Besides, the
+          correlation between the unemployment rate and angry value demonstrate a slightly correlation as expected,
+          and is even slightly negative. Unfortunately, there is no obvious correlation between median age of earners
+          and the angry value. This liner regression model doesn’t fully verify our hypothesis, due to the limited
+          size of our tweets data set and biased dataset.</p>
+      <img src="../static/img/LR_Income.png">
+      <br>
+      <img src="../static/img/LR_Unemploy.png">
+      <br>
+      <img src="../static/img/LR_Age.png">
+    </div>
+
+  </div>
+</div>
+
+
+<div id="social">
+  <div class="container">
+    <div class="row centered">
+      <div class="col-lg-2">
+        <a href="#"><i class="fa fa-dribbble"></i></a>
+      </div>
+      <div class="col-lg-2">
+        <a href="#"><i class="fa fa-facebook"></i></a>
+      </div>
+      <div class="col-lg-2">
+        <a href="#"><i class="fa fa-twitter"></i></a>
+      </div>
+      <div class="col-lg-2">
+        <a href="#"><i class="fa fa-linkedin"></i></a>
+      </div>
+      <div class="col-lg-2">
+        <a href="#"><i class="fa fa-instagram"></i></a>
+      </div>
+      <div class="col-lg-2">
+        <a href="#"><i class="fa fa-tumblr"></i></a>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div id="copyrights">
+  <div class="container">
+    <p>
+      &copy; Copyrights <strong>Instant</strong>. All Rights Reserved
+    </p>
+    <div class="credits">
+      <!--
+        You are NOT allowed to delete the credit link to TemplateMag with free version.
+        You can delete the credit link only if you bought the pro version.
+        Buy the pro version with working PHP/AJAX contact form: https://templatemag.com/instant-bootstrap-personal-template/
+        Licensing information: https://templatemag.com/license/
+      -->
+      Created with Instant template by <a href="https://templatemag.com/">TemplateMag</a>
+    </div>
+  </div>
+</div>
+<!-- / copyrights -->
+
+<!-- JavaScript Libraries -->
+<script src="../static/lib/jquery/jquery.min.js"></script>
+<script src="../static/lib/bootstrap/js/bootstrap.min.js"></script>
+<script src="../static/lib/php-mail-form/validate.js"></script>
+<script src="../static/lib/easing/easing.min.js"></script>
+
+<!-- Web Main Javascript File -->
+<script src="../static/js/main.js"></script>
+
+</body>
+</html>
