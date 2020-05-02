@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  web:
+    build: ./Web
+    command: gunicorn --bind 0.0.0.0:5000 project:app
+    ports:
+      - 5000:5000
+    env_file:
+      - ./Web/.env
+#     depends_on:
+#       - couchdb
+#   db:
+#     image: postgres:12-alpine
+#     volumes:
+#       - postgres_data:/var/lib/postgresql/data/
+#     env_file:
+#       - ./.env.prod.db
+
+volumes:
+  postgres_data:
