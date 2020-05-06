@@ -1,5 +1,5 @@
 # Common Vars
-remote_directory: /home/ubuntu/COMP90024
+remote_directory: /home/ubuntu
 
 # couchdb vars
 couchdb_directory: /home/ubuntu/couchdb

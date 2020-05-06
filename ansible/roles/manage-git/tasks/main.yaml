@@ -1,0 +1,40 @@
+---
+- name: install git configure dependency
+  tags: 'git'
+  become: yes
+  apt:
+    name: ['socat']
+    state: latest
+
+- name: create git config file
+  tags: 'git'
+  become: yes
+  copy:
+    content: "host github.com\n  user git\n  hostname ssh.github.com\n  port 443\n  proxycommand socat - PROXY:wwwproxy.unimelb.edu.au:%h:%p,proxyport=8000"
+    dest: "/home/ubuntu/.ssh/config"
+
+
+- name: Check git repository directory exist
+  tags: 'git'
+  become: yes
+  stat:
+    path: "/home/ubuntu/CCC-2020S1-Assignment2"
+  register: directory_stats
+
+- name: clone git repository
+  tags: 'git'
+  command: git clone git@github.com:shizhec/CCC-2020S1-Assignment2.git
+  args:
+    chdir: /home/ubuntu/
+  when: item.stat.exists == false
+  with_items:
+    - "{{ directory_stats }}"
+
+- name: git pull
+  tags: 'git'
+  command: git pull
+  args:
+    chdir: /home/ubuntu/CCC-2020S1-Assignment2
+  when: item.stat.exists == true
+  with_items:
+     - "{{ directory_stats }}"
