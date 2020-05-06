@@ -1,5 +1,5 @@
 import GetOldTweets3 as got 
-import couchdb
+#import couchdb
 # import mpi4py
 # from mpi4py import MPI
 
