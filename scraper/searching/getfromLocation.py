@@ -8,16 +8,16 @@ import json
 
 parser = argparse.ArgumentParser(description='COMP90024 / get tweet via coordinate location')
 parser.add_argument('--coordinates', type=str, default="-37.80811,144.96071")
-parser.add_argument('--startdate', type=str, default="2020-04-28")
-parser.add_argument('--enddate', type=str, default="2020-04-29")
+parser.add_argument('--startdate', type=str, default="2020-04-01")
+parser.add_argument('--enddate', type=str, default="2020-05-01")
 parser.add_argument('--within', type=str, default="50mi")
-parser.add_argument('--filename', type=str, default="get_geo_tweet.txt")
+parser.add_argument('--filename', type=str, default="Melbourne_April.txt")
 args = parser.parse_args()
 
 START_MSG = "1"
 ENG_MSG = "0"
 
-output = open(args.filename, "w")
+output = open(args.filename, "w",encoding = "utf-8")
 
 # comm = MPI.COMM_WORLD
 # comm_size = comm.Get_size()
