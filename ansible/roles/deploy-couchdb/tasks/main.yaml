@@ -27,3 +27,7 @@
     state: present
     remove_orphans: yes
     recreate: always
+  register: output
+
+- debug:
+    var: output

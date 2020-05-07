@@ -5,4 +5,4 @@ remote_directory: /home/ubuntu
 couchdb_directory: /home/ubuntu/couchdb
 couchdb_name: couchdb
 couchdb_user: admin
-couchdb_passward: passward
+couchdb_passward: password
