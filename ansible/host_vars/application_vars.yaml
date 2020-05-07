@@ -1,0 +1,8 @@
+# Common Vars
+remote_directory: /home/ubuntu
+
+# couchdb vars
+couchdb_directory: /home/ubuntu/couchdb
+couchdb_name: couchdb
+couchdb_user: admin
+couchdb_passward: password

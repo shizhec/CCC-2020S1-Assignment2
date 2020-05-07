@@ -1,0 +1,14 @@
+version: "3.6"
+services:
+  couchdb:
+    container_name: {{ couchdb_name }}
+    image: {{ couchdb_name }}
+    restart: always
+    ports:
+      - 5984:5984
+    volumes:
+      - {{ couchdb_directory }}:/var/lib/couchdb
+    environment:
+      - 'COUCHDB_USER={{ couchdb_user }}'
+      - 'COUCHDB_PASSWORD={{ couchdb_passward }}'
+      - 'COUCHDB_IP={{ db_host }}'
