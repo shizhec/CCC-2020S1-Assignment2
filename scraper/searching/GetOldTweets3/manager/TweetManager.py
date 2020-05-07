@@ -142,7 +142,7 @@ class TweetManager:
                     
                     if(count >= 180):
                         count = 0
-                        time.sleep(300)
+                        time.sleep(100)
 
                     batch_cnt_results += 1
                     if tweetCriteria.maxTweets > 0 and batch_cnt_results >= tweetCriteria.maxTweets:
