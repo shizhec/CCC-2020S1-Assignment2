@@ -23,6 +23,7 @@ services:
     environment:
       - 'COUCHDB_USER={{ couchdb_user }}'
       - 'COUCHDB_PASSWORD={{ couchdb_passward }}'
+      - 'COUCHDB_IP'={{ couchdb_ip }}
 
 
   spark:
