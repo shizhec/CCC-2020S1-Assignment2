@@ -1,0 +1,23 @@
+.filter.map--fullScreen {
+  position: absolute;
+  z-index: 1;
+  top: 4rem;
+  right: 1rem;
+  padding: 4px 0;
+  font-size: 1.5rem;
+  height: 60px;
+}
+
+.filter.map--fullScreen .ant-picker {
+  padding: 6.4px 15px;
+  font-size: 1.5rem;
+  height: 52px;
+}
+
+.collapsible-section.filter .collapse-btn {
+  height: calc(100% - 2px);
+}
+
+.ant-card#filter-card .ant-picker {
+  width: 100%;
+}
