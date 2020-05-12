@@ -61,8 +61,14 @@
     line: "Environment=\"HTTP_PROXY={{ http_proxy }}\"\nEnvironment=\"HTTPS_PROXY={{ http_proxy }}\"\nEnvironment=\"NO_PROXY=localhost,127.0.0.1,localaddress,172.16.0.0/12,.melbourne.rc.nectar.org.au,.storage.unimelb.edu.au,.cloud.unimelb.edu.au\"\n"
     dest: "{{ docker_service_directory }}/{{ docer_proxy_configure_file }}"
 
-# - name: reload daemond and restart docker
-#   systemd:
-#     name: docker
-#     state: restarted
-#     daemon_reload: yes
+- name: reload daemond
+  become: yes
+  command: systemctl daemon-reload
+
+- name: restart docker
+  become: yes
+  command: systemctl restart docker
+
+- name: fix connect to the Docker daemon socket
+  become: yes
+  command: chmod 666 /var/run/docker.sock

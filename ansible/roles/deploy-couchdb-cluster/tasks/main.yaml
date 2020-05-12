@@ -27,7 +27,20 @@
     state: present
     remove_orphans: yes
     recreate: always
-  register: output
 
-- debug:
-    var: output
+- name: Configure couchdb cluster shell script
+  tags: 'couchdb'
+  become: yes
+  template:
+    src: setup-couchdb-cluster.sh.j2
+    dest: "{{ couchdb_directory }}/setup-couchdb-cluster.sh"
+    owner: ubuntu
+    group: ubuntu
+
+- name: run couchdb cluster setup script
+  tags: 'couchdb'
+  shell: ./setup-couchdb-cluster.sh
+  args:
+    chdir: "{{ couchdb_directory }}"
+  ignore_errors: true
+
