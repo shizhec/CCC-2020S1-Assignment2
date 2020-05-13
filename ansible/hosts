@@ -3,6 +3,9 @@ ansible_python_interpreter=/usr/bin/python3
 ansible_user=ubuntu
 ansible_ssh_private_key_file=~/.ssh/CCC-Nectar-Group.pem
 ansible_ssh_common_args='-o StrictHostKeyChecking=no'
+master_ip = 172.26.130.162 
+slave1_ip = 172.26.130.251
+slave2_ip = 172.26.132.37
 
 [couchdb]
 172.26.130.162 

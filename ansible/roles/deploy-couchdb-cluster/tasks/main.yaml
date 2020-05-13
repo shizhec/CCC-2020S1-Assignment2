@@ -18,29 +18,21 @@
     owner: ubuntu
     group: ubuntu
 
-- name: Run docker compose
-  tags: "couchdb"
-  become: yes
-  docker_compose:
-    project_src: "{{ couchdb_directory }}"
-    pull: yes
-    state: present
-    remove_orphans: yes
-    recreate: always
-
-- name: Configure couchdb cluster shell script
+# - name: Run docker compose
+#   tags: "couchdb"
+#   become: yes
+#   docker_compose:
+#     project_src: "{{ couchdb_directory }}"
+#     pull: yes
+#     state: present
+#     remove_orphans: yes
+#     recreate: always
+- name: COnfigure docker run shell script
   tags: 'couchdb'
   become: yes
   template:
-    src: setup-couchdb-cluster.sh.j2
-    dest: "{{ couchdb_directory }}/setup-couchdb-cluster.sh"
+    src: docker-run-couchdb.sh.j2
+    dest: "{{ couchdb_directory }}/docker-run-couchdb.sh"
     owner: ubuntu
     group: ubuntu
-
-- name: run couchdb cluster setup script
-  tags: 'couchdb'
-  shell: ./setup-couchdb-cluster.sh
-  args:
-    chdir: "{{ couchdb_directory }}"
-  ignore_errors: true
 

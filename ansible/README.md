@@ -22,4 +22,8 @@ password: password
 
 db can be manully access by typing http://[instance_ip]:5984/_utils in browser
 
+## Docker
+### Join swarm (Manager: Instance1)
+docker swarm join --token SWMTKN-1-3lhtwe1j3ixh87wnzy0ss3isf9utk3p6sn868zccnbj00qpzgq-3iery7k9oyi7b3gcryvrg7pub 172.26.130.162:2377
+
 

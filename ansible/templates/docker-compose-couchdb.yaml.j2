@@ -15,3 +15,5 @@ services:
       - 'COUCHDB_USER={{ couchdb_user }}'
       - 'COUCHDB_PASSWORD={{ couchdb_password }}'
       - 'COUCHDB_IP={{ db_host }}'
+    deploy:
+      replicate: 3
