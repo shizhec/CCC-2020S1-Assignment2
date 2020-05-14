@@ -5,6 +5,7 @@ import time
 import couchdb
 import re
 from datetime import date
+import json
 # import pandas as pd
 
 urlpage = 'https://covid-19-au.com/' 
@@ -48,11 +49,23 @@ for i in range(2,10):
     results[state]['Active'] = number_and_change[3]
     results[state]['Tested'] = daily_increase[-1]
 
+today = date.today()
+key_date = today.strftime("%d-%m-%Y")
+
 couch = couchdb.Server('http://admin:password@172.26.130.162:5984/')
 db = couch['daily_increase']
-today = date.today()
-key_date = today.strftime("%d/%m/%Y")
-db[key_date] = results
+
+doc_id,doc_rev= db.save(results)
+doc = db[doc_id]
+doc['_id'] = key_date 
+db[doc_id] = doc
+
+
+with open(key_date+".json","w+",encoding= "utf-8") as f:
+    results = json.dump(results,f,indent=2)
+
+
+
 
 
 
