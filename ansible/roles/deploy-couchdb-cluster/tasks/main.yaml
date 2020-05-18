@@ -18,16 +18,21 @@
     owner: ubuntu
     group: ubuntu
 
-- name: Run docker compose
-  tags: "couchdb"
+# - name: Run docker compose
+#   tags: "couchdb"
+#   become: yes
+#   docker_compose:
+#     project_src: "{{ couchdb_directory }}"
+#     pull: yes
+#     state: present
+#     remove_orphans: yes
+#     recreate: always
+- name: COnfigure docker run shell script
+  tags: 'couchdb'
   become: yes
-  docker_compose:
-    project_src: "{{ couchdb_directory }}"
-    pull: yes
-    state: present
-    remove_orphans: yes
-    recreate: always
-  register: output
+  template:
+    src: docker-run-couchdb.sh.j2
+    dest: "{{ couchdb_directory }}/docker-run-couchdb.sh"
+    owner: ubuntu
+    group: ubuntu
 
-- debug:
-    var: output

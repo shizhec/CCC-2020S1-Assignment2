@@ -1,0 +1,27 @@
+
+#!/usr/bin/env bash
+
+export declare -a node=( {{db_host}} )
+export user={{ couchdb_user }}
+export pass={{ couchdb_password }}
+export VERSION='3.0.0'
+export cookie='a192aeb9904e6590849337933b000c99'
+export uuid='a192aeb9904e6590849337933b001159'
+
+docker stop couchdb${node}
+docker rm couchdb${node}
+
+docker create\
+      --name couchdb${node}\
+      -p 5984:5984\
+      -p 5986:5986\
+      -p 4369:4369\
+      -p 9100-9200:9100-9200\
+      --env COUCHDB_USER=${user}\
+      --env COUCHDB_PASSWORD=${pass}\
+      --env COUCHDB_SECRET=${cookie}\
+      --env ERL_FLAGS="-setcookie \"${cookie}\" -name \"couchdb@${node}\""\
+      ibmcom/couchdb3:${VERSION}
+
+
+docker start couchdb${node}
