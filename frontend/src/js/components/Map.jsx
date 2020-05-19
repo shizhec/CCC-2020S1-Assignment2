@@ -1,20 +1,34 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Row, Col, Card } from "antd";
-import { FullscreenExitOutlined, FullscreenOutlined } from "@ant-design/icons";
+import { Row, Col, Card, Popover } from "antd";
+import {
+  FullscreenExitOutlined,
+  FullscreenOutlined,
+  FlagFilled,
+} from "@ant-design/icons";
 import GoogleMapReact from "google-map-react";
+import debounce from "lodash.debounce";
 
 import "../../css/map.css";
 import { FULL_SCREEN_MAP, CARD_MAP } from "../constants/map";
 import {
   updateMapFullScreenStatus,
   updateMapCenterAndZoom,
+  reverseGeocoding,
 } from "../actions/map";
 import { Filter } from "./Filter";
-
-const GOOGLE_MAP_API_KEY = "AIzaSyDPvEDDdrknvPKqdpl3lfTv547o2mPltuw";
+import { GOOGLE_MAP_API_KEY } from "../constants/credentials";
 
 class MapComponent extends Component {
+  getLocationInfo = (clickedLocationInfo) => {
+    this.props.getTheLocationInfo(clickedLocationInfo);
+  };
+
+  constructor(props) {
+    super(props);
+    this.getLocationInfo = debounce(this.getLocationInfo.bind(this), 500);
+  }
+
   render() {
     console.log("Map, this.props = ", this.props);
 
@@ -23,6 +37,7 @@ class MapComponent extends Component {
       enterFullScreen,
       exitFullScreen,
       updateMapCenterAndZoom,
+      lastClickedInfo,
     } = this.props;
 
     let SwitchComponent = FullscreenExitOutlined;
@@ -60,11 +75,32 @@ class MapComponent extends Component {
             onChange={({ zoom, center }) =>
               updateMapCenterAndZoom(center, zoom)
             }
-            onClick={(value) =>
-              console.log("onClick trigerred, value =", value)
-            }
+            onClick={(value) => {
+              console.log("onClick trigerred, value =", value);
+              this.getLocationInfo(value);
+            }}
           ></GoogleMapReact>
         </div>
+
+        {/* {lastClickedInfo && (
+          <Popover
+            title={"hello world"}
+            content={"HELLO WORLD"}
+            visible={true}
+            
+          >
+            <span
+              style={{
+                left: lastClickedInfo.x,
+                top: lastClickedInfo.y,
+                position: "absolute",
+                width: "1rem",
+                height: "1rem",
+                visibility: "hidden",
+              }}
+            ></span>
+          </Popover>
+        )} */}
 
         <SwitchComponent
           className={"clickable map-full-screen-switch"}
@@ -94,9 +130,9 @@ class MapComponent extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { isFullScreen, center, zoom } = state.map;
+  const { isFullScreen, center, zoom, lastClickedInfo } = state.map;
   const { overviewData } = state.xhr;
-  return { isFullScreen, center, zoom, overviewData };
+  return { isFullScreen, center, zoom, overviewData, lastClickedInfo };
 };
 
 const mapDispatchToProps = (dispatch) => {
@@ -105,6 +141,8 @@ const mapDispatchToProps = (dispatch) => {
     exitFullScreen: () => dispatch(updateMapFullScreenStatus(false)),
     updateMapCenterAndZoom: (center, zoom) =>
       dispatch(updateMapCenterAndZoom(center, zoom)),
+    getTheLocationInfo: (clickedLocationInfo) =>
+      reverseGeocoding(clickedLocationInfo)(dispatch),
   };
 };
 
