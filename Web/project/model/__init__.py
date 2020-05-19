@@ -1,1 +1,1 @@
-from . import couchdb
+from . import couch

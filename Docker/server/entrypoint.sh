@@ -1,22 +1,20 @@
 #!/bin/bash
 
-if [ "$DATABASE" = "postgres" ]
-then
-   echo "Waiting for postgres..."
 
-   while ! nc -z $SQL_HOST $SQL_PORT; do
-     sleep 0.1
-   done
+echo "Waiting for CouchDB..."
 
-   echo "PostgreSQL started"
-fi
+while ! nc -z $COUCHDB_IP 5984; do
+    sleep 0.1
+done
 
-python manage.py create_db
+echo "CouchDB started"
+
+
 
 sed -i '/\[chttpd\]/a\bind_address = 0.0.0.0' local.ini
 sed -i '/\[admins\]/a\admin = ccc' local.ini
 
-echo "couchdb@${IPADD}" >> vm.args
+echo "couchdb@${COUCHDB_IP}" >> vm.args
 sed -i '/^\[\]\./d' sys.config
 echo '[
     {lager, [

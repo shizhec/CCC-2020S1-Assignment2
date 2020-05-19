@@ -1,5 +1,8 @@
 from project import app
-from flask import render_template
+from flask import render_template, request, jsonify
+from datetime import datetime
+from project.model.couch import DB
+
 
 
 @app.route('/')
@@ -8,31 +11,22 @@ def index():
     return render_template('index.html')
 
 
-@app.route('/team')
-def team():
-    return render_template('team.html')
+@app.route('/sentiment')
+def sentiment():
+    region = request.form.get("region", type=str)
+    date_begin = request.form.get("date_begin", type=str)
+    date_end = request.form.get("date_end", type=str)
 
 
-@app.route('/works')
-def works():
-    return render_template('works.html')
+@app.route('/hashtag')
+def hashtag():
+    region = request.form.get("region", type=str)
+    date_begin = request.form.get("date_begin", type=str)
+    date_end = request.form.get("date_end", type=str)
 
 
-@app.route('/works01')
-def works01():
-    return render_template('works01.html')
-
-
-@app.route('/works02')
-def works02():
-    return render_template('works02.html')
-
-
-@app.route('/works03')
-def works03():
-    return render_template('works03.html')
-
-
-@app.route('/contact')
-def contact():
-    return render_template('contact.html')
+@app.route('/corona')
+def corona_related():
+    region = request.form.get("region", type=str)
+    date_begin = request.form.get("date_begin", type=str)
+    date_end = request.form.get("date_end", type=str)

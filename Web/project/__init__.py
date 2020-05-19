@@ -1,14 +1,9 @@
 from flask import Flask
 # from couchdb import Server
+from cloudant.client import CouchDB
 
 app = Flask(__name__)
-# server = Server('http://115.146.95.246:5984')
-# db = server['twitter_rest']
+client = CouchDB('admin', 'password', url='http://172.26.130.251:5984', connect=True)
 
-# server = Server('http://172.26.38.7:5984')
-# db = server['city_resultdb']
-
-
-# import view_db.couchdb
-# from app import model
 from project import controller
+from project import model
