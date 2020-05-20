@@ -1,6 +1,10 @@
 # CCC-2020S1-Assignment2
 University of Melbourne
 
+# CouchDB
+CouchDB user: admin 
+CouchDB password: password
+
 # Twitter format in JSON
 {  
     id (str)  
