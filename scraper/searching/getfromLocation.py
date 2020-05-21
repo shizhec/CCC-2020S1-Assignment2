@@ -7,7 +7,7 @@ import argparse
 import json
 
 parser = argparse.ArgumentParser(description='COMP90024 / get tweet via coordinate location')
-parser.add_argument('--coordinates', type=str, default="-37.80811,144.96071")
+parser.add_argument('--coordinates', type=str, default="-37.810705635660895, 144.94372249922165")
 parser.add_argument('--startdate', type=str, default="2020-04-01")
 parser.add_argument('--enddate', type=str, default="2020-05-01")
 parser.add_argument('--within', type=str, default="50mi")

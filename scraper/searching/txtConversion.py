@@ -6,10 +6,11 @@ import argparse
 
 parser = argparse.ArgumentParser(description='COMP90024 /upload the tweets to the couchdb')
 # parser.add_argument('--filename', type=str, default="Melbourne_April.txt")
-parser.add_argument('--address',type = str,default="172.26.130.162")
-parser.add_argument('--username',type = str,default= "admin")
-parser.add_argument('--password',type = str,default = "password")
+parser.add_argument('--address',type = str,default="127.0.0.1")
+parser.add_argument('--username',type = str,default= "90024_12")
+parser.add_argument('--password',type = str,default = "90024_12")
 parser.add_argument('--database',type = str, default= "canberra_april")
+parser.add_argument('--filename',type = str,default = "1.txt")
 args = parser.parse_args()
 
 # output = open(args.filename, "r+",encoding = "utf-8")
@@ -27,7 +28,7 @@ print("done")
 
 
 
-with open('processed_canberra_april.json','r',encoding="utf-8") as f:
+with open(args.filename,'r',encoding="utf-8") as f:
     bulk = json.loads(f.read())
     processed_tweets = bulk['docs']
     for processed_tweet in processed_tweets:
@@ -41,4 +42,3 @@ with open('processed_canberra_april.json','r',encoding="utf-8") as f:
     #         db.save(line)
     #     except Exception as e:
     #         print(line)
-    #         pass

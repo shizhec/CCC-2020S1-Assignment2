@@ -35,9 +35,9 @@ for i in range(2,10):
             number = re.search('\d+',daily_increase[i].replace(',',''))
             if (re.match('\((.*?)\)',daily_increase[i+1])):
                 change = re.search('(\+|\-)\d+',daily_increase[i+1])
-                compound = (number.group(0),change.group(0))
+                compound = (int(number.group(0)),int(change.group(0)))
             else:
-                compound = (number.group(0),"+0")
+                compound = (int(number.group(0)),0)
             number_and_change.append(compound)
     
         except Exception as e:
@@ -47,21 +47,22 @@ for i in range(2,10):
     results[state]['Deaths'] = number_and_change[1]
     results[state]['Cured'] = number_and_change[2]
     results[state]['Active'] = number_and_change[3]
-    results[state]['Tested'] = daily_increase[-1]
+    number = re.search('\d+',daily_increase[-1].replace(',',''))
+    results[state]['Tested'] = int(number.group(0))
 
 today = date.today()
 key_date = today.strftime("%d-%m-%Y")
 
-couch = couchdb.Server('http://admin:password@172.26.130.162:5984/')
-db = couch['daily_increase']
+# couch = couchdb.Server('http://admin:password@172.26.130.162:5984/')
+# db = couch['daily_increase']
 
-doc_id,doc_rev= db.save(results)
-doc = db[doc_id]
-doc['_id'] = key_date 
-db[doc_id] = doc
+# doc_id,doc_rev= db.save(results)
+# doc = db[doc_id]
+# doc['_id'] = key_date 
+# db[doc_id] = doc
 
 
-with open(key_date+".json","w+",encoding= "utf-8") as f:
+with open('new-'+key_date+".json","w+",encoding= "utf-8") as f:
     results = json.dump(results,f,indent=2)
 
 

@@ -126,13 +126,13 @@ class TweetManager:
                     
                     if not tweet.text.startswith('RT'):
                         temp = {}
-                        temp['id'] = tweet.id
-                        temp['permalink'] = tweet.permalink
-                        temp['username']=tweet.username
+                        temp["id"] = tweet.id
+                        temp["permalink"] = tweet.permalink
+                        temp["username"]=tweet.username
                         temp["date"] = tweet.date.strftime('%Y-%m-%d %H:%M:%S%z')
-                        temp['text']= tweet.text
-                        temp['hashtags'] = tweet.hashtags.split()
-                        temp['geo'] = [tweet.geo]
+                        temp["text"]= tweet.text
+                        temp["hashtags"] = tweet.hashtags.split()
+                        temp["geo"] = [tweet.geo]
                         file.write(str(temp)+"\n")
                     resultsAux.append(tweet)
                     
