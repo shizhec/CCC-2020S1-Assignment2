@@ -9,7 +9,7 @@ parser = argparse.ArgumentParser(description='COMP90024 /upload the tweets to th
 parser.add_argument('--address',type = str,default="172.26.130.162")
 parser.add_argument('--username',type = str,default= "admin")
 parser.add_argument('--password',type = str,default = "password")
-parser.add_argument('--database',type = str, default= "melbourne_test")
+parser.add_argument('--database',type = str, default= "melbourne_test_part")
 parser.add_argument('--filename',type = str,default = "processed_melbourne_april.json")
 args = parser.parse_args()
 
@@ -32,6 +32,8 @@ with open(args.filename,'r',encoding="utf-8") as f:
     bulk = json.loads(f.read())
     processed_tweets = bulk['docs']
     for processed_tweet in processed_tweets:
+        processed_tweet['_id'] = processed_tweet["date"].split(" ")[0]+":"+processed_tweet['id']
+        del processed_tweet['id']
         try:
             db.save(processed_tweet)
         except:

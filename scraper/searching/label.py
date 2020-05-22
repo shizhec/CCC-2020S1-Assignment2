@@ -7,15 +7,16 @@ from ast import literal_eval
 import nltk
 from tqdm import tqdm
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
+import argparse
 
 
+parser = argparse.ArgumentParser(description = 'label the simple sentiment analysis')
+parser.add_argument('--inputfilename', type=str, default='defaultinput.json')
+parser.add_argument('--outputfilename', type=str, default='defaultoutput.json')
+args = parser.parse_args()
 
 
-#nltk.download('vader_lexicon')
-
-
-
-f = open('LATROBE.json','r+',encoding = "utf-8")
+f = open(args.inputfilename,'r+',encoding = "utf-8")
 tweets = json.loads(f.read())["docs"]
 
 no_text_index = []
@@ -56,8 +57,8 @@ result = {"docs":processed_fr}
 
 
 
-with open('processed_latrobe.json', 'w+',encoding="utf-8") as fp:
-    json.dump(result, fp)
+with open(argparse.outputfilename, 'w+',encoding="utf-8") as fp:
+    json.dump(result, fp,indent= 2)
 
 f.close()
 

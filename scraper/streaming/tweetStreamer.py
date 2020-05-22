@@ -2,7 +2,7 @@ import tweepy
 from tweepy.streaming import StreamListener
 from tweepy import OAuthHandler
 from tweepy import Stream
-import json as js
+import json 
 import argparse
 from datetime import datetime
 import time
@@ -56,12 +56,12 @@ def handler(tweet):
 
         
         if tweet["coordinates"] is not None and tweet["coordinates"]["coordinates"] is not None:
-            tweetdict["geo"] = ["coordinates"]["coordinates"]
+            tweetdict["geo"] = tweet["coordinates"]["coordinates"]
 
         elif tweet["geo"] is not None and  tweet["geo"]["coordinates"] is not None:
             try:
                 (X,Y) = tweet["geo"]["coordinates"]
-                tweetdict["geo"] = [X,Y]
+                tweetdict["geo"] = [Y,X]
             except:
                 tweetdict["geo"] = []
         
@@ -69,22 +69,34 @@ def handler(tweet):
             tweetdict["geo"] = []
 
         pack = js.dumps(tweetdict)
-        print(pack.geo)
+        print(pack)
+        return pack
 
     except Exception as e:
 
         print(e)
+        time.sleep(30)
+
+
+parser = argparse.ArgumentParser(description='COMP90024 Twitter Streamer')
+
+parser.add_argument('-l','--list', nargs='+', default=[141, -38, 150, -34])
+parser.add_argument('--filename', type=str, default="streamlog.txt")
+args = parser.parse_args()
+
+file = open(args.filename, "w+",encoding= "utf-8")
         
 class TweetListener(StreamListener):
 
     def on_data(self, data):
 
         tweet = js.loads(data,encoding = 'utf-8')
-    
+        print(tweet)
     	# need to filter out the retweets
         if not tweet["text"].startswith('RT') and tweet["retweeted"] == False:
-            # file.write(data)
-            handler(tweet)
+            tweetJson = handler(tweet)
+            if(tweetJson is not None):
+                file.write(tweetJson+"\n")
         return True
 
     def on_error(self, status):
@@ -100,4 +112,6 @@ if __name__ == '__main__':
     stream = Stream(auth, listener)
 
     #This line filter Twitter Streams to capture data around Victoria state
-    stream.filter(track=['Melbourne']) 
+    stream.filter(locations=args.list) 
+
+    file.close()
