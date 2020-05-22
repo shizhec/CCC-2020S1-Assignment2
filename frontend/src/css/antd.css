@@ -1,0 +1,24 @@
+.ant-row {
+  margin-bottom: 1rem;
+}
+
+.ant-row .ant-card {
+  margin: 0.5rem;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.collapsible-section {
+  display: flex;
+  align-items: center;
+}
+
+.collapsible-section .collapse-btn.ant-btn {
+  width: 1rem;
+  background: rgba(163, 163, 163, 1);
+  border: 0;
+  border-radius: 0;
+  color: white;
+}
