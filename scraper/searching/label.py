@@ -15,13 +15,12 @@ from nltk.sentiment.vader import SentimentIntensityAnalyzer
 
 
 
-f = open('Canberra_April.txt','r+',encoding = "utf-8")
-fr = f.readlines()
+f = open('LATROBE.json','r+',encoding = "utf-8")
+tweets = json.loads(f.read())["docs"]
 
 no_text_index = []
 processed_fr = []
-for tweet in fr:
-    candidate = literal_eval(tweet.strip())
+for candidate in tweets:
     if len(candidate['text']) == 0:
         no_text_index.append(candidate)
     else:
@@ -53,11 +52,11 @@ for i in tqdm(range(len(processed_fr))):
     else:
         processed_fr[i]['simple_sentiment_label'] = str("neutral")
 
-result = {"new_edits":False,"docs":processed_fr}
+result = {"docs":processed_fr}
 
 
 
-with open('processed_canberra_april.json', 'w+',encoding="utf-8") as fp:
+with open('processed_latrobe.json', 'w+',encoding="utf-8") as fp:
     json.dump(result, fp)
 
 f.close()

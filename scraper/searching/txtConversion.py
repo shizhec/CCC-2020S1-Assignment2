@@ -6,11 +6,11 @@ import argparse
 
 parser = argparse.ArgumentParser(description='COMP90024 /upload the tweets to the couchdb')
 # parser.add_argument('--filename', type=str, default="Melbourne_April.txt")
-parser.add_argument('--address',type = str,default="127.0.0.1")
-parser.add_argument('--username',type = str,default= "90024_12")
-parser.add_argument('--password',type = str,default = "90024_12")
-parser.add_argument('--database',type = str, default= "canberra_april")
-parser.add_argument('--filename',type = str,default = "1.txt")
+parser.add_argument('--address',type = str,default="172.26.130.162")
+parser.add_argument('--username',type = str,default= "admin")
+parser.add_argument('--password',type = str,default = "password")
+parser.add_argument('--database',type = str, default= "melbourne_test")
+parser.add_argument('--filename',type = str,default = "processed_melbourne_april.json")
 args = parser.parse_args()
 
 # output = open(args.filename, "r+",encoding = "utf-8")

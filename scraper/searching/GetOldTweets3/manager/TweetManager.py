@@ -25,7 +25,7 @@ class TweetManager:
     
     
     @staticmethod
-    def getTweets(tweetCriteria, receiveBuffer=None, bufferLength=100, proxy=None, debug=False, file = None):
+    def getTweets(tweetCriteria, receiveBuffer=None, bufferLength=100, proxy=None, debug=False):
         """Get tweets that match the tweetCriteria parameter
         A static method.
 
@@ -121,19 +121,7 @@ class TweetManager:
 
                     tweet.urls = ",".join(urls)
 
-                    # results.append(tweet)
-
-                    
-                    if not tweet.text.startswith('RT'):
-                        temp = {}
-                        temp["id"] = tweet.id
-                        temp["permalink"] = tweet.permalink
-                        temp["username"]=tweet.username
-                        temp["date"] = tweet.date.strftime('%Y-%m-%d %H:%M:%S%z')
-                        temp["text"]= tweet.text
-                        temp["hashtags"] = tweet.hashtags.split()
-                        temp["geo"] = [tweet.geo]
-                        file.write(str(temp)+"\n")
+                    results.append(tweet)
                     resultsAux.append(tweet)
                     
                     if receiveBuffer and len(resultsAux) >= bufferLength:
@@ -152,7 +140,7 @@ class TweetManager:
             if receiveBuffer and len(resultsAux) > 0:
                 receiveBuffer(resultsAux)
                 resultsAux = []
-        file.close()
+        return results
 
     
 
