@@ -4,21 +4,21 @@
     gather_subset: all
 
 # add proxy variables to the instance environments
-- name: add proxy to environments
-  become: yes
-  lineinfile:
-    line: "http_proxy=\"{{ http_proxy }}\"\nhttps_proxy=\"{{ http_proxy }}\"\nftp_proxy=\"{{ http_proxy }}\"\nno_proxy=\"localhost,127.0.0.1,localaddress,172.16.0.0/12,.melbourne.rc.nectar.org.au,.storage.unimelb.edu.au,.cloud.unimelb.edu.au\"\n"
-    dest: /etc/environment
+# - name: add proxy to environments
+#   become: yes
+#   lineinfile:
+#     line: "http_proxy=\"{{ http_proxy }}\"\nhttps_proxy=\"{{ http_proxy }}\"\nftp_proxy=\"{{ http_proxy }}\"\nno_proxy=\"localhost,127.0.0.1,localaddress,172.16.0.0/12,.melbourne.rc.nectar.org.au,.storage.unimelb.edu.au,.cloud.unimelb.edu.au\"\n"
+#     dest: /etc/environment
 
 # add the environments
-- name: make proxy available for current session
-  become: yes
-  shell: echo 'add proxy configuration success'
-  environment:
-    http_proxy: "{{ http_proxy }}"
-    https_proxy: "{{ http_proxy }}"
-    ftp_proxy: "{{ http_proxy }}"
-    no_proxy: "localhost,127.0.0.1,localaddress,172.16.0.0/12,.melbourne.rc.nectar.org.au,.storage.unimelb.edu.au,.cloud.unimelb.edu.au"
+# - name: make proxy available for current session
+#   become: yes
+#   shell: echo 'add proxy configuration success'
+#   environment:
+#     http_proxy: "{{ http_proxy }}"
+#     https_proxy: "{{ http_proxy }}"
+#     ftp_proxy: "{{ http_proxy }}"
+#     no_proxy: "localhost,127.0.0.1,localaddress,172.16.0.0/12,.melbourne.rc.nectar.org.au,.storage.unimelb.edu.au,.cloud.unimelb.edu.au"
 
 # - name: reboot machine
 #   become: yes
@@ -36,10 +36,21 @@
   apt:
     name: ['xfsprogs', 'apt-transport-https', 'build-essential',
      'ca-certificates', 'curl', 'git', 'python3-dev', 'python3-pip', 'python3-setuptools',
-     'software-properties-common', 'unzip', 'vim', 'zip']
+     'software-properties-common', 'unzip', 'vim', 'zip', 'npm', 'nodejs', 'netcat']
     state: latest
     install_recommends: no
     update_cache: yes
 
+- name: Update pip
+  become: yes
+  pip:
+    name: ['pip']
+    state: latest
 
-- include_tasks: docker.yaml
+- name: Install pip3 dependencies
+  become: yes
+  pip:
+    name: ['flask', 'couchdb', 'gunicorn', 'gevent', 'beautifulsoup4']
+    state: latest
+
+# - include_tasks: docker.yaml

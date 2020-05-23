@@ -27,7 +27,7 @@
 #     state: present
 #     remove_orphans: yes
 #     recreate: always
-- name: COnfigure docker run shell script
+- name: Configure docker run shell script
   tags: 'couchdb'
   become: yes
   template:
