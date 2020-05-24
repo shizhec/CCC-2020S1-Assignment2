@@ -4,7 +4,11 @@ import os
 
 env = os.environ
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder=os.path.abspath("../frontend/build/static"),
+            template_folder=os.path.abspath('../frontend/build'))
+
+# app = Flask(__name__)
+
 client = CouchDB(env.get('COUCHDB_USER', 'admin'), env.get('COUCHDB_PASSWORD', 'password'),
                  url='http://'+env.get('COUCHDB_IP', '172.26.130.251')+':5984', connect=True)
 
