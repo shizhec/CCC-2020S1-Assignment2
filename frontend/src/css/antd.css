@@ -22,3 +22,15 @@
   border-radius: 0;
   color: white;
 }
+
+.ant-card-body {
+  height: 400px;
+}
+
+.ant-card.ant-card-type-inner {
+  height: auto;
+}
+
+.ant-card.ant-card-type-inner .ant-card-body {
+  height: auto;
+}
