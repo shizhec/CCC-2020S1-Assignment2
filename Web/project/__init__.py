@@ -1,5 +1,4 @@
 from flask import Flask
-# from couchdb import Server
 from cloudant.client import CouchDB
 import os
 

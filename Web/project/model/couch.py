@@ -57,3 +57,24 @@ class DB:
             for re in db.get_partitioned_view_result(day, '_design/coronavirus_related', 'new-view'):
                 counts += re['value']
         return {'count': counts}
+
+    def get_overview(self, date_begin='2020-01-01', date_end=datetime.datetime.today()):
+        db = CloudantDatabase(self.client, 'daily_increase', partitioned=False)
+        days = get_days(date_begin, date_end)
+
+        results = {}
+
+        for day in days:
+            res = db.__getitem__(day)
+            results[day] = {key: value for key, value in res.items() if key != '_id' and key != '_rev'}
+
+        return results
+
+    def get_all_overview(self):
+        db = CloudantDatabase(self.client, 'daily_increase', partitioned=False)
+        results = {}
+
+        for day in db:
+            results[day['_id']] = {key: value for key, value in day.items() if key != '_id' and key != '_rev'}
+
+        return results

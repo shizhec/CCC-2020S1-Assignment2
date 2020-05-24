@@ -41,3 +41,12 @@ def corona_related():
     date_end = request.args.get("date_end", type=str)
 
     return jsonify(db.get_corona(region, date_begin, date_end))
+
+@app.route('/overview')
+def overview():
+    # date_begin = request.args.get("date_start", type=str)
+    # date_end = request.args.get("date_end", type=str)
+    #
+    # return jsonify(db.get_overview(date_begin, date_end))
+
+    return jsonify(db.get_all_overview())
