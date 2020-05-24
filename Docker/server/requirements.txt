@@ -1,5 +1,0 @@
-flask
-couchdb
-gunicorn
-gevent
-beautifulsoup4
