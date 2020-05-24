@@ -63,10 +63,12 @@ class DB:
         days = get_days(date_begin, date_end)
 
         results = {}
+        keys = db.keys(remote=True)
 
         for day in days:
-            res = db.__getitem__(day)
-            results[day] = {key: value for key, value in res.items() if key != '_id' and key != '_rev'}
+            if day in keys:
+                res = db[day]
+                results[day] = {key: value for key, value in res.items() if key != '_id' and key != '_rev'}
 
         return results
 
@@ -74,7 +76,7 @@ class DB:
         db = CloudantDatabase(self.client, 'daily_increase', partitioned=False)
         results = {}
 
-        for day in db:
-            results[day['_id']] = {key: value for key, value in day.items() if key != '_id' and key != '_rev'}
+        for day_data in db:
+            results[day_data['_id']] = {key: value for key, value in day_data.items() if key != '_id' and key != '_rev'}
 
         return results
