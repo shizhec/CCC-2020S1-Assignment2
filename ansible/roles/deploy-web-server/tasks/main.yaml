@@ -98,12 +98,12 @@
     dest: "{{ server_directory }}/Web/"
     remote_src: yes
 
-# - name: Run docker compose for server and nginx
-#   tags: 'nginx'
-#   become: yes
-#   docker_compose:
-#     project_src: "{{ working_directory }}"
-#     pull: yes
-#     state: present
-#     remove_orphans: yes
-#     recreate: always
+- name: Run docker compose for server and nginx
+  tags: 'nginx'
+  become: yes
+  docker_compose:
+    project_src: "{{ working_directory }}"
+    pull: yes
+    state: present
+    remove_orphans: yes
+    recreate: always
