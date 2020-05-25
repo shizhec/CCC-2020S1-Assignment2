@@ -29,32 +29,32 @@ class DB:
         self.client = client
 
     def get_sentiment(self, region, date_begin='2020-01-01', date_end=datetime.datetime.today()):
-        db = CloudantDatabase(self.client, 'melbourne_test_part', partitioned=True)
+        db = CloudantDatabase(self.client, 'wellington', partitioned=True)
         days = get_days(date_begin, date_end)
 
         counts = {'negative': 0, 'neutral': 0, 'positive': 0}
         for day in days:
-            for re in db.get_partitioned_view_result(day, '_design/sentiment_count', 'new-view', group_level=1):
+            for re in db.get_partitioned_view_result(day, '_design/sentiment_count', 'sentiment_count', group_level=1):
                 counts[re['key']] += re['value']
         return counts
 
     def get_hashtag(self, region, date_begin='2020-01-01', date_end=datetime.datetime.today()):
-        db = CloudantDatabase(self.client, 'melbourne_test_part', partitioned=True)
+        db = CloudantDatabase(self.client, 'wellington', partitioned=True)
         days = get_days(date_begin, date_end)
 
         counts = 0
         for day in days:
-            for re in db.get_partitioned_view_result(day, '_design/hashtag_count', 'new-view'):
+            for re in db.get_partitioned_view_result(day, '_design/hashtag_count', 'hashtag_count'):
                 counts += re['value']
         return {'count': counts}
 
     def get_corona(self, region, date_begin='2020-01-01', date_end=datetime.datetime.today()):
-        db = CloudantDatabase(self.client, 'melbourne_test_part', partitioned=True)
+        db = CloudantDatabase(self.client, 'wellington', partitioned=True)
         days = get_days(date_begin, date_end)
 
         counts = 0
         for day in days:
-            for re in db.get_partitioned_view_result(day, '_design/coronavirus_related', 'new-view'):
+            for re in db.get_partitioned_view_result(day, '_design/coronavirus_related', 'coronavirus_related'):
                 counts += re['value']
         return {'count': counts}
 
@@ -80,3 +80,23 @@ class DB:
             results[day_data['_id']] = {key: value for key, value in day_data.items() if key != '_id' and key != '_rev'}
 
         return results
+
+    def get_tweet_count(self, region, date_begin='2020-01-01', date_end=datetime.datetime.today()):
+        db = CloudantDatabase(self.client, 'wellington', partitioned=True)
+        days = get_days(date_begin, date_end)
+
+        counts = 0
+        for day in days:
+            for re in db.get_partitioned_view_result(day, '_design/tweet_count', 'tweet_count'):
+                counts += re['value']
+        return {'count': counts}
+
+    def get_hashtag_overview(self, region, date_begin='2020-01-01', date_end=datetime.datetime.today()):
+        db = CloudantDatabase(self.client, 'wellington', partitioned=True)
+        days = get_days(date_begin, date_end)
+
+        results = {}
+        for day in days:
+            for re in db.get_partitioned_view_result(day, '_design/hashtag_count', 'hashtag_count', group_level=1):
+                results[re['key']] = results.get(re['key'], 0) + re['value']
+        return sorted(results.items(), key=lambda item: item[1], reverse=True)
