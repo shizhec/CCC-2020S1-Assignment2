@@ -1,8 +1,24 @@
 from project import app
-from flask_apscheduler import APScheduler
+
+
+class Config(object):
+    JOBS = [
+        {
+            'id': 'job1',
+            'func': 'ccc:job1',
+            'args': (1, 2),
+            'trigger': 'interval',
+            'seconds': 10
+        }
+    ]
+
+    SCHEDULER_API_ENABLED = True
+
+
+
+
 
 if __name__ == '__main__':
-    scheduler = APScheduler()
-    scheduler.init_app(app)
-    scheduler.start()
     app.run(host='0.0.0.0', debug=True, threaded=True)
+
+

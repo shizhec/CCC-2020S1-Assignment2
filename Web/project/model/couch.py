@@ -100,3 +100,26 @@ class DB:
             for re in db.get_partitioned_view_result(day, '_design/hashtag_count', 'hashtag_count', group_level=1):
                 results[re['key']] = results.get(re['key'], 0) + re['value']
         return sorted(results.items(), key=lambda item: item[1], reverse=True)
+
+    def get_overview_lga(self, date_begin='2020-01-01', date_end=datetime.datetime.today()):
+        db = CloudantDatabase(self.client, 'daily_increase_lga', partitioned=False)
+        days = get_days(date_begin, date_end)
+
+        results = {}
+        keys = db.keys(remote=True)
+
+        for day in days:
+            if day in keys:
+                res = db[day]
+                results[day] = {key: value for key, value in res.items() if key != '_id' and key != '_rev'}
+        return results
+
+
+    def get_all_overview_lga(self):
+        db = CloudantDatabase(self.client, 'daily_increase_lga', partitioned=False)
+        results = {}
+
+        for day_data in db:
+            results[day_data['_id']] = {key: value for key, value in day_data.items() if key != '_id' and key != '_rev'}
+
+        return results
