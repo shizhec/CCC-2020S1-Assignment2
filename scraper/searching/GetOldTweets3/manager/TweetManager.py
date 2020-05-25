@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import json, re, datetime, sys, random, http.cookiejar
+import re, datetime, sys, random, http.cookiejar,json
 import urllib.request, urllib.parse, urllib.error
 from pyquery import PyQuery
 from .. import models
@@ -66,8 +66,11 @@ class TweetManager:
             active = True
             count = 0
             while active:
-                count = count + 1
                 json = TweetManager.getJsonResponse(tweetCriteria, refreshCursor, cookieJar, proxy, user_agent, debug=debug)
+                if json == "wait a moment,429":
+                    time.sleep(100)
+                    continue
+
                 if len(json['items_html'].strip()) == 0:
                     break
 
@@ -128,9 +131,7 @@ class TweetManager:
                         receiveBuffer(resultsAux)
                         resultsAux = []
                     
-                    if(count >= 180):
-                        count = 0
-                        time.sleep(100)
+
 
                     batch_cnt_results += 1
                     if tweetCriteria.maxTweets > 0 and batch_cnt_results >= tweetCriteria.maxTweets:
@@ -355,7 +356,8 @@ class TweetManager:
         except Exception as e:
             print("An error occured during an HTTP request:", str(e))
             print("Try to open in browser: https://twitter.com/search?q=%s&src=typd" % urllib.parse.quote(urlGetData))
-            sys.exit()
+            dataJson = "wait a moment,429"
+            return dataJson
 
         try:
             s_json = jsonResponse.decode()

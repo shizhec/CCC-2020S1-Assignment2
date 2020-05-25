@@ -36,6 +36,17 @@ def nltk_sentiment(sentence):
     score = nltk_sentiment.polarity_scores(sentence)
     return score
 
+def label_sentiment(tweet):
+    text = tweet['text']
+    score = nltk_sentiment(text)
+    if score['compound'] >= 0.05:
+        tweet['simple_sentiment_label'] = str("positive")
+    elif score['compound'] <= -0.05:
+        tweet['simple_sentiment_label'] = str("negative")
+    else:
+        tweet['simple_sentiment_label'] = str("neutral")
+    return tweet
+
 
 
 
@@ -57,7 +68,7 @@ result = {"docs":processed_fr}
 
 
 
-with open(argparse.outputfilename, 'w+',encoding="utf-8") as fp:
+with open(args.outputfilename, 'w+',encoding="utf-8") as fp:
     json.dump(result, fp,indent= 2)
 
 f.close()

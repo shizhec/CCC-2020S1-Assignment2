@@ -7,15 +7,13 @@ import argparse
 import json
 
 parser = argparse.ArgumentParser(description='COMP90024 / get tweet via coordinate location')
-parser.add_argument('--coordinates', type=str, default="-35.28346,149.12807")
-parser.add_argument('--startdate', type=str, default="2020-04-25")
+parser.add_argument('--coordinates', type=str, default="-37.814413,144.93163")
+parser.add_argument('--startdate', type=str, default="2020-01-01")
 parser.add_argument('--enddate', type=str, default="2020-05-01")
-parser.add_argument('--within', type=str, default="5km")
-parser.add_argument('--filename', type=str, default="CANBERRA.json")
+parser.add_argument('--within', type=str, default="3.363945833km")
+parser.add_argument('--filename', type=str, default="MELBOURNE.json")
 args = parser.parse_args()
 
-START_MSG = "1"
-ENG_MSG = "0"
 
 output = open(args.filename, "w+",encoding = "utf-8")
 
@@ -38,7 +36,8 @@ tweetlist = got.manager.TweetManager.getTweets(tweetCriteria)
 
 tweet_json_list = []
 
-print(len(tweetlist))
+
+
 
 for tweet in tweetlist:
     if not tweet.text.startswith('RT'):
