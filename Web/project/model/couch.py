@@ -29,7 +29,7 @@ class DB:
         self.client = client
 
     def get_sentiment(self, region, date_begin='2020-01-01', date_end=datetime.datetime.today()):
-        db = CloudantDatabase(self.client, 'wellington', partitioned=True)
+        db = CloudantDatabase(self.client, region, partitioned=True)
         days = get_days(date_begin, date_end)
 
         counts = {'negative': 0, 'neutral': 0, 'positive': 0}
@@ -39,7 +39,7 @@ class DB:
         return counts
 
     def get_hashtag(self, region, date_begin='2020-01-01', date_end=datetime.datetime.today()):
-        db = CloudantDatabase(self.client, 'wellington', partitioned=True)
+        db = CloudantDatabase(self.client, region, partitioned=True)
         days = get_days(date_begin, date_end)
 
         counts = 0
@@ -49,7 +49,7 @@ class DB:
         return {'count': counts}
 
     def get_corona(self, region, date_begin='2020-01-01', date_end=datetime.datetime.today()):
-        db = CloudantDatabase(self.client, 'wellington', partitioned=True)
+        db = CloudantDatabase(self.client, region, partitioned=True)
         days = get_days(date_begin, date_end)
 
         counts = 0
@@ -82,7 +82,7 @@ class DB:
         return results
 
     def get_tweet_count(self, region, date_begin='2020-01-01', date_end=datetime.datetime.today()):
-        db = CloudantDatabase(self.client, 'wellington', partitioned=True)
+        db = CloudantDatabase(self.client, region, partitioned=True)
         days = get_days(date_begin, date_end)
 
         counts = 0
@@ -92,7 +92,7 @@ class DB:
         return {'count': counts}
 
     def get_hashtag_overview(self, region, date_begin='2020-01-01', date_end=datetime.datetime.today()):
-        db = CloudantDatabase(self.client, 'wellington', partitioned=True)
+        db = CloudantDatabase(self.client, region, partitioned=True)
         days = get_days(date_begin, date_end)
 
         results = {}
