@@ -1,7 +1,7 @@
-from project import app
+from project import app, scheduler
 from flask import render_template, request, jsonify
 from project.model.couch import DB
-
+from flask_apscheduler import APScheduler
 from project import client
 
 db = DB(client)
@@ -19,10 +19,8 @@ def sentiment():
     date_begin = request.args.get("date_start", type=str)
     date_end = request.args.get("date_end", type=str)
 
-    if region is None:
-        print("fucK!!")
-    else:
-        return jsonify(db.get_sentiment(region, date_begin, date_end))
+    region.strip().lower().replace(' ', '_')
+    return jsonify(db.get_sentiment(region, date_begin, date_end))
 
 
 @app.route('/api/hashtag')
@@ -31,6 +29,7 @@ def hashtag():
     date_begin = request.args.get("date_start", type=str)
     date_end = request.args.get("date_end", type=str)
 
+    region.strip().lower().replace(' ', '_')
     return jsonify(db.get_hashtag(region, date_begin, date_end))
 
 
@@ -40,6 +39,7 @@ def corona_related():
     date_begin = request.args.get("date_start", type=str)
     date_end = request.args.get("date_end", type=str)
 
+    region.strip().lower().replace(' ', '_')
     return jsonify(db.get_corona(region, date_begin, date_end))
 
 
@@ -52,3 +52,38 @@ def overview():
         return jsonify(db.get_all_overview())
     else:
         return jsonify(db.get_overview(date_begin, date_end))
+
+
+@app.route('/api/tweet_count')
+def tweet_count():
+    region = request.args.get("region", type=str)
+    date_begin = request.args.get("date_start", type=str)
+    date_end = request.args.get("date_end", type=str)
+
+    region.strip().lower().replace(' ', '_')
+    return jsonify(db.get_tweet_count(region, date_begin, date_end))
+
+
+@app.route('/api/hashtag_overview')
+def hashtag_overview():
+    region = request.args.get("region", type=str)
+    date_begin = request.args.get("date_start", type=str)
+    date_end = request.args.get("date_end", type=str)
+
+    region.strip().lower().replace(' ', '_')
+    return jsonify(db.get_hashtag_overview(region, date_begin, date_end))
+
+
+@app.route('/api/covid_19_vic_lga_overview')
+def overview_lga():
+    date_begin = request.args.get("date_start", type=str)
+    date_end = request.args.get("date_end", type=str)
+
+    if date_begin is None:
+        return jsonify(db.get_all_overview_lga())
+    else:
+        return jsonify(db.get_overview_lga(date_begin, date_end))
+#
+# @scheduler.task('interval', id='refresh_data', hours=6, misfire_grace_time=900)
+# def refresh_data():
+#     return 0
