@@ -127,7 +127,7 @@ class DB:
         db = CloudantDatabase(self.client, db, partitioned=False)
         days = get_days(date_begin, date_end)
 
-        if not db.exists():
+        while not db.exists():
             time.sleep(0.1)
 
         results = {'negative': 0, 'neutral': 0, 'positive': 0}
