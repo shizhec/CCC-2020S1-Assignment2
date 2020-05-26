@@ -3,7 +3,14 @@ import {
   UPDATE_MAP_CENTER_AND_ZOOM,
   UPDATE_LAST_CLICKED_INFO,
 } from "../actionTypes/map";
-import { builtReverseGeocodingUrl } from "../utils/googleMap";
+import { UPDATE_DESIGNATED_COMPARING_TARGET_ADDRESS } from "../actionTypes/comparison";
+
+import {
+  updateCurrentComparisonTargetIndex,
+  updateComparisonPanelVisibility,
+} from "./comparison";
+
+import {builtReverseGeocodingUrl, getCityAddressObject} from "../utils/googleMap";
 
 export function updateMapFullScreenStatus(isFullScreen = true) {
   return {
@@ -19,7 +26,17 @@ export function updateMapCenterAndZoom(center, zoom) {
   };
 }
 
-export const reverseGeocoding = ({ lat, lng, x, y }) => (dispatch) =>
+export function updateLastClickedInfo(lastClickedInfo = null) {
+  return {
+    type: UPDATE_LAST_CLICKED_INFO,
+    payload: { lastClickedInfo },
+  };
+}
+
+export const reverseGeocoding = (
+  { lat, lng, x, y },
+  currentComparingTargetIndex = null
+) => (dispatch) =>
   fetch(builtReverseGeocodingUrl(lat, lng))
     .then((res) => {
       if (res.ok) {
@@ -30,8 +47,20 @@ export const reverseGeocoding = ({ lat, lng, x, y }) => (dispatch) =>
     })
     .then((address) => {
       console.log("address =", address);
-      dispatch({
-        type: UPDATE_LAST_CLICKED_INFO,
-        payload: { lastClickedInfo: { lat, lng, x, y, address } },
-      });
+      console.log("cityName =", getCityAddressObject(address));
+      console.log("currentComparingTargetIndex =", currentComparingTargetIndex);
+
+      if (currentComparingTargetIndex === null) {
+        dispatch(updateLastClickedInfo({ lat, lng, x, y, address }));
+      } else {
+        // If the current comparison target index is not null, the location user clicked is for comparison.
+        dispatch({
+          type: UPDATE_DESIGNATED_COMPARING_TARGET_ADDRESS,
+          payload: { currentComparingTargetIndex, address },
+        });
+        // Reset the current comparison target index.
+        dispatch(updateCurrentComparisonTargetIndex());
+        // Show the comparison panel.
+        dispatch(updateComparisonPanelVisibility(true));
+      }
     });

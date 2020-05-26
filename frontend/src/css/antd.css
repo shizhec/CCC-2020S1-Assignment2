@@ -34,3 +34,22 @@
 .ant-card.ant-card-type-inner .ant-card-body {
   height: auto;
 }
+
+.anticon.map--fullScreen,
+.filter.map--fullScreen {
+  position: absolute;
+  z-index: 1;
+  right: 1rem;
+  padding: 4px 0;
+  font-size: 1.5rem;
+  height: auto;
+  color: rgb(214, 214, 214);
+}
+
+.ant-popover-title {
+  padding: 8px 16px;
+}
+
+.ant-popover-title h3 {
+  margin: 0;
+}

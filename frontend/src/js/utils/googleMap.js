@@ -101,3 +101,12 @@ export function getStateName(address) {
 
   return "";
 }
+
+export function getStateShortName(address) {
+  const stateAddressObject = getStateAddressObject(address);
+  if (stateAddressObject) {
+    return stateAddressObject.address_components[0].short_name;
+  }
+
+  return "";
+}

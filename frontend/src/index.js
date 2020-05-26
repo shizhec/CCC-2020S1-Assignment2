@@ -5,6 +5,8 @@ import { createStore, applyMiddleware } from "redux";
 import reduxThunk from "redux-thunk";
 
 import "./css/antd.css";
+import "./css/comparison.css";
+import "./css/visualisation.css";
 
 import { App } from "./js/components/App";
 import reducers from "./js/reducers";
