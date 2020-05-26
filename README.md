@@ -24,8 +24,8 @@ Team Members:
   1. Stream in all the real-time tweets to CouchDB
   2. keep a streamlog
 * Covid-19
-  1. Customized scraper for the two websites
-     https://covid-19-au.com/
+  1. Customized scraper for the two websites  
+     https://covid-19-au.com/  
      https://www.dhhs.vic.gov.au/media-hub-coronavirus-disease-covid-19
   2. Updated and modified on daily basis (no automation)
 
