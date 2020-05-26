@@ -31,9 +31,6 @@ Team Members:
   6. Wordcloud to show the result with top 10 frequent words.
   
 
-Implement three kinds of analytics on each tweet
-Upload the result to the second level CouchDB (call backend interface)
-
 ### Deployment
 1.
 
