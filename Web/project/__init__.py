@@ -14,16 +14,17 @@ class Config(object):
 
 app = Flask(__name__, static_folder=os.path.abspath("../frontend/build/static"),
             template_folder=os.path.abspath('../frontend/build'))
+# app = Flask(__name__)
+
 app.config.from_object(Config())
 scheduler = APScheduler()
 # it is also possible to enable the API directly
 # scheduler.api_enabled = True
 scheduler.init_app(app)
 scheduler.start()
-# app.config.from_object(Config())
-# app = Flask(__name__)
 
-client = CouchDB(env.get('COUCHDB_USER', 'admin'), env.get('COUCHDB_PASSWORD', 'password'),
+
+client = CouchDB('admin', 'password',
                  url='http://' + env.get('COUCHDB_IP', '172.26.130.251') + ':5984', connect=True)
 
 from project import controller
