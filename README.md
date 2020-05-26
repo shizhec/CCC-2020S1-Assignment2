@@ -3,7 +3,7 @@ Team Members:
 * [Yizhou Zhu - 1034676](https://github.com/lupintheforth)
 * [Shizhe Cai - 798125](https://github.com/shizhec)
 * [Haoyu Zhang - ](https://github.com/Neetordy)
-* [Haowen Shen - ](https://github.com/hwnshen)
+* [Haowen Shen - 1070497](https://github.com/hwnshen)
 * [Peng Cao - 798530](https://github.com/c731615340)
 
 ## Project Structure
