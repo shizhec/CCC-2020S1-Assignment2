@@ -1,0 +1,109 @@
+---
+- name: create server directory
+  tags: 'server'
+  become: yes
+  file:
+    path: "{{ server_directory }}"
+    owner: ubuntu
+    group: ubuntu
+    recurse: yes
+    state: directory
+
+- name: create nginx directory
+  tags: 'nginx'
+  become: yes
+  file:
+    path: "{{ nginx_directory }}"
+    owner: ubuntu
+    group: ubuntu
+    recurse: yes
+    state: directory
+
+- name: Configure docker compose for server and ngix
+  tags: 'nginx'
+  become: yes
+  template:
+    src: instance1-docker-compose.yaml.j2
+    dest: "{{ working_directory }}/docker-compose.yaml"
+    owner: ubuntu
+    group: ubuntu
+
+- name: Configure nginx docker file
+  tags: 'nginx'
+  become: yes
+  template:
+    src: nginx-dockerfile.j2
+    dest: "{{ nginx_directory }}/Dockerfile"
+    owner: ubuntu
+    group: ubuntu
+
+- name: Configure nginx config file
+  tags: 'nginx'
+  become: yes
+  template:
+    src: nginx.conf.j2
+    dest: "{{ nginx_directory }}/nginx.conf"
+    owner: ubuntu
+    group: ubuntu
+
+- name: Configure server docker file
+  tags: 'server'
+  become: yes
+  template:
+    src: server-dockerfile.j2
+    dest: "{{ server_directory }}/Dockerfile"
+    owner: ubuntu
+    group: ubuntu
+
+- name: Configure server env file
+  tags: 'server'
+  become: yes
+  template:
+    src: server-env.j2
+    dest: "{{ server_directory }}/.env_server"
+    owner: ubuntu
+    group: ubuntu
+
+- name: Configure server entrypoint
+  tags: 'server'
+  become: yes
+  template:
+    src: server-entrypoint.sh.j2
+    dest: "{{ server_directory }}/entrypoint.sh"
+    owner: ubuntu
+    group: ubuntu
+
+- name: Configure requirements
+  tags: 'server'
+  become: yes
+  template:
+    src: server-requirements.txt.j2
+    dest: "{{ server_directory }}/requirements.txt"
+    owner: ubuntu
+    group: ubuntu
+
+- name: Create Web directory
+  tags: 'server'
+  become: yes
+  file:
+    path: "{{ server_directory }}/Web"
+    owner: ubuntu
+    group: ubuntu
+    recurse: yes
+    state: directory
+
+- name: Copy Web File
+  copy:
+    src: "{{ project_directory }}/Web/"
+    dest: "{{ server_directory }}/Web/"
+    remote_src: yes
+
+# - name: Run docker compose for server and nginx
+#   tags: 'nginx'
+#   become: yes
+#   docker_compose:
+#     project_src: "{{ working_directory }}"
+#     pull: yes
+#     state: present
+#     remove_orphans: yes
+#     recreate: always

@@ -6,6 +6,7 @@
   padding: 4px 0;
   font-size: 1.5rem;
   height: 60px;
+  color: rgb(214, 214, 214);
 }
 
 .filter.map--fullScreen .ant-picker {
@@ -15,7 +16,7 @@
 }
 
 .collapsible-section.filter .collapse-btn {
-  height: calc(100% - 2px);
+  height: 100%;
 }
 
 .ant-card#filter-card .ant-picker {

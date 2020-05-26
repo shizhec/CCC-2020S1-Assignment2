@@ -11,6 +11,7 @@ header {
 header.map--fullScreen {
   position: absolute;
   z-index: 1;
+  color: rgb(214, 214, 214);
 }
 
 header.map--fullScreen:first-of-type {
@@ -38,7 +39,7 @@ header.map--card .ant-input-search .ant-input-search-button {
 }
 
 header .collapsible-section .ant-btn {
-  height: calc(2.5rem - 2px);
+  height: 2.5rem;
 }
 
 header.map--card .collapsible-section .ant-btn.collapse-btn {
