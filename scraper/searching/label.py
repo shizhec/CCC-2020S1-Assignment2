@@ -9,12 +9,6 @@ from nltk.sentiment.vader import SentimentIntensityAnalyzer
 import argparse
 
 
-parser = argparse.ArgumentParser(description = 'label the simple sentiment analysis')
-parser.add_argument('--inputfilename', type=str, default='defaultinput.json')
-parser.add_argument('--outputfilename', type=str, default='defaultoutput.json')
-args = parser.parse_args()
-
-
 
 
 
@@ -39,6 +33,11 @@ def label_sentiment(tweet):
 
 
 if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description = 'label the simple sentiment analysis')
+    parser.add_argument('--inputfilename', type=str, default='defaultinput.json')
+    parser.add_argument('--outputfilename', type=str, default='defaultoutput.json')
+    args = parser.parse_args()
+
     f = open(args.inputfilename,'r+',encoding = "utf-8")
     tweets = json.loads(f.read())["docs"]
 

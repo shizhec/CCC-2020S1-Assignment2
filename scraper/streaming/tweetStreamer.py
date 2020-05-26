@@ -86,7 +86,7 @@ def handler(tweet):
 
 parser = argparse.ArgumentParser(description='COMP90024 Twitter Streamer')
 parser.add_argument('--filename', type=str, default="streamlog.txt")
-parser.add_argument('--address',type = str,default="172.26.130.162")
+parser.add_argument('--address',type = str,default="127.0.0.1")
 parser.add_argument('--username',type = str,default= "admin")
 parser.add_argument('--password',type = str,default = "password")
 parser.add_argument('--database',type = str, default= "just_in_vic")

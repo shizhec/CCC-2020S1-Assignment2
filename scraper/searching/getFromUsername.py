@@ -6,7 +6,7 @@ import argparse
 
 
 parser = argparse.ArgumentParser(description='COMP90024 / get tweet via coordinate location,upload the tweets to the couchdb')
-parser.add_argument('--address',type = str,default="172.26.130.162")
+parser.add_argument('--address',type = str,default="127.0.0.1")
 parser.add_argument('--username',type = str,default= "admin")
 parser.add_argument('--password',type = str,default = "password")
 parser.add_argument('--database',type = str, default= "username_realdonaldtrump")
