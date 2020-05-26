@@ -88,7 +88,7 @@ class DB:
                 counts += re['value']
         return {'count': counts}
 
-    def get_hashtag_overview(self, region, date_begin, date_end):
+    def get_hashtag_overview(self, region, date_begin, date_end, top):
         db = CloudantDatabase(self.client, region, partitioned=True)
         days = get_days(date_begin, date_end)
 
@@ -97,8 +97,11 @@ class DB:
             tmp_re = db.get_partitioned_view_result(day, '_design/hashtag_count', 'hashtag_count',
                                                     group_level=1, limit=1000)
             for re in tmp_re[:]:
-                results[re['key']] = results.get(re['key'], 0) + re['value']
-        return sorted(results.items(), key=lambda item: item[1], reverse=True)
+                results[re['key'].lower()] = results.get(re['key'].lower(), 0) + re['value']
+        if top:
+            return sorted(results.items(), key=lambda item: item[1], reverse=True)[:top]
+        else:
+            return sorted(results.items(), key=lambda item: item[1], reverse=True)
 
     def get_overview_lga(self, date_begin, date_end):
         db = CloudantDatabase(self.client, 'daily_increase_lga', partitioned=False)
@@ -181,7 +184,6 @@ class DB:
 
     def get_tweet_count_today(self, region, date=datetime.datetime.today()):
         db = CloudantDatabase(self.client, region, partitioned=True)
-
         counts = 0
 
         for re in db.get_partitioned_view_result(date, '_design/tweet_count', 'tweet_count'):
