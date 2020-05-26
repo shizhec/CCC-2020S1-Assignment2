@@ -94,7 +94,9 @@ class DB:
 
         results = {}
         for day in days:
-            for re in db.get_partitioned_view_result(day, '_design/hashtag_count', 'hashtag_count', group_level=1):
+            tmp_re = db.get_partitioned_view_result(day, '_design/hashtag_count', 'hashtag_count',
+                                                    group_level=1, limit=1000)
+            for re in tmp_re[:]:
                 results[re['key']] = results.get(re['key'], 0) + re['value']
         return sorted(results.items(), key=lambda item: item[1], reverse=True)
 
@@ -162,12 +164,13 @@ class DB:
         db = CloudantDatabase(self.client, 'aurin', partitioned=False)
 
         if self.dic is None:
-            self.dic = {key[:5].lower().replace(' ', '_'): key for key in db['aurin_data'].keys()}
+            self.dic = {'_'.join(filter(lambda x: x[0] != '(', key.split())).lower().replace('-', '_'): key
+                        for key in db['aurin_data'].keys()}
 
         if region[-1] == ')':
-            re = 'uninc'
+            re = 'unincorporated_vic'
         else:
-            re = region[:5].lower().replace(' ', '_')
+            re = region.lower().replace(' ', '_').replace('-', '_')
 
         if re in self.dic:
             if types == 'all':
