@@ -9,7 +9,7 @@ with open("vic_lga_raidus_center.json","r+",encoding="utf-8") as f:
         district_name = lga.replace(" ","_")
         request_type1 = "curl -X PUT 'http://admin:password@172.26.130.162:5984/{lga}/_design/tweet_count'".format(lga = district_name.lower())
         header = " --header 'Content-Type:application/json'\n"
-        data1 = " --data @'added_views/view4.json'"
+        data1 = " --data @'view4.json'"
         wr_line_1 = request_type1+data1+header
         output.writelines(wr_line_1)
 

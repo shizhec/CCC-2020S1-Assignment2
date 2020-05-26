@@ -3,7 +3,9 @@ import os
 
 import argparse
 
-output = open("shell_commands.txt", "w+",encoding="utf-8")
+output = open("shell_commands.sh", "w+",encoding="utf-8")
+output.writelines("#!/bin/bash\n")
+output.writelines("# scrape scripts shell\n")
 
 parser = argparse.ArgumentParser(description='COMP90024 / generate shell commands for scraping')
 parser.add_argument('--startdate', type=str, default="2020-04-15")

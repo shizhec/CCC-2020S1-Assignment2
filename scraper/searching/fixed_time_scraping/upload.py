@@ -8,7 +8,9 @@ parser.add_argument('--username',type = str,default= "admin")
 parser.add_argument('--password',type = str,default = "password")
 args = parser.parse_args()
 
-output = open("upload_command.txt", "w+",encoding="utf-8")
+output = open("upload_command.sh", "w+",encoding="utf-8")
+output.writelines("#!/bin/bash\n")
+output.writelines("# upload scripts shell\n")
 
 
 with open("vic_lga_raidus_center.json","r+",encoding="utf-8") as f:
