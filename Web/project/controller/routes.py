@@ -73,10 +73,11 @@ def hashtag_overview():
     region = request.args.get("region", type=str)
     date_begin = request.args.get("date_start", type=str)
     date_end = request.args.get("date_end", type=str)
+    top = request.args.get("top", type=int)
 
     region = region.strip().lower().replace(' ', '_') \
         .replace('(unincorporated)', '(uninc)')
-    return jsonify(db.get_hashtag_overview(region, date_begin, date_end))
+    return jsonify(db.get_hashtag_overview(region, date_begin, date_end, top))
 
 
 @app.route('/api/covid_19_vic_lga_overview')
@@ -103,6 +104,8 @@ def sentiment_user():
               ' --startdate ' + date_begin +
               ' --enddate ' + date_end +
               ' --filename ' + user.strip() + '.json')
+
+    os.system('rm ' + user.strip() + '.json')
 
     return jsonify(db.get_sentiment_user('username_' + user.strip().lower(),
                                          date_begin, date_end))
