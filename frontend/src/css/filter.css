@@ -1,12 +1,12 @@
 .filter.map--fullScreen {
-  position: absolute;
-  z-index: 1;
   top: 4rem;
-  right: 1rem;
-  padding: 4px 0;
-  font-size: 1.5rem;
   height: 60px;
-  color: rgb(214, 214, 214);
+  display: flex;
+  align-items: center;
+}
+
+.filter.map--fullScreen.collapsible-section {
+  height: 60px;
 }
 
 .filter.map--fullScreen .ant-picker {
@@ -19,6 +19,26 @@
   height: 100%;
 }
 
-.ant-card#filter-card .ant-picker {
+#filter-card.ant-card .ant-picker {
   width: 100%;
+}
+
+.data-source-selector.map--fullScreen {
+  top: 9rem;
+}
+
+#filter-card .ant-card.ant-card-type-inner:not(:last-of-type) {
+  margin-bottom: 1rem;
+}
+
+.ant-card-body > .ant-radio-group {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+}
+
+#location-card.ant-card .ant-card-head-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }

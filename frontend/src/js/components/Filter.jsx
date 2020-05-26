@@ -2,32 +2,32 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import moment from "moment";
 import { Card, Col } from "antd";
-import { CalendarOutlined } from "@ant-design/icons";
-import { DatePicker } from "antd";
+import { CalendarOutlined, RedoOutlined } from "@ant-design/icons";
+import { DatePicker, Popover } from "antd";
 
-import {
-  updateDatePickerExpansionStatus,
-  updateDateRange,
-} from "../actions/filter";
-import { CollapseButton, TitleWithTooltip } from "./gadgets";
+import { updateDateRange } from "../actions/filter";
+import { TitleWithTooltip } from "./gadgets";
 import {
   getFormattedAddress,
   getCityName,
   getStateName,
 } from "../utils/googleMap";
+import { DataSourceSwitch } from "./DataSourceSwitch";
+import { ComparisonPanel } from "./comparison/ComparisonPanel";
 
 import "../../css/filter.css";
+import { updateLastClickedInfo } from "../actions/map";
 
 class FilterComponent extends Component {
   render() {
+    // console.log("in Filter, this.props =", this.props);
     const {
       isFullScreen,
-      showDatePicker,
       expandDatePicker,
-      hideDatePicker,
       datesRange,
       updateDateRange,
       lastClickedInfo,
+      resetLocationFilter,
     } = this.props;
 
     const dateRangePicker = (
@@ -38,20 +38,27 @@ class FilterComponent extends Component {
       />
     );
 
+    const title = (
+      <TitleWithTooltip
+        placement={"leftTop"}
+        title={"Date Range"}
+        tooltipInfo={"Please select the date range you want to explore"}
+      />
+    );
+
     if (isFullScreen) {
-      if (showDatePicker) {
-        return (
-          <section className={"collapsible-section filter map--fullScreen"}>
-            <CollapseButton onClickHandler={hideDatePicker} />
-            {dateRangePicker}
-          </section>
-        );
-      }
       return (
-        <CalendarOutlined
-          className={"clickable filter map--fullScreen"}
-          onClick={expandDatePicker}
-        />
+        <Popover
+          placement={"left"}
+          title={title}
+          trigger={"click"}
+          content={dateRangePicker}
+        >
+          <CalendarOutlined
+            className={"clickable filter map--fullScreen"}
+            onClick={expandDatePicker}
+          />
+        </Popover>
       );
     }
 
@@ -73,33 +80,65 @@ class FilterComponent extends Component {
             type="inner"
             title={
               <TitleWithTooltip
-                title={"Date Range"}
-                tooltipInfo={"Please select the date range you want to explore"}
+                placement={"leftTop"}
+                title={"Rendering Data"}
+                tooltipInfo={
+                  "Please select the data you want to render on the map"
+                }
               />
             }
           >
-            {dateRangePicker}
+            <DataSourceSwitch />
           </Card>
+
           <Card
             hoverable
             type="inner"
             title={
               <TitleWithTooltip
-                title={"Location"}
+                title={"Comparison Panel"}
                 tooltipInfo={
-                  lastClickedInfo
-                    ? "This is the position you clicked on the map."
-                    : "By default we will show data within Australia"
+                  "Please select the data you want to render on the map"
                 }
               />
             }
           >
+            <ComparisonPanel />
+          </Card>
+
+          <Card hoverable type="inner" title={title}>
+            {dateRangePicker}
+          </Card>
+          <Card
+            hoverable
+            type="inner"
+            id={"location-card"}
+            title={
+              <>
+                <TitleWithTooltip
+                  title={"Location"}
+                  tooltipInfo={
+                    lastClickedInfo
+                      ? "This is the position you clicked on the map."
+                      : "By default we will show data within Australia"
+                  }
+                />
+                <TitleWithTooltip
+                  title={
+                    <RedoOutlined
+                      className={"clickable"}
+                      onClick={resetLocationFilter}
+                    />
+                  }
+                  tooltipInfo={
+                    "Click here to reset the location filter to Australia"
+                  }
+                />
+              </>
+            }
+          >
             {lastClickedInfo && formattedAddress ? (
               <>
-                <p>
-                  <b>Formatted Address: </b>
-                  {formattedAddress}
-                </p>
                 {cityName && (
                   <p>
                     <b>City: </b> {cityName}
@@ -123,16 +162,15 @@ class FilterComponent extends Component {
 
 const mapStateToProps = (state) => {
   const { isFullScreen, lastClickedInfo } = state.map;
-  const { showDatePicker, datesRange } = state.filter;
-  return { isFullScreen, showDatePicker, datesRange, lastClickedInfo };
+  const { datesRange } = state.filter;
+  return { isFullScreen, datesRange, lastClickedInfo };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    expandDatePicker: () => dispatch(updateDatePickerExpansionStatus()),
-    hideDatePicker: () => dispatch(updateDatePickerExpansionStatus(false)),
     updateDateRange: (selectedDateRange) =>
       dispatch(updateDateRange(selectedDateRange)),
+    resetLocationFilter: () => dispatch(updateLastClickedInfo()),
   };
 };
 const Filter = connect(mapStateToProps, mapDispatchToProps)(FilterComponent);

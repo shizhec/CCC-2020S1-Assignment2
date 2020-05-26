@@ -7,6 +7,7 @@ import { Spinner } from "./Spinner";
 import { Map } from "./Map";
 import { Dashboard } from "./Dashboard";
 import { Header } from "./Header";
+import { ComparisonBoard } from "./comparison/ComparisonBoard";
 
 class AppComponent extends Component {
   componentDidMount() {
@@ -14,7 +15,7 @@ class AppComponent extends Component {
   }
 
   render() {
-    const { isFullScreen } = this.props;
+    const { boardVisible } = this.props;
 
     return (
       <>
@@ -22,6 +23,7 @@ class AppComponent extends Component {
         <Header />
         <Map />
         <Dashboard />
+        {boardVisible && <ComparisonBoard />}
       </>
     );
   }
@@ -29,7 +31,8 @@ class AppComponent extends Component {
 
 const mapStateToProps = (state) => {
   const { isFullScreen } = state.map;
-  return { isFullScreen };
+  const { boardVisible } = state.comparison;
+  return { isFullScreen, boardVisible };
 };
 
 const mapDispatchToProps = (dispatch) => {

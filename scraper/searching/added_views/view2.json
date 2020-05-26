@@ -1,0 +1,8 @@
+{
+    "views": {
+      "hashtag_count": {
+        "map": "function (doc) {\r\n  doc.hashtags.forEach(getHashtag);\r\n  \r\n  function getHashtag(item) {\r\n  emit(item, 1);\r\n  }\r\n}",
+        "reduce": "_count"
+      }
+    }
+  }
