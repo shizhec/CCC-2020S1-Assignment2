@@ -1,0 +1,14 @@
+.ant-card-body > .empty-data-cover {
+  position: absolute;
+  height: calc(100% - 58px - 1rem);
+  width: calc(100% - 2rem);
+  top: calc(58px + 0.5rem);
+  left: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(250, 250, 250, 0.95);
+  -webkit-box-shadow: 0px 0px 28px 13px rgba(230, 230, 230, 1);
+  -moz-box-shadow: 0px 0px 28px 13px rgba(230, 230, 230, 1);
+  box-shadow: 0px 0px 28px 13px rgba(230, 230, 230, 1);
+}

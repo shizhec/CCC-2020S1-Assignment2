@@ -1,34 +1,24 @@
 import React, { Component } from "react";
-import { Row, Col, Card } from "antd";
+import { Row, Col } from "antd";
 
 import "antd/dist/antd.min.css";
 
 import { VerticalBarChart } from "./visualisation/VerticalBarChart";
-import { SimplePieChart } from "./visualisation/SimplePieChart";
-import { SimpleLineChart } from "./visualisation/SimpleLineChart";
-import { CovidLegend } from "./visualisation/CovidLegend";
+import { PieChart } from "./visualisation/PieChart";
+import { LineChart } from "./visualisation/LineChart";
 
 class Dashboard extends Component {
   render() {
     return (
       <Row>
         <Col span={12}>
-          <Card hoverable className="col-6" title="Data In Bar Chart">
-            <VerticalBarChart />
-          </Card>
+          <VerticalBarChart />
         </Col>
         <Col span={12}>
-          <Card hoverable className="col-6" title="Data In Bar Chart">
-            <SimplePieChart />
-          </Card>
+          <PieChart />
         </Col>
         <Col span={12}>
-          <Card hoverable className="col-6" title={`Covid-19 Trends In Australia`}>
-            <div style={{ height: "90%" }}>
-              <SimpleLineChart />
-            </div>
-            <CovidLegend />
-          </Card>
+          <LineChart />
         </Col>
       </Row>
     );

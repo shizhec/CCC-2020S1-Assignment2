@@ -1,0 +1,89 @@
+#comparison-panel-container {
+  min-width: 40rem;
+}
+
+.comparison-panel {
+  top: 13rem;
+}
+
+section.comparison-buttons-container {
+  display: flex;
+}
+
+section.comparison-buttons-container .ant-btn {
+  border-color: #808080;
+  color: #808080;
+  height: auto;
+  min-height: 2.5rem;
+  width: calc((100% - 0.25rem) / 2);
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+
+section.comparison-buttons-container .ant-btn span {
+  width: 100%;
+}
+
+section.comparison-buttons-container .ant-btn.selecting {
+  border-color: rgb(127, 205, 241);
+  color: rgb(127, 205, 241);
+}
+
+#comparison-panel-container
+  .ant-popover-inner-content
+  > section
+  .ant-btn:hover {
+  border-color: #40a9ff;
+  color: #40a9ff;
+}
+
+section.comparison-buttons-container .ant-btn:first-of-type {
+  margin-right: 0.25rem;
+}
+
+#comparison-btn.ant-btn {
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.ant-modal.comparison-board {
+  margin-top: 4rem;
+}
+
+.ant-modal-root .ant-modal.comparison-board.ant-modal-centered {
+  width: 90%;
+}
+
+.ant-modal.comparison-board .ant-modal-body {
+  display: flex;
+}
+
+section.comparison-section {
+  width: 50%;
+  height: auto;
+  padding: 1rem 0.5rem;
+}
+
+section.comparison-section header {
+  padding: 0;
+  width: 100%;
+  text-align: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  flex-direction: row;
+  height: auto;
+}
+
+section.comparison-section header span {
+  width: 100%;
+  font-size: 1rem;
+}
+
+section.comparison-section:first-of-type {
+  border-right: lightgrey dashed;
+}
+
+section.comparison-section .ant-card {
+  margin-bottom: 1.5rem;
+}
