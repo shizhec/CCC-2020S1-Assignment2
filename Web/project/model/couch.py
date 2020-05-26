@@ -155,7 +155,7 @@ class DB:
         db.delete()
         return results
 
-    def get_aurin(self, region, type):
+    def get_aurin(self, region='melbourne', types='all'):
         mapping = {'income': "income_num(aud)",
                    'labor': "labour_force_num",
                    'participation': "Participation_rate%",
@@ -174,7 +174,9 @@ class DB:
             re = region[:5].lower().replace(' ', '_')
 
         if re in self.dic:
-            return db['aurin_data'][self.dic[re]].get(mapping.get(type, ""), -1)
+            if types == 'all':
+                return {key: db['aurin_data'][self.dic[re]][value] for key, value in mapping.items()}
+            return db['aurin_data'][self.dic[re]].get(mapping.get(types, ""), -1)
         else:
             return -1
 
