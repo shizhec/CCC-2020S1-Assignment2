@@ -27,7 +27,7 @@ Team Members:
   1. Customized scraper for the two websites
      https://covid-19-au.com/
      https://www.dhhs.vic.gov.au/media-hub-coronavirus-disease-covid-19
-  2.Updated and modified on daily basis (no automation)
+  2. Updated and modified on daily basis (no automation)
 
 
 ### Natural Language Processing
