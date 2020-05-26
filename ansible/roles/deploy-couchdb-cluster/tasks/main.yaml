@@ -1,4 +1,5 @@
 ---
+# create working directory for couchdb
 - name: Create couchdb directory
   tags: 'couchdb'
   become: yes
@@ -9,14 +10,14 @@
     recurse: yes
     state: directory
 
-- name: Configure docker compose for couchdb
-  tags: 'couchdb'
-  become: yes
-  template:
-    src: docker-compose-couchdb.yaml.j2
-    dest: "{{ couchdb_directory }}/docker-compose.yaml"
-    owner: ubuntu
-    group: ubuntu
+# - name: Configure docker compose for couchdb
+#   tags: 'couchdb'
+#   become: yes
+#   template:
+#     src: docker-compose-couchdb.yaml.j2
+#     dest: "{{ couchdb_directory }}/docker-compose.yaml"
+#     owner: ubuntu
+#     group: ubuntu
 
 # - name: Run docker compose
 #   tags: "couchdb"

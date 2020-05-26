@@ -1,4 +1,5 @@
 ---
+# create working directory for server
 - name: create server directory
   tags: 'server'
   become: yes
@@ -9,6 +10,7 @@
     recurse: yes
     state: directory
 
+# create working directory for nginx
 - name: create nginx directory
   tags: 'nginx'
   become: yes
@@ -19,6 +21,7 @@
     recurse: yes
     state: directory
 
+# render template of the docker compose of server and nginx
 - name: Configure docker compose for server and ngix
   tags: 'nginx'
   become: yes
@@ -28,6 +31,7 @@
     owner: ubuntu
     group: ubuntu
 
+# configure docker file for nginx
 - name: Configure nginx docker file
   tags: 'nginx'
   become: yes
@@ -37,6 +41,7 @@
     owner: ubuntu
     group: ubuntu
 
+# configure configuration file for nginx
 - name: Configure nginx config file
   tags: 'nginx'
   become: yes
@@ -46,6 +51,7 @@
     owner: ubuntu
     group: ubuntu
 
+# configure docker file for server
 - name: Configure server docker file
   tags: 'server'
   become: yes
@@ -54,7 +60,8 @@
     dest: "{{ server_directory }}/Dockerfile"
     owner: ubuntu
     group: ubuntu
-
+    
+# configure docker file for nginx
 - name: Configure server env file
   tags: 'server'
   become: yes
