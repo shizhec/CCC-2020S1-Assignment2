@@ -52,6 +52,7 @@ if __name__ == '__main__':
     for i in tqdm(range(len(processed_fr))):
         text = processed_fr[i]['text']
         score = nltk_sentiment(text)
+        #could be use for detailed analysis
         #processed_fr[i]['negative'] = score['neg']
         #processed_fr[i]['neutral'] = score['neu']
         #processed_fr[i]['positive'] = score['pos']
