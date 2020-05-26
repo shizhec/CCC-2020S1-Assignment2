@@ -20,7 +20,8 @@ def sentiment():
     date_begin = request.args.get("date_start", type=str)
     date_end = request.args.get("date_end", type=str)
 
-    region = region.strip().lower().replace(' ', '_')
+    region = region.strip().lower().replace(' ', '_') \
+        .replace('(unincorporated)', '(uninc)')
     return jsonify(db.get_sentiment(region, date_begin, date_end))
 
 
