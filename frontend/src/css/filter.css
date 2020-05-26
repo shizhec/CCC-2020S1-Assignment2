@@ -1,0 +1,44 @@
+.filter.map--fullScreen {
+  top: 4rem;
+  height: 60px;
+  display: flex;
+  align-items: center;
+}
+
+.filter.map--fullScreen.collapsible-section {
+  height: 60px;
+}
+
+.filter.map--fullScreen .ant-picker {
+  padding: 6.4px 15px;
+  font-size: 1.5rem;
+  height: 52px;
+}
+
+.collapsible-section.filter .collapse-btn {
+  height: 100%;
+}
+
+#filter-card.ant-card .ant-picker {
+  width: 100%;
+}
+
+.data-source-selector.map--fullScreen {
+  top: 9rem;
+}
+
+#filter-card .ant-card.ant-card-type-inner:not(:last-of-type) {
+  margin-bottom: 1rem;
+}
+
+.ant-card-body > .ant-radio-group {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+}
+
+#location-card.ant-card .ant-card-head-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}

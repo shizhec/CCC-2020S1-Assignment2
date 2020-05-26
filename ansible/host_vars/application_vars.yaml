@@ -1,0 +1,20 @@
+# Common Vars
+remote_directory: /home/ubuntu
+project_directory: /home/ubuntu/CCC-2020S1-Assignment2
+working_directory: /opt/ccc
+
+# couchdb vars
+couchdb_directory: /opt/ccc/couchdb
+couchdb_name: ibmcom/couchdb3:3.0.0
+couchdb_user: admin
+couchdb_password: password
+
+# nginx vars
+nginx_directory: /opt/ccc/nginx
+
+
+# server vars
+server_directory: /opt/ccc/server
+
+# spark vars
+spark_directory: /opt/ccc/spark

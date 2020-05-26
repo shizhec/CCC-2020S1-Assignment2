@@ -1,0 +1,8 @@
+{
+  "views": {
+      "tweet_count": {
+        "map": "function (doc) {emit(\"tweet_count\", 1);}",
+        "reduce": "_count"
+      }
+  }
+}

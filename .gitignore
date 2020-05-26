@@ -1,3 +1,7 @@
+*.DS_Store
+*.txt
+*.out
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -127,3 +131,11 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# JetBrains tmp files
+.idea/
+
+# MacOS tmp files
+.DS_Store
+
+
