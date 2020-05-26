@@ -9,14 +9,7 @@ from tqdm import tqdm
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 import argparse
 
-
-
-
-
-
-
-
-
+# check the analysis directory to find comments and explain for the script
 
 def nltk_sentiment(sentence):
     nltk_sentiment = SentimentIntensityAnalyzer()

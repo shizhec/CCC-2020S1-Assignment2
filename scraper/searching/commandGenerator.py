@@ -1,7 +1,14 @@
 import json
 import os
 
+import argparse
+
 output = open("shell_commands.txt", "w+",encoding="utf-8")
+
+parser = argparse.ArgumentParser(description='COMP90024 / generate shell commands for scraping')
+parser.add_argument('--startdate', type=str, default="2020-04-15")
+parser.add_argument('--enddate', type=str, default="2020-04-29")
+args = parser.parse_args()
 
 # path = os.getcwd()
 # os.mkdir(path+"\\VIC_LGA")
@@ -13,7 +20,9 @@ with open("vic_lga_raidus_center.json","r+",encoding="utf-8") as f:
         # os.mkdir(path+"\\VIC_LGA\\"+district_name)
         [X,Y] = data["center"]
         radius = data["raidus"]+1
-        wr_line_1 = "python3 getfromLocation.py --coordinates \"{lat}, {lon}\" --startdate 2019-10-01 --enddate 2020-01-01 --within {rad}km --filename \"VIC_LGA/{lga}/{lga}05.json\"\n".format(lat=Y,lon=X,rad=radius,lga = district_name)
+        wr_line_1 = "python3 getfromLocation.py --coordinates \"{lat}, {lon}\" --startdate {start} --enddate {end} --within {rad}km --filename \"{lga}.json\"\n"\
+            .format(lat=Y,lon=X,rad=radius,lga = district_name,start = args.startdate,end = args.enddate)
+
         output.writelines(wr_line_1)
 output.close()
 

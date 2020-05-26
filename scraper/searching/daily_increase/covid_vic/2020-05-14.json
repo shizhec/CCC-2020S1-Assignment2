@@ -1,57 +1,5 @@
 {
-  "_id": "2020-05-13",
-  "BRIMBANK": [
-    59,
-    17
-  ],
-  "WYNDHAM": [
-    51,
-    11
-  ],
-  "MELBOURNE": [
-    82,
-    8
-  ],
-  "HUME": [
-    45,
-    8
-  ],
-  "WHITTLESEA": [
-    31,
-    7
-  ],
-  "MELTON": [
-    30,
-    7
-  ],
-  "YARRA": [
-    29,
-    5
-  ],
-  "BOROONDARA": [
-    65,
-    4
-  ],
-  "MORELAND": [
-    56,
-    4
-  ],
-  "GLEN_EIRA": [
-    49,
-    4
-  ],
-  "MARIBYRNONG": [
-    16,
-    4
-  ],
-  "HOBSONS_BAY": [
-    19,
-    3
-  ],
-  "MAROONDAH": [
-    14,
-    3
-  ],
+  "_id": "2020-05-14",
   "STONNINGTON": [
     91,
     2
@@ -60,41 +8,93 @@
     88,
     2
   ],
+  "MELBOURNE": [
+    85,
+    10
+  ],
+  "BOROONDARA": [
+    65,
+    4
+  ],
+  "GREATER_GEELONG": [
+    64,
+    0
+  ],
+  "BRIMBANK": [
+    62,
+    17
+  ],
   "MORNINGTON_PENINSULA": [
     61,
-    2
-  ],
-  "PORT_PHILLIP": [
-    48,
-    2
-  ],
-  "DAREBIN": [
-    38,
-    2
-  ],
-  "INTERSTATE": [
-    31,
-    2
-  ],
-  "YARRA_RANGES": [
-    23,
     2
   ],
   "CASEY": [
     56,
     1
   ],
+  "MORELAND": [
+    56,
+    4
+  ],
+  "WYNDHAM": [
+    51,
+    12
+  ],
+  "GLEN_EIRA": [
+    49,
+    4
+  ],
+  "PORT_PHILLIP": [
+    48,
+    2
+  ],
+  "HUME": [
+    47,
+    9
+  ],
   "MONASH": [
     46,
     1
   ],
-  "FRANKSTON": [
+  "DAREBIN": [
     38,
     1
+  ],
+  "FRANKSTON": [
+    38,
+    0
   ],
   "MOONEE_VALLEY": [
     37,
     1
+  ],
+  "BAYSIDE": [
+    31,
+    0
+  ],
+  "INTERSTATE": [
+    31,
+    2
+  ],
+  "MELTON": [
+    31,
+    7
+  ],
+  "WHITTLESEA": [
+    30,
+    4
+  ],
+  "MANNINGHAM": [
+    29,
+    0
+  ],
+  "YARRA": [
+    29,
+    5
+  ],
+  "KINGSTON": [
+    26,
+    0
   ],
   "NILLUMBIK": [
     25,
@@ -102,11 +102,43 @@
   ],
   "WHITEHORSE": [
     23,
-    1
+    0
+  ],
+  "YARRA_RANGES": [
+    23,
+    2
+  ],
+  "HOBSONS_BAY": [
+    19,
+    2
+  ],
+  "CARDINIA": [
+    16,
+    0
+  ],
+  "MARIBYRNONG": [
+    16,
+    2
+  ],
+  "GREATER_DANDENONG": [
+    15,
+    0
+  ],
+  "MAROONDAH": [
+    14,
+    2
+  ],
+  "KNOX": [
+    13,
+    0
   ],
   "GREATER_SHEPPARTON": [
     11,
     1
+  ],
+  "MOIRA": [
+    11,
+    0
   ],
   "WELLINGTON": [
     11,
@@ -115,46 +147,6 @@
   "BALLARAT": [
     10,
     1
-  ],
-  "MACEDON_RANGES": [
-    8,
-    1
-  ],
-  "MOORABOOL": [
-    2,
-    1
-  ],
-  "GREATER_GEELONG": [
-    64,
-    0
-  ],
-  "BAYSIDE": [
-    31,
-    0
-  ],
-  "MANNINGHAM": [
-    29,
-    0
-  ],
-  "KINGSTON": [
-    26,
-    0
-  ],
-  "CARDINIA": [
-    16,
-    0
-  ],
-  "GREATER_DANDENONG": [
-    15,
-    0
-  ],
-  "KNOX": [
-    13,
-    0
-  ],
-  "MOIRA": [
-    11,
-    0
   ],
   "SURF_COAST": [
     10,
@@ -168,6 +160,10 @@
     9,
     0
   ],
+  "MACEDON_RANGES": [
+    8,
+    1
+  ],
   "LATROBE": [
     7,
     0
@@ -180,7 +176,7 @@
     6,
     0
   ],
-  "ARARAT": [
+  "ARARAT*": [
     5,
     0
   ],
@@ -236,6 +232,10 @@
     2,
     0
   ],
+  "MOORABOOL": [
+    2,
+    1
+  ],
   "SOUTHERN_GRAMPIANS": [
     2,
     0
@@ -281,6 +281,14 @@
     0
   ],
   "WEST_WIMMERA": [
+    1,
+    0
+  ],
+  "WODONGA": [
+    1,
+    0
+  ],
+  "YARRIAMBIACK": [
     1,
     0
   ]

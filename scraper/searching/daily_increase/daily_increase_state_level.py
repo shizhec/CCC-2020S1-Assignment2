@@ -1,3 +1,10 @@
+# @Author: Yizhou Zhu
+# @Email:  yizzhu@student.unimelb.edu.au
+# @Filename: daily_increase_lga_level.py
+# @Last modified by:   Yizhou Zhu
+# @Last modified time: 2020-05-26
+
+
 import urllib.request
 from selenium import webdriver
 import time
@@ -7,8 +14,18 @@ import json
 from selenium.webdriver.chrome.options import Options
 import couchdb
 import os
+import argparse
 
 
+# make the script compatiable to other database and other nodes
+parser = argparse.ArgumentParser(description='scrape the state level coronavirus data and upload to db')
+parser.add_argument('--address',type = str,default="172.26.130.162")
+parser.add_argument('--username',type = str,default= "admin")
+parser.add_argument('--password',type = str,default = "password")
+parser.add_argument('--database',type = str, default= "daily_increase")
+args = parser.parse_args()
+
+PATH = "http://"+args.username+":"+args.password+"@"+args.address+":5984/"
 
 path = os.getcwd()
 
@@ -28,7 +45,7 @@ time.sleep(10)
 results = {}
 
 
-# find the root and extract the number of matched column and rows
+# decode the required web page ,find the root and extract the number of matched column and rows
 for i in range(2,10):
     index = i
     path = '//*[@id="root"]/div/div/div[4]/div[1]/div[2]/div[2]/div['+str(index)+']'
@@ -65,12 +82,14 @@ key_date = today.strftime("%Y-%m-%d")
 results['_id'] = key_date
 
 # upload the result to couchdb
-couch = couchdb.Server('http://admin:password@172.26.130.162:5984/')
-db = couch['daily_increase']
+
+couch = couchdb.Server(PATH)
+db = couch[args.database]
 db.save(results)
 
 print(results)
 
+# save a copy at local directory to check
 with open('new-'+key_date+".json","w+",encoding= "utf-8") as f:
     results = json.dump(results,f,indent=2)
 

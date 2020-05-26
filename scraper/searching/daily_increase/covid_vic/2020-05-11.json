@@ -1,96 +1,92 @@
 {
-  "_id": "2020-05-17",
-  "MELBOURNE": [
-    97,
-    17
-  ],
+  "_id": "2020-05-11",
   "STONNINGTON": [
     91,
-    1
+    2
   ],
   "BANYULE": [
-    89,
+    87,
     3
+  ],
+  "MELBOURNE": [
+    80,
+    8
   ],
   "BOROONDARA": [
     65,
-    2
+    4
   ],
   "GREATER_GEELONG": [
     64,
-    0
-  ],
-  "MORELAND": [
-    61,
-    7
+    1
   ],
   "MORNINGTON_PENINSULA": [
     61,
     2
   ],
   "BRIMBANK": [
-    60,
-    8
+    58,
+    16
   ],
   "CASEY": [
-    57,
+    56,
     1
   ],
-  "HUME": [
-    53,
-    13
-  ],
-  "WYNDHAM": [
-    51,
-    4
+  "MORELAND": [
+    54,
+    3
   ],
   "GLEN_EIRA": [
-    50,
+    49,
     4
-  ],
-  "MONASH": [
-    48,
-    3
   ],
   "PORT_PHILLIP": [
     48,
+    2
+  ],
+  "WYNDHAM": [
+    47,
+    11
+  ],
+  "MONASH": [
+    46,
     1
   ],
-  "FRANKSTON": [
-    39,
-    1
+  "HUME": [
+    42,
+    5
   ],
   "DAREBIN": [
+    38,
+    3
+  ],
+  "FRANKSTON": [
     38,
     1
   ],
   "MOONEE_VALLEY": [
-    37,
-    1
-  ],
-  "MELTON": [
-    35,
-    7
+    36,
+    0
   ],
   "BAYSIDE": [
     31,
     0
   ],
-  "INTERSTATE": [
-    31,
-    3
-  ],
-  "WHITTLESEA": [
-    31,
-    3
+  "MANNINGHAM": [
+    29,
+    0
   ],
   "YARRA": [
     29,
-    3
+    5
   ],
-  "MANNINGHAM": [
+  "MELTON": [
     28,
-    0
+    7
+  ],
+  "WHITTLESEA": [
+    30,
+    7
   ],
   "KINGSTON": [
     26,
@@ -98,47 +94,39 @@
   ],
   "NILLUMBIK": [
     25,
-    1
+    2
   ],
   "WHITEHORSE": [
-    24,
+    23,
     1
   ],
   "YARRA_RANGES": [
-    23,
-    2
+    22,
+    1
   ],
   "HOBSONS_BAY": [
-    20,
-    2
+    18,
+    3
   ],
   "CARDINIA": [
     16,
-    0
+    3
   ],
   "GREATER_DANDENONG": [
-    16,
+    15,
     0
   ],
   "MARIBYRNONG": [
-    16,
-    2
-  ],
-  "MAROONDAH": [
-    14,
-    2
+    15,
+    4
   ],
   "KNOX": [
     13,
-    0
-  ],
-  "BALLARAT": [
-    11,
     1
   ],
-  "GREATER_SHEPPARTON": [
-    11,
-    1
+  "MAROONDAH": [
+    13,
+    2
   ],
   "MOIRA": [
     11,
@@ -146,10 +134,18 @@
   ],
   "WELLINGTON": [
     11,
-    0
+    1
+  ],
+  "GREATER_SHEPPARTON": [
+    11,
+    1
   ],
   "SURF_COAST": [
     10,
+    0
+  ],
+  "BALLARAT": [
+    9,
     0
   ],
   "GREATER_BENDIGO": [
@@ -168,19 +164,15 @@
     7,
     0
   ],
-  "MILDURA": [
-    6,
-    1
-  ],
   "MOUNT_ALEXANDER": [
     6,
     0
   ],
-  "ARARAT_*": [
+  "BAW_BAW": [
     5,
     0
   ],
-  "BAW_BAW": [
+  "MILDURA": [
     5,
     0
   ],
@@ -232,10 +224,6 @@
     2,
     1
   ],
-  "MURRINDINDI": [
-    2,
-    1
-  ],
   "SOUTHERN_GRAMPIANS": [
     2,
     0
@@ -246,6 +234,10 @@
   ],
   "WANGARATTA": [
     2,
+    0
+  ],
+  "ARARAT": [
+    4,
     0
   ],
   "CENTRAL_GOLDFIELDS": [
@@ -276,12 +268,28 @@
     1,
     0
   ],
-  "OVERSEAS": [
+  "MURRINDINDI": [
     1,
     0
   ],
   "WEST_WIMMERA": [
     1,
+    0
+  ],
+  "WODONGA": [
+    1,
+    0
+  ],
+  "YARRIAMBIACK": [
+    1,
+    0
+  ],
+  "INTERSTATE": [
+    31,
+    2
+  ],
+  "OVERSEAS": [
+    7,
     0
   ]
 }

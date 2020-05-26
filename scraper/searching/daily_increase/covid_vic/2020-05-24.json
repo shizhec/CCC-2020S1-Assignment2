@@ -1,32 +1,32 @@
 {
-  "_id": "2020-05-22",
+  "_id": "2020-05-24",
+  "MELBOURNE": [
+    102,
+    14
+  ],
   "STONNINGTON": [
     95,
     0
   ],
-  "MELBOURNE": [
-    99,
-    18
-  ],
   "BANYULE": [
     91,
-    1
+    2
   ],
   "BOROONDARA": [
-    68,
-    3
+    69,
+    4
+  ],
+  "BRIMBANK": [
+    67,
+    12
+  ],
+  "MORELAND": [
+    65,
+    7
   ],
   "GREATER_GEELONG": [
     64,
     0
-  ],
-  "MORELAND": [
-    65,
-    9
-  ],
-  "BRIMBANK": [
-    65,
-    10
   ],
   "MORNINGTON_PENINSULA": [
     60,
@@ -34,62 +34,62 @@
   ],
   "CASEY": [
     58,
-    2
+    1
   ],
   "HUME": [
     55,
-    8
+    7
   ],
   "GLEN_EIRA": [
     51,
-    3
+    2
   ],
   "WYNDHAM": [
     51,
     1
   ],
   "MONASH": [
-    49,
+    50,
     1
   ],
   "PORT_PHILLIP": [
-    46,
+    45,
     0
   ],
   "DAREBIN": [
-    40,
-    2
+    41,
+    3
   ],
   "FRANKSTON": [
     40,
     0
   ],
   "MELTON": [
-    39,
-    6
+    40,
+    5
   ],
   "MOONEE_VALLEY": [
-    37,
-    0
+    38,
+    1
   ],
   "INTERSTATE": [
     36,
-    8
+    3
   ],
   "BAYSIDE": [
     31,
-    0
+    1
   ],
   "YARRA": [
     31,
-    4
+    3
   ],
   "WHITTLESEA": [
-    31,
+    30,
     4
   ],
   "MANNINGHAM": [
-    30,
+    29,
     1
   ],
   "KINGSTON": [
@@ -106,7 +106,7 @@
   ],
   "YARRA_RANGES": [
     24,
-    2
+    1
   ],
   "HOBSONS_BAY": [
     20,
@@ -122,7 +122,7 @@
   ],
   "MARIBYRNONG": [
     16,
-    2
+    1
   ],
   "KNOX": [
     13,
@@ -154,7 +154,7 @@
   ],
   "MACEDON_RANGES": [
     9,
-    2
+    1
   ],
   "MITCHELL": [
     9,
@@ -200,10 +200,6 @@
     4,
     2
   ],
-  "LODDON": [
-    3,
-    0
-  ],
   "BENALLA": [
     3,
     0
@@ -212,9 +208,17 @@
     3,
     0
   ],
+  "LODDON": [
+    3,
+    0
+  ],
   "MANSFIELD": [
     3,
     0
+  ],
+  "MOORABOOL": [
+    3,
+    1
   ],
   "NORTHERN_GRAMPIANS": [
     3,
@@ -224,11 +228,15 @@
     3,
     0
   ],
-  "HEPBURN": [
+  "CENTRAL_GOLDFIELDS": [
     2,
-    0
+    1
   ],
-  "MOORABOOL": [
+  "GANNAWARRA": [
+    2,
+    1
+  ],
+  "HEPBURN": [
     2,
     0
   ],
@@ -252,23 +260,11 @@
     2,
     0
   ],
-  "NOT_STATED": [
-    1,
-    0
-  ],
-  "CENTRAL_GOLDFIELDS": [
-    1,
-    0
-  ],
   "CORANGAMITE": [
     1,
     0
   ],
   "EAST_GIPPSLAND": [
-    1,
-    0
-  ],
-  "GANNAWARRA": [
     1,
     0
   ],
@@ -281,6 +277,18 @@
     0
   ],
   "MOYNE": [
+    1,
+    0
+  ],
+  "WEST_WIMMERA": [
+    1,
+    0
+  ],
+  "WODONGA": [
+    1,
+    0
+  ],
+  "YARRIAMBIACK": [
     1,
     0
   ]

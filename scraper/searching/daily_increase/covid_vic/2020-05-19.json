@@ -1,28 +1,32 @@
 {
-  "_id": "2020-05-20",
+  "_id": "2020-05-19",
+  "MELBOURNE": [
+    97,
+    15
+  ],
   "STONNINGTON": [
     91,
     0
   ],
   "BANYULE": [
     90,
-    1
+    3
   ],
   "BOROONDARA": [
     67,
     3
   ],
   "GREATER_GEELONG": [
-    66,
+    64,
     0
-  ],
-  "MORELAND": [
-    63,
-    9
   ],
   "BRIMBANK": [
     61,
     8
+  ],
+  "MORELAND": [
+    61,
+    7
   ],
   "MORNINGTON_PENINSULA": [
     61,
@@ -45,32 +49,32 @@
     3
   ],
   "MONASH": [
-    49,
-    1
+    48,
+    2
   ],
   "PORT_PHILLIP": [
     48,
     1
   ],
   "DAREBIN": [
-    40,
-    3
+    39,
+    1
   ],
   "FRANKSTON": [
     39,
-    0
+    1
   ],
   "MELTON": [
     37,
-    3
+    5
   ],
   "MOONEE_VALLEY": [
     37,
     0
   ],
   "INTERSTATE": [
-    35,
-    7
+    34,
+    6
   ],
   "BAYSIDE": [
     31,
@@ -82,7 +86,7 @@
   ],
   "YARRA": [
     30,
-    3
+    4
   ],
   "MANNINGHAM": [
     28,
@@ -101,38 +105,38 @@
     1
   ],
   "YARRA_RANGES": [
-    24,
-    3
+    23,
+    2
   ],
   "HOBSONS_BAY": [
     20,
-    1
-  ],
-  "GREATER_DANDENONG": [
-    17,
-    0
-  ],
-  "MARIBYRNONG": [
-    17,
     2
   ],
   "CARDINIA": [
     16,
     0
   ],
+  "GREATER_DANDENONG": [
+    16,
+    0
+  ],
+  "MARIBYRNONG": [
+    16,
+    2
+  ],
   "MAROONDAH": [
     14,
-    1
+    2
   ],
   "KNOX": [
     13,
     0
   ],
-  "GREATER_SHEPPARTON": [
-    12,
+  "BALLARAT": [
+    11,
     1
   ],
-  "BALLARAT": [
+  "GREATER_SHEPPARTON": [
     11,
     0
   ],
@@ -168,7 +172,7 @@
     6,
     0
   ],
-  "ARARAT": [
+  "ARARAT*": [
     5,
     0
   ],
@@ -192,10 +196,6 @@
     4,
     0
   ],
-  "CAMPASPE": [
-    4,
-    2
-  ],
   "LODDON": [
     4,
     1
@@ -203,6 +203,10 @@
   "BENALLA": [
     3,
     0
+  ],
+  "CAMPASPE": [
+    3,
+    1
   ],
   "HORSHAM": [
     3,
@@ -220,10 +224,6 @@
     3,
     0
   ],
-  "NOT_STATED": [
-    2,
-    0
-  ],
   "HEPBURN": [
     2,
     0
@@ -233,10 +233,6 @@
     0
   ],
   "MURRINDINDI": [
-    2,
-    1
-  ],
-  "OVERSEAS": [
     2,
     1
   ],
@@ -280,7 +276,19 @@
     1,
     0
   ],
+  "OVERSEAS": [
+    1,
+    0
+  ],
   "WEST_WIMMERA": [
+    1,
+    0
+  ],
+  "WODONGA": [
+    1,
+    0
+  ],
+  "YARRIAMBIACK": [
     1,
     0
   ]
