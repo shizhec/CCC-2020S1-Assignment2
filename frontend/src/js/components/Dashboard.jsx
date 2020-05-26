@@ -11,8 +11,10 @@ import {
   LineChart,
   AurinCard,
 } from "./visualisation/";
+import { TweetCard } from "./visualisation/TweetCard";
+import { SentimentCard } from "./visualisation/SentimentCard";
 
-function DashboardComponent({ aurin }) {
+function DashboardComponent({ aurin, tweetCount, coronaCount, sentiment }) {
   return (
     <Row>
       <Col span={12}>
@@ -32,14 +34,24 @@ function DashboardComponent({ aurin }) {
           <AurinCard />
         </Col>
       )}
+      {tweetCount && coronaCount && (
+        <Col span={12}>
+          <TweetCard />
+        </Col>
+      )}
+      {sentiment && (
+        <Col span={12}>
+          <SentimentCard />
+        </Col>
+      )}
     </Row>
   );
 }
 
 const mapStateToProps = (state) => {
-  const { aurin } = state.xhr;
+  const { aurin, tweetCount, coronaCount, sentiment } = state.xhr;
 
-  return { aurin };
+  return { aurin, tweetCount, coronaCount, sentiment };
 };
 
 const Dashboard = connect(mapStateToProps)(DashboardComponent);

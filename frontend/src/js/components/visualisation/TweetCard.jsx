@@ -9,11 +9,7 @@ import {
   PieChart as RechartPie,
 } from "recharts";
 
-import {
-  getCityName,
-  getStateName,
-  getStateShortName,
-} from "../../utils/googleMap";
+import { getCityName, getStateName } from "../../utils/googleMap";
 
 const renderActiveShape = (props) => {
   const RADIAN = Math.PI / 180;
@@ -71,12 +67,21 @@ const renderActiveShape = (props) => {
         textAnchor={textAnchor}
         fill={fill}
       >
-        {payload.name} ({`Count: ${payload.value}`})
+        {payload.name}
       </text>
       <text
         x={ex + (cos >= 0 ? 1 : -1) * 12}
         y={ey}
         dy={20}
+        textAnchor={textAnchor}
+        fill="#333"
+      >
+        {`Count: ${payload.value}`}
+      </text>
+      <text
+        x={ex + (cos >= 0 ? 1 : -1) * 12}
+        y={ey}
+        dy={40}
         textAnchor={textAnchor}
         fill="#333"
       >
@@ -86,115 +91,82 @@ const renderActiveShape = (props) => {
   );
 };
 
-class AurinCardComponent extends Component {
+class TweetCardComponent extends Component {
   constructor(props) {
     super(props);
     this.state = { activeIndex: 0 };
   }
 
   render() {
-    console.log("In AurinCard, this.props =", this.props);
-    const { cityName, stateName, aurin } = this.props;
-    const {
-      female,
-      highedu,
-      income,
-      labor,
-      male,
-      participation,
-      unemployment,
-    } = aurin;
+    console.log("In TweetCard, this.props =", this.props);
+    const { cityName, stateName, tweetCount, coronaCount } = this.props;
 
-    const data = [
-      { name: "Female", value: female },
-      { name: "Male", value: male },
-    ];
-
-    let title = "Demographic Data";
+    let title = "Tweet Data";
     if (cityName && stateName) {
       title = `${title} - ${cityName}, ${stateName}`;
     }
 
+    const coronaRelatedName = "Coronavirus-related tweets";
+    const data = [
+      { name: coronaRelatedName, value: coronaCount },
+      { name: "Other tweets", value: tweetCount - coronaCount },
+    ];
+
     return (
-      <Card hoverable className="col-6 aurin-card xhr-data-card" title={title}>
+      <Card hoverable className="col-6 tweet-card xhr-data-card" title={title}>
         <div className={"data-presentation"}>
-          {labor && (
+          {tweetCount && (
             <p>
               <span>
-                <b>Number of labour force: </b>
+                <b>Number of tweets: </b>
               </span>
-              {labor}
+              {tweetCount}
             </p>
           )}
-          {income && (
+          {coronaCount && (
             <p>
               <span>
-                <b>Average Income: </b>
+                <b>Number of tweets related to Coronavirus: </b>
               </span>
-              ${income}
-            </p>
-          )}
-          {highedu && (
-            <p>
-              <span>
-                <b>Higher Education Rate: </b>
-              </span>
-              {highedu}%
-            </p>
-          )}
-          {participation && (
-            <p>
-              <span>
-                <b>Participation Rate: </b>
-              </span>
-              {participation}%
-            </p>
-          )}
-          {unemployment && (
-            <p>
-              <span>
-                <b>Unemployment Rate: </b>
-              </span>
-              {unemployment}%
+              {coronaCount}
             </p>
           )}
         </div>
-
-        {female && male && (
-          <ResponsiveContainer height={"100%"} width={"50%"}>
-            <RechartPie width={300} height={150}>
-              <Pie
-                data={data}
-                dataKey="value"
-                startAngle={180}
-                endAngle={-180}
-                outerRadius={100}
-                activeIndex={this.state.activeIndex}
-                activeShape={renderActiveShape}
-                isAnimationActive={false}
-                onMouseEnter={(_, index, e) => {
-                  this.setState({
-                    activeIndex: index,
-                  });
-                }}
-              >
-                {data.map((entry, index) => (
-                  <Cell
-                    key={`slice-${index}`}
-                    fill={entry.name === "Female" ? "#fc8a88" : "#88c4fc"}
-                  />
-                ))}
-              </Pie>
-            </RechartPie>
-          </ResponsiveContainer>
-        )}
+        <ResponsiveContainer height={"100%"} width={"60%"}>
+          <RechartPie width={400} height={150} margin={{ left: 25, right: 25 }}>
+            <Pie
+              data={data}
+              dataKey="value"
+              startAngle={90}
+              endAngle={-270}
+              outerRadius={100}
+              activeIndex={this.state.activeIndex}
+              activeShape={renderActiveShape}
+              isAnimationActive={false}
+              onMouseEnter={(_, index, e) => {
+                this.setState({
+                  activeIndex: index,
+                });
+              }}
+            >
+              {data.map((entry, index) => (
+                <Cell
+                  key={`slice-${index}`}
+                  fill={
+                    entry.name === coronaRelatedName ? "#a52a2a" : "#11c299"
+                  }
+                />
+              ))}
+            </Pie>
+          </RechartPie>
+        </ResponsiveContainer>
       </Card>
     );
   }
 }
 
 const mapStateToProps = (state) => {
-  const { aurin } = state.xhr;
+  const { tweetCount, coronaCount } = state.xhr;
   const { lastClickedInfo } = state.map;
 
   let cityName = "";
@@ -205,9 +177,9 @@ const mapStateToProps = (state) => {
     stateName = getStateName(lastClickedInfo.address);
   }
 
-  return { aurin, cityName, stateName };
+  return { tweetCount, coronaCount, cityName, stateName };
 };
 
-const AurinCard = connect(mapStateToProps)(AurinCardComponent);
+const TweetCard = connect(mapStateToProps)(TweetCardComponent);
 
-export { AurinCard };
+export { TweetCard };

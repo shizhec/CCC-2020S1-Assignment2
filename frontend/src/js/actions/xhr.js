@@ -13,6 +13,9 @@ import {
   OVERVIEW_DATA_RECEIVED,
   VIC_LGA_OVERVIEW_RECEIVED,
   RECEIVE_AURIN_DATA,
+  RECEIVE_TWEET_COUNT_OF_LGA,
+  RECEIVE_CORONA_COUNT_OF_LGA,
+  RECEIVE_SENTIMENT_OF_LGA,
 } from "../actionTypes/xhr";
 
 export function getOverviewData() {
@@ -63,90 +66,75 @@ export function getRenderingData() {
   };
 }
 
-function getDataByLGA(API, lgaName, callback, startDate = "", endDate = "") {
-  return (dispatch) => {
-    return fetch(
-      `${API}?region=${lgaName}${startDate ? `&date_start=${startDate}` : ""}${
-        endDate ? `&date_end=${endDate}` : ""
-      }`
-    )
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
+function getDataByLGA(API, lgaName, startDate = "", endDate = "") {
+  return fetch(
+    `${API}?region=${lgaName}${startDate ? `&date_start=${startDate}` : ""}${
+      endDate ? `&date_end=${endDate}` : ""
+    }`
+  ).then((res) => {
+    if (res.ok) {
+      return res.json();
+    }
 
-        throw res.statusText;
-      })
-      .then((value) => callback(dispatch, ...value));
-  };
+    throw res.statusText;
+  });
 }
 
 export function getTweetCountOfLGA(lgaName, startDate = "", endDate = "") {
-  return getDataByLGA(
-    API__GET_TWEET_COUNT_OF_LGA,
-    lgaName,
-    (dispatch, lgaTweetCount) => {
-      console.log("In getTweetCountOfLGA, lgaTweetCount =", lgaTweetCount);
-      console.log("In getTweetCountOfLGA, dispatch =", dispatch);
-    },
-    startDate,
-    endDate
-  );
+  return (dispatch) =>
+    getDataByLGA(API__GET_TWEET_COUNT_OF_LGA, lgaName, startDate, endDate).then(
+      ({ count }) =>
+        dispatch({
+          type: RECEIVE_TWEET_COUNT_OF_LGA,
+          payload: { tweetCount: count },
+        })
+    );
 }
 
 export function getCoronaInfoOfLGA(lgaName, startDate = "", endDate = "") {
-  return getDataByLGA(
-    API__GET_CORONA_INFO_OF_LGA,
-    lgaName,
-    (dispatch, coronaInfo) => {
-      console.log("In getCoronaInfoOfLGA, coronaInfo =", coronaInfo);
-      console.log("In getCoronaInfoOfLGA, dispatch =", dispatch);
-    },
-    startDate,
-    endDate
-  );
+  return (dispatch) =>
+    getDataByLGA(API__GET_CORONA_INFO_OF_LGA, lgaName, startDate, endDate).then(
+      ({ count }) =>
+        dispatch({
+          type: RECEIVE_CORONA_COUNT_OF_LGA,
+          payload: { coronaCount: count },
+        })
+    );
 }
 
 export function getSentimentOfLGA(lgaName, startDate = "", endDate = "") {
-  return getDataByLGA(
-    API__GET_SENTIMENT_OF_LGA,
-    lgaName,
-    (dispatch, sentiment) => {
-      console.log("In getSentimentOfLGA, sentiment =", sentiment);
-      console.log("In getSentimentOfLGA, dispatch =", dispatch);
-    },
-    startDate,
-    endDate
-  );
+  return (dispatch) =>
+    getDataByLGA(API__GET_SENTIMENT_OF_LGA, lgaName, startDate, endDate).then(
+      (sentiment) =>
+        dispatch({
+          type: RECEIVE_SENTIMENT_OF_LGA,
+          payload: { sentiment },
+        })
+    );
 }
 
 export function getHashtagOfLGA(lgaName, startDate = "", endDate = "") {
-  return getDataByLGA(
-    API__GET_HASHTAG_OF_LGA,
-    lgaName,
-    (dispatch, hashtag) => {
-      console.log("In getHashtagOfLGA, hashtag =", hashtag);
-      console.log("In getHashtagOfLGA, dispatch =", dispatch);
-    },
-    startDate,
-    endDate
-  );
+  return (dispatch) =>
+    getDataByLGA(API__GET_HASHTAG_OF_LGA, lgaName, startDate, endDate).then(
+      (hashtag) => {
+        console.log("In getHashtagOfLGA, hashtag =", hashtag);
+      }
+    );
 }
 
 export function getHashtagOverviewOfLGA(lgaName, startDate = "", endDate = "") {
-  return getDataByLGA(
-    API__GET_HASHTAG_OVERVIEW_OF_LGA,
-    lgaName,
-    (dispatch, hashtagOverview) => {
+  return (dispatch) =>
+    getDataByLGA(
+      API__GET_HASHTAG_OVERVIEW_OF_LGA,
+      lgaName,
+      startDate,
+      endDate
+    ).then((hashtagOverview) => {
       console.log(
         "In getHashtagOverviewOfLGA, hashtagOverview =",
         hashtagOverview
       );
-      console.log("In getHashtagOverviewOfLGA, dispatch =", dispatch);
-    },
-    startDate,
-    endDate
-  );
+    });
 }
 
 // todo: /api/sentiment_user
@@ -172,9 +160,9 @@ export function getDataOfLGA(lgaName, startDate = "", endDate = "") {
     dispatch(startLoading());
 
     return Promise.all([
-      // getTweetCountOfLGA(lgaName, startDate, endDate)(dispatch),
-      // getCoronaInfoOfLGA(lgaName, startDate, endDate)(dispatch),
-      // getSentimentOfLGA(lgaName, startDate, endDate)(dispatch),
+      getTweetCountOfLGA(lgaName, startDate, endDate)(dispatch),
+      getCoronaInfoOfLGA(lgaName, startDate, endDate)(dispatch),
+      getSentimentOfLGA(lgaName, startDate, endDate)(dispatch),
       // getHashtagOfLGA(lgaName, startDate, endDate)(dispatch),
       // getHashtagOverviewOfLGA(lgaName, startDate, endDate)(dispatch),
       getAurinData(lgaName)(dispatch),

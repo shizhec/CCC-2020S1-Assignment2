@@ -16,7 +16,7 @@ import {
   getStateShortName,
   getCityName,
 } from "../utils/googleMap";
-import { getTweetCountOfLGA, getDataOfLGA } from "./xhr";
+import { getDataOfLGA } from "./xhr";
 
 export function updateMapFullScreenStatus(isFullScreen = true) {
   return {
@@ -80,7 +80,6 @@ export const reverseGeocoding = (
 
       const cityName = getCityName(address, false);
       if (address && getStateShortName(address) === "VIC") {
-        // getTweetCountOfLGA(cityName, datesRange[0], datesRange[1])(dispatch);
         getDataOfLGA(cityName, datesRange[0], datesRange[1])(dispatch);
       }
     });

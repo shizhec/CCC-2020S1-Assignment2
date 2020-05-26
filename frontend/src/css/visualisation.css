@@ -33,14 +33,25 @@
   flex-direction: row;
 }
 
-.aurin-card .data-presentation {
+.data-presentation {
   height: 100%;
-  width: 50%;
   align-content: space-around;
   display: flex;
   flex-wrap: wrap;
 }
 
-.aurin-card .data-presentation p {
+.aurin-card .data-presentation {
+  width: 50%;
+}
+
+.data-presentation p {
   width: 100%;
+}
+
+.xhr-data-card .ant-card-body {
+  display: flex;
+}
+
+.tweet-card .data-presentation {
+  width: 40%;
 }
