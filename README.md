@@ -1,11 +1,12 @@
-# CCC-2020S1-Assignment2 Group XX
+### CCC-2020S1-Assignment2 Group XX
 Team Members:
-* Yizhou Zhu - 1034676
-* Shizhe Cai -
-* [Haoyu Zhang](https://github.com/Neetordy) - 
-* Haowen Shen - 
-* Peng Cao - 798530
+* [Yizhou Zhu - 1034676](https://github.com/lupintheforth)
+* [Shizhe Cai - 798125](https://github.com/shizhec)
+* [Haoyu Zhang - ](https://github.com/Neetordy)
+* [Haowen Shen - ](https://github.com/hwnshen)
+* [Peng Cao - 798530](https://github.com/c731615340)
 
+## Project Structure
 # CouchDB
 CouchDB user: admin 
 CouchDB password: password
