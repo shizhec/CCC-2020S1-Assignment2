@@ -134,15 +134,24 @@ class DB:
         results = {'negative': 0, 'neutral': 0, 'positive': 0}
         cou = 0
         hash_count = {}
+        related = 0
         for tweet_data in db:
             results[tweet_data['simple_sentiment_label']] += 1
             cou += 1
+            flag = 0
             for hash in tweet_data['hashtags']:
                 hash = hash.lower()
+                if 'covid' in hash or 'corona' in hash or ('19' in hash and 'co' in hash) \
+                        or 'home' in hash or 'lock' in hash or 'safe' in hash:
+                    flag = 1
+
                 hash_count[hash] = hash_count.get(hash, 0) + 1
+
+            related += flag
 
         results['count'] = cou
         results['hashtags'] = sorted(hash_count.items(), key=lambda item: item[1], reverse=True)
+        results['coronavirus_related'] = related
         db.delete()
         return results
 
