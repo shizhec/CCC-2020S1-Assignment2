@@ -11,7 +11,8 @@ Team Members:
 1.
 
 ### BackEnd
-1.
+- Flask
+* API
 
 ### Scraper
 * Searching API
@@ -29,10 +30,6 @@ Team Members:
      https://www.dhhs.vic.gov.au/media-hub-coronavirus-disease-covid-19
   2. Updated and modified on daily basis (no automation)
 
-### Spider
-1.
-
-
 ### Natural Language Processing
 * Sentiment Analysis
   1. Remove non-text tweets.
@@ -47,26 +44,36 @@ Team Members:
   5. latent dirichlet allocation model for topic extraction
   6. Wordcloud to show the result with top 10 frequent words.
   
-
-### Deployment
-1.
+### Deployment via Ansible
+1. setup nectar
+2. install environments
+3. clone github repository
+4. deploy applications
 
 ## Server Arrangement
 Server 1: 172.26.130.162
 ```
 server 1 
+- Couchdb Master Node
+- front-end
+- back-end
+- server
+- nginx
 ```
 Server 2: 172.26.130.251
 ```
-server 2  
+server 2
+- Couchdb Worker Node
+- Spark Cluster   
 ```
 Server 3: 172.26.132.37
 ```
 server 3 
+- Couchdb Worker Node
+- Data Havester
 ```
 Server 4: 172.26.132.136
 ```
-server 4 
+server 4
+- Test Ansible Script 
 ```
-
-=======
