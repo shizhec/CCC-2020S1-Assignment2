@@ -114,7 +114,7 @@ def aurin():
     region = request.args.get("region", type=str)
     types = request.args.get("type", type=str)
 
-    return jsonify(db.get_aurin(region.strip().replace(' ', '_'), types.lower()))
+    return jsonify(db.get_aurin(region.strip(), types.lower()))
 
 
 @scheduler.task('interval', id='refresh_data', hours=6, misfire_grace_time=900)

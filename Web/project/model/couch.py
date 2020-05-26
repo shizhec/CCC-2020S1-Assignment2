@@ -27,6 +27,7 @@ def get_days(date_begin, date_end):
 class DB:
     def __init__(self, client):
         self.client = client
+        self.dic = None
 
     def get_sentiment(self, region, date_begin='2020-01-01', date_end=datetime.datetime.today()):
         db = CloudantDatabase(self.client, region, partitioned=True)
@@ -146,11 +147,19 @@ class DB:
                    'male': "Male",
                    'female': "Female"}
         db = CloudantDatabase(self.client, 'aurin', partitioned=False)
-        for key, value in db['aurin_data'].items():
-            if key[:5].lower().replace(' ', '_') == region[:5].lower():
-                return value.get(mapping.get(type, ""), -1)
 
-        return -1
+        if self.dic is None:
+            self.dic = {key[:5].lower().replace(' ', '_'): key for key in db['aurin_data'].keys()}
+
+        if region[-1] == ')':
+            re = 'uninc'
+        else:
+            re = region[:5].lower().replace(' ', '_')
+
+        if re in self.dic:
+            return db['aurin_data'][self.dic[re]].get(mapping.get(type, ""), -1)
+        else:
+            return -1
 
     def get_tweet_count_today(self, region, date=datetime.datetime.today()):
         db = CloudantDatabase(self.client, region, partitioned=True)
