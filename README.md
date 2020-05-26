@@ -1,5 +1,10 @@
-# CCC-2020S1-Assignment2
-University of Melbourne
+# CCC-2020S1-Assignment2 Group XX
+Team Members:
+* Yizhou Zhu - 1034676
+* Shizhe Cai -
+* [Haoyu Zhang](https://github.com/Neetordy) - 
+* Haowen Shen - 
+* Peng Cao - 798530
 
 # CouchDB
 CouchDB user: admin 
