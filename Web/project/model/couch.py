@@ -132,9 +132,17 @@ class DB:
             time.sleep(0.1)
 
         results = {'negative': 0, 'neutral': 0, 'positive': 0}
+        cou = 0
+        hash_count = {}
         for tweet_data in db:
             results[tweet_data['simple_sentiment_label']] += 1
+            cou += 1
+            for hash in tweet_data['hashtags']:
+                hash = hash.lower()
+                hash_count[hash] = hash_count.get(hash, 0) + 1
 
+        results['count'] = cou
+        results['hashtags'] = sorted(hash_count.items(), key=lambda item: item[1], reverse=True)
         db.delete()
         return results
 
