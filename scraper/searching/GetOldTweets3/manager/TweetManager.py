@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import json, re, datetime, sys, random, http.cookiejar
+import re, datetime, sys, random, http.cookiejar,json
 import urllib.request, urllib.parse, urllib.error
 from pyquery import PyQuery
 from .. import models
@@ -25,7 +25,7 @@ class TweetManager:
     
     
     @staticmethod
-    def getTweets(tweetCriteria, receiveBuffer=None, bufferLength=100, proxy=None, debug=False, file = None):
+    def getTweets(tweetCriteria, receiveBuffer=None, bufferLength=100, proxy=None, debug=False):
         """Get tweets that match the tweetCriteria parameter
         A static method.
 
@@ -66,8 +66,11 @@ class TweetManager:
             active = True
             count = 0
             while active:
-                count = count + 1
                 json = TweetManager.getJsonResponse(tweetCriteria, refreshCursor, cookieJar, proxy, user_agent, debug=debug)
+                if json == "wait a moment,429":
+                    time.sleep(100)
+                    continue
+
                 if len(json['items_html'].strip()) == 0:
                     break
 
@@ -121,28 +124,14 @@ class TweetManager:
 
                     tweet.urls = ",".join(urls)
 
-                    # results.append(tweet)
-
-                    
-                    if not tweet.text.startswith('RT'):
-                        temp = {}
-                        temp['id'] = tweet.id
-                        temp['permalink'] = tweet.permalink
-                        temp['username']=tweet.username
-                        temp["date"] = tweet.date.strftime('%Y-%m-%d %H:%M:%S%z')
-                        temp['text']= tweet.text
-                        temp['hashtags'] = tweet.hashtags.split()
-                        temp['geo'] = [tweet.geo]
-                        file.write(str(temp)+"\n")
+                    results.append(tweet)
                     resultsAux.append(tweet)
                     
                     if receiveBuffer and len(resultsAux) >= bufferLength:
                         receiveBuffer(resultsAux)
                         resultsAux = []
                     
-                    if(count >= 180):
-                        count = 0
-                        time.sleep(100)
+
 
                     batch_cnt_results += 1
                     if tweetCriteria.maxTweets > 0 and batch_cnt_results >= tweetCriteria.maxTweets:
@@ -152,7 +141,7 @@ class TweetManager:
             if receiveBuffer and len(resultsAux) > 0:
                 receiveBuffer(resultsAux)
                 resultsAux = []
-        file.close()
+        return results
 
     
 
@@ -367,7 +356,8 @@ class TweetManager:
         except Exception as e:
             print("An error occured during an HTTP request:", str(e))
             print("Try to open in browser: https://twitter.com/search?q=%s&src=typd" % urllib.parse.quote(urlGetData))
-            sys.exit()
+            dataJson = "wait a moment,429"
+            return dataJson
 
         try:
             s_json = jsonResponse.decode()
