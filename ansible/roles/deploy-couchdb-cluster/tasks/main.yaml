@@ -36,3 +36,8 @@
     owner: ubuntu
     group: ubuntu
 
+- name: Run docker couchdb shell
+  tags: 'couchdb'
+  shell: docker-run-couchdb.sh
+  args:
+    chdir: "{{ couchdb_directory }}"

@@ -7,6 +7,13 @@
 #   roles:
 #     - role: deploy-couchdb-cluster
 
+# - hosts: localhost
+#   vars_files:
+#     - host_vars/application_vars.yaml
+#   shell: setup-couchdb-cluster.sh
+#   args:
+#     chdir: "{{ local }}/"
+
 - hosts: instance1
   remote_user: ubuntu
   vars_files:
@@ -22,3 +29,12 @@
 #   gather_facts: true
 #   roles:
 #     - role: deploy-spark
+
+
+# - hosts: instance3
+#   remote_user: ubuntu
+#   vars_files:
+#     - host_vars/application_vars.yaml
+#   gather_facts: true
+#   roles:
+#     - role: deploy-daily-scraper

@@ -5,7 +5,7 @@ services:
     build:
       context: ./server
       dockerfile: Dockerfile
-    command: gunicorn --bind 0.0.0.0:5000 project:app
+    command: gunicorn -w 2 --bind 0.0.0.0:5000 ccc:app
     ports:
       - 5000:5000
     env_file:

@@ -24,7 +24,8 @@ COPY ./entrypoint.sh /usr/src/app/entrypoint.sh
 RUN chmod +x ./entrypoint.sh
 
 # copy project
-COPY ./Web/ /usr/src/app/
+COPY ./Web/ /usr/src/app/Web/
+COPY ./frontend/ /usr/src/app/frontend/
 
 # run entrypoint.sh
 ENTRYPOINT ["/usr/src/app/entrypoint.sh"]

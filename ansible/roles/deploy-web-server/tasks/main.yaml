@@ -82,6 +82,16 @@
     owner: ubuntu
     group: ubuntu
 
+- name: delete Web directory
+  file:
+    path: "{{ server_directory }}/Web"
+    state: absent
+
+- name: delete frontend directory
+  file:
+    path: "{{ server_directory }}/frontend"
+    state: absent
+
 - name: Create Web directory
   tags: 'server'
   become: yes
@@ -92,11 +102,39 @@
     recurse: yes
     state: directory
 
+- name: Create Frontend directory
+  tags: 'server'
+  become: yes
+  file:
+    path: "{{ server_directory }}/frontend"
+    owner: ubuntu
+    group: ubuntu
+    recurse: yes
+    state: directory
+
 - name: Copy Web File
   copy:
     src: "{{ project_directory }}/Web/"
     dest: "{{ server_directory }}/Web/"
+    force: yes
     remote_src: yes
+
+- name: Copy frontend File
+  copy:
+    src: "{{ project_directory }}/frontend/"
+    dest: "{{ server_directory }}/frontend/"
+    force: yes
+    remote_src: yes
+
+- name: Run npm install
+  command: npm build
+  args:
+    chdir: "{{ server_directory }}/frontend/"
+
+- name: Run npm run build
+  command: npm run build
+  args:
+    chdir: "{{ server_directory }}/frontend/"
 
 - name: Run docker compose for server and nginx
   tags: 'nginx'
@@ -107,3 +145,4 @@
     state: present
     remove_orphans: yes
     recreate: always
+    build: yes

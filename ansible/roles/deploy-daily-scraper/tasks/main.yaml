@@ -1,0 +1,8 @@
+---
+- name: Create cron job for daily_increase
+  tags: 'scraper'
+  cron:
+    name: "daily increase"
+    hour: "9"
+    job: "{{ project_directory }}/scraper/daily_increase/run.sh"
+    user: "ubuntu"
