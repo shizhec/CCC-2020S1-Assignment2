@@ -111,6 +111,10 @@ def aurin():
 
     return jsonify(db.get_aurin(region.strip(), types.lower()))
 
-# @scheduler.task('interval', id='refresh_data', hours=6, misfire_grace_time=900)
-# def refresh_data():
-#     return 0
+
+@scheduler.task('interval', id='refresh_data', hours=6, misfire_grace_time=900)
+def refresh_data():
+    os.system('python3 ' + ' steaming/getTweetStream.py ')
+    everyday_tweet = db.get_tweet_count_today()
+
+    return everyday_tweet

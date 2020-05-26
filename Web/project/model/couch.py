@@ -151,3 +151,12 @@ class DB:
                 return value.get(mapping.get(type, ""), -1)
 
         return -1
+
+    def get_tweet_count_today(self, region, date=datetime.datetime.today()):
+        db = CloudantDatabase(self.client, region, partitioned=True)
+
+        counts = 0
+
+        for re in db.get_partitioned_view_result(date, '_design/tweet_count', 'tweet_count'):
+            counts += re['value']
+        return {'count': counts}
