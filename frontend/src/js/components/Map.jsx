@@ -96,7 +96,7 @@ class MapComponent extends Component {
 
         return {
           fillColor: fillColor,
-          strokeWeight: 0.1,
+          strokeWeight: 0.25,
           strokeColor: "#ffffff",
           zIndex: 0,
           fillOpacity: 0.7,
