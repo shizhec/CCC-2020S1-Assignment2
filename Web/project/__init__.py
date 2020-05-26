@@ -4,11 +4,7 @@ import os
 from flask_apscheduler import APScheduler
 
 
-env = os.environ
-
-
 class Config(object):
-
     SCHEDULER_API_ENABLED = True
 
 
@@ -23,9 +19,9 @@ scheduler = APScheduler()
 scheduler.init_app(app)
 scheduler.start()
 
-
 client = CouchDB('admin', 'password',
-                 url='http://' + env.get('COUCHDB_IP', '172.26.130.251') + ':5984', connect=True)
+                 url='http://' + os.environ.get('COUCHDB_IP', '172.26.130.251') + ':5984',
+                 connect=True, auto_renew=True)
 
 from project import controller
 from project import model
