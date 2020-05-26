@@ -8,7 +8,7 @@ export function TitleWithTooltip({
 }) {
   return (
     <Tooltip title={tooltipInfo} placement={placement}>
-      <h3>{title}</h3>
+      {typeof title === "string" ? <h3>{title}</h3> : title}
     </Tooltip>
   );
 }
