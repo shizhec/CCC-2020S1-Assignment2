@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Row, Col, Card, Popover } from "antd";
+import { Row, Col, Card } from "antd";
 import { FullscreenExitOutlined, FullscreenOutlined } from "@ant-design/icons";
 import GoogleMapReact from "google-map-react";
 import debounce from "lodash.debounce";
@@ -23,13 +23,7 @@ import {
   extractMostRecentDataOfVicLGA,
   extractStartAndEndDateFromArray,
 } from "../utils/overviewDataExtraction";
-import {
-  getCityName,
-  getStateName,
-  getStateShortName,
-} from "../utils/googleMap";
 import { capitalizeString } from "../utils/string";
-import { MapPopup } from "./MapPopup";
 
 class MapComponent extends Component {
   constructor(props) {
@@ -75,11 +69,11 @@ class MapComponent extends Component {
         const { minValue, maxValue, extractedMapData } = this.props;
         const name = capitalizeString(feature.getProperty("vic_lga__3"));
 
-        console.log("in setDataStyle, name =", name);
-        let colors = gradient("#ffffff", "#e21016", 7);
+        // console.log("in setDataStyle, name =", name);
+        let colors = gradient("#be9283", "#621b47", 7);
 
         const valueOfThisLGA = extractedMapData.get(name);
-        console.log("valueOfThisLGA =", valueOfThisLGA);
+        // console.log("valueOfThisLGA =", valueOfThisLGA);
 
         const step = (maxValue - minValue) / 7;
         let i = 0;
@@ -92,18 +86,20 @@ class MapComponent extends Component {
           }
         }
 
-        let fillColor = colors[i];
+        // let fillColor = colors[i];
 
-        console.log(
-          `valueOfThisLGA =${valueOfThisLGA}, LGA = ${name}, color = ${fillColor} colors = ${colors}, i = ${i}`
-        );
+        let fillColor = valueOfThisLGA === undefined ? "#c7b79e" : colors[i];
+
+        // console.log(
+        //   `valueOfThisLGA =${valueOfThisLGA}, LGA = ${name}, color = ${fillColor} colors = ${colors}, i = ${i}`
+        // );
 
         return {
           fillColor: fillColor,
-          strokeWeight: 0.5,
+          strokeWeight: 0.1,
           strokeColor: "#ffffff",
-          zIndex: 1,
-          fillOpacity: 0.75,
+          zIndex: 0,
+          fillOpacity: 0.7,
         };
       });
     }
@@ -118,7 +114,6 @@ class MapComponent extends Component {
       exitFullScreen,
       updateMapCenterAndZoom,
       hideComparisonPanel,
-      lastClickedInfo,
       extractedMapData,
     } = this.props;
 
@@ -174,8 +169,6 @@ class MapComponent extends Component {
           )}
         </div>
 
-        {lastClickedInfo && <MapPopup />}
-
         <SwitchComponent
           className={"clickable map-full-screen-switch"}
           onClick={() => {
@@ -186,7 +179,7 @@ class MapComponent extends Component {
         {isFullScreen && (
           <>
             <ComparisonPanel />
-            <DataSourceSwitch />
+            {/* <DataSourceSwitch /> */}
             <Filter />
           </>
         )}
@@ -211,7 +204,7 @@ class MapComponent extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { isFullScreen, center, zoom, lastClickedInfo } = state.map;
+  const { isFullScreen, center, zoom } = state.map;
   const { overviewData, vicLGAOverviewData } = state.xhr;
   const { currentComparingTargetIndex } = state.comparison;
 
@@ -220,7 +213,7 @@ const mapStateToProps = (state) => {
   const renderingData =
     dataSource === "vicLGAOverviewData" ? vicLGAOverviewData : overviewData;
 
-  console.log("vicLGAOverviewData =", vicLGAOverviewData);
+  // console.log("vicLGAOverviewData =", vicLGAOverviewData);
   const [
     extractedMapData,
     mostRecentDate,
@@ -235,7 +228,6 @@ const mapStateToProps = (state) => {
     zoom,
     overviewData,
     vicLGAOverviewData,
-    lastClickedInfo,
     currentComparingTargetIndex,
     renderingData,
     dataSource,

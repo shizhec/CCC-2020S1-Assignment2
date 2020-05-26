@@ -16,6 +16,8 @@ import {
   RECEIVE_TWEET_COUNT_OF_LGA,
   RECEIVE_CORONA_COUNT_OF_LGA,
   RECEIVE_SENTIMENT_OF_LGA,
+  REVIEW_HASHTAG_OF_LGA,
+  REVIEW_HASHTAG_OVERVIEW_OF_LGA,
 } from "../actionTypes/xhr";
 
 export function getOverviewData() {
@@ -116,9 +118,11 @@ export function getSentimentOfLGA(lgaName, startDate = "", endDate = "") {
 export function getHashtagOfLGA(lgaName, startDate = "", endDate = "") {
   return (dispatch) =>
     getDataByLGA(API__GET_HASHTAG_OF_LGA, lgaName, startDate, endDate).then(
-      (hashtag) => {
-        console.log("In getHashtagOfLGA, hashtag =", hashtag);
-      }
+      ({ count }) =>
+        dispatch({
+          type: REVIEW_HASHTAG_OF_LGA,
+          payload: { hashtagCount: count },
+        })
     );
 }
 
@@ -129,12 +133,12 @@ export function getHashtagOverviewOfLGA(lgaName, startDate = "", endDate = "") {
       lgaName,
       startDate,
       endDate
-    ).then((hashtagOverview) => {
-      console.log(
-        "In getHashtagOverviewOfLGA, hashtagOverview =",
-        hashtagOverview
-      );
-    });
+    ).then((hashtagOverview) =>
+      dispatch({
+        type: REVIEW_HASHTAG_OVERVIEW_OF_LGA,
+        payload: { hashtagOverview },
+      })
+    );
 }
 
 // todo: /api/sentiment_user
@@ -163,8 +167,8 @@ export function getDataOfLGA(lgaName, startDate = "", endDate = "") {
       getTweetCountOfLGA(lgaName, startDate, endDate)(dispatch),
       getCoronaInfoOfLGA(lgaName, startDate, endDate)(dispatch),
       getSentimentOfLGA(lgaName, startDate, endDate)(dispatch),
-      // getHashtagOfLGA(lgaName, startDate, endDate)(dispatch),
-      // getHashtagOverviewOfLGA(lgaName, startDate, endDate)(dispatch),
+      getHashtagOfLGA(lgaName, startDate, endDate)(dispatch),
+      getHashtagOverviewOfLGA(lgaName, startDate, endDate)(dispatch),
       getAurinData(lgaName)(dispatch),
     ]).finally(() => dispatch(stopLoading()));
   };

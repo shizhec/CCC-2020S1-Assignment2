@@ -3,6 +3,7 @@ import {
   UPDATE_MAP_CENTER_AND_ZOOM,
   UPDATE_LAST_CLICKED_INFO,
 } from "../actionTypes/map";
+import { RESET_LGA_DATA } from "../actionTypes/xhr";
 import { UPDATE_DESIGNATED_COMPARING_TARGET_ADDRESS } from "../actionTypes/comparison";
 
 import {
@@ -83,3 +84,7 @@ export const reverseGeocoding = (
         getDataOfLGA(cityName, datesRange[0], datesRange[1])(dispatch);
       }
     });
+
+export function resetLGAData() {
+  return { type: RESET_LGA_DATA };
+}
