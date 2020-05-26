@@ -8,6 +8,11 @@ import { getCityName, getStateName } from "../utils/googleMap";
 function MapPopupComponent({ cityName, stateName, lastClickedInfo, aurin }) {
   return (
     <Popover
+      style={{
+        left: lastClickedInfo.x,
+        top: lastClickedInfo.y,
+        position: "absolute",
+      }}
       title={
         <header>
           {cityName && (
@@ -25,16 +30,6 @@ function MapPopupComponent({ cityName, stateName, lastClickedInfo, aurin }) {
       visible={true}
       content={"HELLO WORLD"}
     >
-      <span
-        style={{
-          left: lastClickedInfo.x,
-          top: lastClickedInfo.y,
-          position: "absolute",
-          width: "1rem",
-          height: "1rem",
-          visibility: "hidden",
-        }}
-      ></span>
       {aurin && <AurinCard />}
     </Popover>
   );

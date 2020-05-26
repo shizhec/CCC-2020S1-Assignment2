@@ -76,7 +76,7 @@ class MapComponent extends Component {
         const name = capitalizeString(feature.getProperty("vic_lga__3"));
 
         console.log("in setDataStyle, name =", name);
-        let colors = gradient("#ffffff", "#be2026", 7);
+        let colors = gradient("#ffffff", "#e21016", 7);
 
         const valueOfThisLGA = extractedMapData.get(name);
         console.log("valueOfThisLGA =", valueOfThisLGA);
@@ -99,7 +99,6 @@ class MapComponent extends Component {
         );
 
         return {
-          // fillColor: colors[0],
           fillColor: fillColor,
           strokeWeight: 0.5,
           strokeColor: "#ffffff",
