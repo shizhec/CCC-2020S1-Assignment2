@@ -19,12 +19,7 @@ Team Members:
 
 ### Natural Language Processing
 1.
-```
-Instance1: 172.26.130.162
-Instance2: 
-Instance3:
-Instance4: 
-```
+
 ## Server Arrangement
 Server 1: 172.26.130.162
 ```
