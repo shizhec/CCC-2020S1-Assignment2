@@ -2,8 +2,10 @@ import tweepy
 from tweepy.streaming import StreamListener
 from tweepy import OAuthHandler
 from tweepy import Stream
-import json 
+import json
+import couchdb
 import argparse
+from label import label_sentiment
 from datetime import datetime
 import time
 
@@ -27,7 +29,6 @@ def getAuth(access):
 def handler(tweet):
     try:
         tweetdict = {}
-        tweetdict["id"] = tweet["id_str"]
         tweetdict["user"] = tweet["user"]["screen_name"]
         tweetdict["text"] = tweet["text"]
 
@@ -36,6 +37,8 @@ def handler(tweet):
             tweetdict["date"] = datetime.strptime(stringTime,'%a %b %d %H:%M:%S %z %Y').strftime('%Y-%m-%d %H:%M:%S%z')
         else:
             tweetdict["date"] =""
+        
+        tweetdict["_id"] =datetime.strptime(stringTime,'%a %b %d %H:%M:%S %z %Y').strftime('%Y-%m-%d')+":"+tweet["id_str"]
 
         tweetdict["hashtags"] = []
 
@@ -51,7 +54,7 @@ def handler(tweet):
 
             List = tweet["extended_tweet"]["entities"]["hashtags"]
             for hashtag in List:
-                 tweetdict["hashtags"].append(hashtag["text"])
+                 tweetdict["hashtags"].append("#"+hashtag["text"])
 
 
         
@@ -63,40 +66,56 @@ def handler(tweet):
                 (X,Y) = tweet["geo"]["coordinates"]
                 tweetdict["geo"] = [Y,X]
             except:
-                tweetdict["geo"] = []
+                tweetdict["geo"] = [""]
         
         else:
-            tweetdict["geo"] = []
+            tweetdict["geo"] = [""]
+        
+        tweetdict_labelled = label_sentiment(tweetdict)
 
-        pack = js.dumps(tweetdict)
+        pack = json.dumps(tweetdict_labelled)
         print(pack)
         return pack
 
     except Exception as e:
 
         print(e)
-        time.sleep(30)
+        print("ahhh, maybe a rate limit")
+        time.sleep(100)
 
 
 parser = argparse.ArgumentParser(description='COMP90024 Twitter Streamer')
-
-parser.add_argument('-l','--list', nargs='+', default=[141, -38, 150, -34])
 parser.add_argument('--filename', type=str, default="streamlog.txt")
+parser.add_argument('--address',type = str,default="172.26.130.162")
+parser.add_argument('--username',type = str,default= "admin")
+parser.add_argument('--password',type = str,default = "password")
+parser.add_argument('--database',type = str, default= "just_in_vic")
 args = parser.parse_args()
 
-file = open(args.filename, "w+",encoding= "utf-8")
+PATH = "http://"+args.username+":"+args.password+"@"+args.address+":5984"
+
+
+couch = couchdb.Server(PATH)
+try:
+    db = couch[args.database]
+except:
+    db = couch.create(args.database)
+
+streamlog = open(args.filename, "w+",encoding= "utf-8")
         
 class TweetListener(StreamListener):
 
     def on_data(self, data):
 
-        tweet = js.loads(data,encoding = 'utf-8')
+        tweet = json.loads(data,encoding = 'utf-8')
         print(tweet)
     	# need to filter out the retweets
         if not tweet["text"].startswith('RT') and tweet["retweeted"] == False:
-            tweetJson = handler(tweet)
-            if(tweetJson is not None):
-                file.write(tweetJson+"\n")
+            tweetjson = handler(tweet)
+            if(tweetjson is not None):
+                uploadable_tweet = json.loads(tweetjson)
+                db.save(uploadable_tweet)
+                streamlog.write(tweetjson+"\n")
         return True
 
     def on_error(self, status):
@@ -112,6 +131,6 @@ if __name__ == '__main__':
     stream = Stream(auth, listener)
 
     #This line filter Twitter Streams to capture data around Victoria state
-    stream.filter(locations=args.list) 
+    stream.filter(locations=[141, -38, 150, -34]) 
 
-    file.close()
+    streamlog.close()

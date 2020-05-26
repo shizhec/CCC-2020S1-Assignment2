@@ -1,7 +1,4 @@
-import GetOldTweets3 as got 
-#import couchdb
-# import mpi4py
-# from mpi4py import MPI
+import GetOldTweets3 as getter 
 
 import argparse
 import json
@@ -17,22 +14,17 @@ args = parser.parse_args()
 
 output = open(args.filename, "w+",encoding = "utf-8")
 
-# comm = MPI.COMM_WORLD
-# comm_size = comm.Get_size()
-# comm_rank = comm.Get_rank()
-
-
 # couch = couchdb.Server('http://90024_12:90024_12@localhost:5984')
 # db = couch['twitter_sample']
 
 # tweet within 50mil of Melbourne central located 
-tweetCriteria = got.manager.TweetCriteria()\
+tweetCriteria = getter.manager.TweetCriteria()\
                 .setNear(args.coordinates)\
                 .setWithin(args.within)\
                 .setSince(args.startdate)\
                 .setUntil(args.enddate)\
 
-tweetlist = got.manager.TweetManager.getTweets(tweetCriteria)
+tweetlist = getter.manager.TweetManager.getTweets(tweetCriteria)
 
 tweet_json_list = []
 

@@ -1,0 +1,156 @@
+{
+  "NSW": {
+    "Confirmed": [
+      3090,
+      0
+    ],
+    "Deaths": [
+      48,
+      0
+    ],
+    "Cured": [
+      2656,
+      0
+    ],
+    "Active": [
+      386,
+      0
+    ],
+    "Tested": 422703
+  },
+  "VIC": {
+    "Confirmed": [
+      1605,
+      0
+    ],
+    "Deaths": [
+      19,
+      0
+    ],
+    "Cured": [
+      1520,
+      0
+    ],
+    "Active": [
+      66,
+      0
+    ],
+    "Tested": 431878
+  },
+  "QLD": {
+    "Confirmed": [
+      1056,
+      0
+    ],
+    "Deaths": [
+      6,
+      0
+    ],
+    "Cured": [
+      1038,
+      0
+    ],
+    "Active": [
+      12,
+      0
+    ],
+    "Tested": 174974
+  },
+  "WA": {
+    "Confirmed": [
+      564,
+      0
+    ],
+    "Deaths": [
+      9,
+      0
+    ],
+    "Cured": [
+      549,
+      0
+    ],
+    "Active": [
+      6,
+      0
+    ],
+    "Tested": 77501
+  },
+  "SA": {
+    "Confirmed": [
+      439,
+      0
+    ],
+    "Deaths": [
+      4,
+      0
+    ],
+    "Cured": [
+      435,
+      0
+    ],
+    "Active": [
+      0,
+      0
+    ],
+    "Tested": 90013
+  },
+  "TAS": {
+    "Confirmed": [
+      226,
+      0
+    ],
+    "Deaths": [
+      13,
+      0
+    ],
+    "Cured": [
+      201,
+      0
+    ],
+    "Active": [
+      12,
+      0
+    ],
+    "Tested": 24663
+  },
+  "ACT": {
+    "Confirmed": [
+      107,
+      0
+    ],
+    "Deaths": [
+      3,
+      0
+    ],
+    "Cured": [
+      104,
+      0
+    ],
+    "Active": [
+      0,
+      0
+    ],
+    "Tested": 16006
+  },
+  "NT": {
+    "Confirmed": [
+      30,
+      0
+    ],
+    "Deaths": [
+      0,
+      0
+    ],
+    "Cured": [
+      30,
+      0
+    ],
+    "Active": [
+      0,
+      0
+    ],
+    "Tested": 7223
+  },
+  "_id": "2020-05-26",
+  "_rev": "1-a28b962e58e0df8f5215a37143896bc8"
+}

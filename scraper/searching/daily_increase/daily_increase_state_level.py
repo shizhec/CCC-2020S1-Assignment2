@@ -65,7 +65,7 @@ key_date = today.strftime("%Y-%m-%d")
 results['_id'] = key_date
 
 # upload the result to couchdb
-couch = couchdb.Server('http://admin:password@127.0.0.1:5984/')
+couch = couchdb.Server('http://admin:password@172.26.130.162:5984/')
 db = couch['daily_increase']
 db.save(results)
 

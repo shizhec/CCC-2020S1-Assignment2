@@ -1,7 +1,7 @@
 import GetOldTweets3 as got 
 import json
 import couchdb
-
+from label import label_sentiment
 import argparse
 
 
@@ -9,14 +9,14 @@ parser = argparse.ArgumentParser(description='COMP90024 / get tweet via coordina
 parser.add_argument('--address',type = str,default="172.26.130.162")
 parser.add_argument('--username',type = str,default= "admin")
 parser.add_argument('--password',type = str,default = "password")
-parser.add_argument('--database',type = str, default= "username_realDonaldTrump")
-parser.add_argument('--username', type=str, default="realDonaldTrump")
-parser.add_argument('--startdate', type=str, default="2020-01-01")
+parser.add_argument('--database',type = str, default= "username_realdonaldtrump")
+parser.add_argument('--Tusername', type=str, default="realDonaldTrump")
+parser.add_argument('--startdate', type=str, default="2020-04-15")
 parser.add_argument('--enddate', type=str, default="2020-04-29")
 parser.add_argument('--filename', type=str, default="realDonaldTrump.json")
 args = parser.parse_args()
 
-output = open(args.filename, "w",encoding = "utf-8")
+output = open(args.filename, "w+",encoding = "utf-8")
 
 PATH = "http://"+args.username+":"+args.password+"@"+args.address+":5984"
 
@@ -30,7 +30,7 @@ except:
 # print("done")
 
 tweetCriteria = got.manager.TweetCriteria()\
-                .setUsername(args.username)\
+                .setUsername(args.Tusername)\
                 .setSince(args.startdate)\
                 .setUntil(args.enddate)\
               
@@ -48,8 +48,9 @@ for tweet in tweetlist:
     temp['text']= tweet.text
     temp['hashtags'] = tweet.hashtags.split()
     temp['geo'] = [tweet.geo]
-    tweet_json_list.append(temp)
-    db.save(temp)
+    temp_labeled = label_sentiment(temp) 
+    tweet_json_list.append(temp_labeled)
+    db.save(temp_labeled)
 
 tweets = {"docs":tweet_json_list}
 json.dump(tweets,output)
