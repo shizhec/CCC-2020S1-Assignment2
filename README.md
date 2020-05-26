@@ -13,8 +13,25 @@ Team Members:
 ### BackEnd
 1.
 
+### Scraper
+* Searching API
+  1. GetOldTweet3 modified for rate limit
+  2. generate matched shell script to run for each local government area in Victoria
+  3. Use shell scripts to automate the spier
+  4. Provide data to Natural Language Processing section
+  5. retreive processed data to upload to CouchDB
+* Streaming API
+  1. Stream in all the real-time tweets to CouchDB
+  2. keep a streamlog
+* Covid-19
+  1. Customized scraper for the two websites  
+     https://covid-19-au.com/  
+     https://www.dhhs.vic.gov.au/media-hub-coronavirus-disease-covid-19
+  2. Updated and modified on daily basis (no automation)
+
 ### Spider
 1.
+
 
 ### Natural Language Processing
 * Sentiment Analysis
@@ -51,3 +68,5 @@ Server 4: 172.26.132.136
 ```
 server 4 
 ```
+
+=======

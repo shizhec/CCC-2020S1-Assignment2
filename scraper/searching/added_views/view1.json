@@ -1,7 +1,8 @@
 {
+  "_rev": "1-057e945dd485c264b74bb7e92a0455e5",
   "views": {
     "coronavirus_related": {
-      "map": "function (doc) {\r\n  doc.hashtags.forEach(getHashtag);\r\n  \r\n  function getHashtag(item) {\r\n  if(item.includes(\"19\")&&item.toLowerCase().includes('co')||item.toLowerCase().includes('home')||item.toLowerCase().includes('lock')){\r\n  emit(\"corona_related\", 1);\r\n    }\r\n  }\r\n}",
+      "map": "function (doc) {\r\n  doc.hashtags.forEach(getHashtag);\r\n  \r\n  function getHashtag(item) {\r\n  if((item.includes(\"19\")&&item.toLowerCase().includes('co'))||item.toLowerCase().includes('home')||item.toLowerCase().includes('lock')||item.toLowerCase().includes('covid')||item.toLowerCase().includes('corona')||item.toLowerCase().includes('safe')){\r\n  emit(\"corona_related\", 1);\r\n    }\r\n  }\r\n}",
       "reduce": "_sum"
     }
   }
