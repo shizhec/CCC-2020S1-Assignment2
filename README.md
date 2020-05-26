@@ -15,3 +15,9 @@ University of Melbourne
     hashtags (str)  
     geo (str)  
 }
+
+# GetOldTweets3
+
+The open source libray, the pip installed version is not as good as the modified one,
+Leave the folder named with GetOldTweets3 there or move it to the default path where
+installed library should be.
