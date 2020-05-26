@@ -1,7 +1,6 @@
 from project import app, scheduler
 from flask import render_template, request, jsonify
 from project.model.couch import DB
-from flask_apscheduler import APScheduler
 from project import client
 import os
 
@@ -114,7 +113,7 @@ def aurin():
     region = request.args.get("region", type=str)
     types = request.args.get("type", type=str)
 
-    return jsonify(db.get_aurin(region.strip(), types.lower()))
+    return jsonify(db.get_aurin(region.strip(), types.lower() if types else 'all'))
 
 
 @scheduler.task('interval', id='refresh_data', hours=6, misfire_grace_time=900)

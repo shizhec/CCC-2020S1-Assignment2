@@ -1,5 +1,4 @@
 from datetime import datetime
-from project import app
 import datetime
 import time
 from cloudant.database import CloudantDatabase
@@ -7,15 +6,12 @@ from cloudant.database import CloudantDatabase
 
 def get_days(date_begin, date_end):
     date_list = []
-    if date_begin is not None:
-        begin_date = datetime.datetime.strptime(date_begin, "%Y-%m-%d")
-    else:
-        begin_date = datetime.datetime.strptime('2020-01-01', "%Y-%m-%d")
 
-    if date_end is not None:
-        end_date = datetime.datetime.strptime(date_end, "%Y-%m-%d")
-    else:
-        end_date = datetime.datetime.today()
+    begin_date = datetime.datetime.strptime(date_begin, "%Y-%m-%d") \
+        if date_begin else datetime.datetime.strptime('2020-01-01', "%Y-%m-%d")
+
+    end_date = datetime.datetime.strptime(date_end, "%Y-%m-%d") \
+        if date_begin else datetime.datetime.today()
 
     while begin_date <= end_date:
         date_str = begin_date.strftime("%Y-%m-%d")
@@ -29,7 +25,7 @@ class DB:
         self.client = client
         self.dic = None
 
-    def get_sentiment(self, region, date_begin='2020-01-01', date_end=datetime.datetime.today()):
+    def get_sentiment(self, region, date_begin, date_end):
         db = CloudantDatabase(self.client, region, partitioned=True)
         days = get_days(date_begin, date_end)
 
@@ -39,7 +35,7 @@ class DB:
                 counts[re['key']] += re['value']
         return counts
 
-    def get_hashtag(self, region, date_begin='2020-01-01', date_end=datetime.datetime.today()):
+    def get_hashtag(self, region, date_begin, date_end):
         db = CloudantDatabase(self.client, region, partitioned=True)
         days = get_days(date_begin, date_end)
 
@@ -49,7 +45,7 @@ class DB:
                 counts += re['value']
         return {'count': counts}
 
-    def get_corona(self, region, date_begin='2020-01-01', date_end=datetime.datetime.today()):
+    def get_corona(self, region, date_begin, date_end):
         db = CloudantDatabase(self.client, region, partitioned=True)
         days = get_days(date_begin, date_end)
 
@@ -59,7 +55,7 @@ class DB:
                 counts += re['value']
         return {'count': counts}
 
-    def get_overview(self, date_begin='2020-01-01', date_end=datetime.datetime.today()):
+    def get_overview(self, date_begin, date_end):
         db = CloudantDatabase(self.client, 'daily_increase', partitioned=False)
         days = get_days(date_begin, date_end)
 
@@ -82,7 +78,7 @@ class DB:
 
         return results
 
-    def get_tweet_count(self, region, date_begin='2020-01-01', date_end=datetime.datetime.today()):
+    def get_tweet_count(self, region, date_begin, date_end):
         db = CloudantDatabase(self.client, region, partitioned=True)
         days = get_days(date_begin, date_end)
 
@@ -92,7 +88,7 @@ class DB:
                 counts += re['value']
         return {'count': counts}
 
-    def get_hashtag_overview(self, region, date_begin='2020-01-01', date_end=datetime.datetime.today()):
+    def get_hashtag_overview(self, region, date_begin, date_end):
         db = CloudantDatabase(self.client, region, partitioned=True)
         days = get_days(date_begin, date_end)
 
@@ -102,7 +98,7 @@ class DB:
                 results[re['key']] = results.get(re['key'], 0) + re['value']
         return sorted(results.items(), key=lambda item: item[1], reverse=True)
 
-    def get_overview_lga(self, date_begin='2020-01-01', date_end=datetime.datetime.today()):
+    def get_overview_lga(self, date_begin, date_end):
         db = CloudantDatabase(self.client, 'daily_increase_lga', partitioned=False)
         days = get_days(date_begin, date_end)
 
@@ -124,7 +120,7 @@ class DB:
 
         return results
 
-    def get_sentiment_user(self, db, date_begin='2020-04-01', date_end=datetime.datetime.today()):
+    def get_sentiment_user(self, db, date_begin, date_end):
         db = CloudantDatabase(self.client, db, partitioned=False)
         days = get_days(date_begin, date_end)
 
@@ -155,7 +151,7 @@ class DB:
         db.delete()
         return results
 
-    def get_aurin(self, region='melbourne', types='all'):
+    def get_aurin(self, region, types):
         mapping = {'income': "income_num(aud)",
                    'labor': "labour_force_num",
                    'participation': "Participation_rate%",
