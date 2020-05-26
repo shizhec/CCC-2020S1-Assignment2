@@ -20,7 +20,8 @@ def sentiment():
     date_begin = request.args.get("date_start", type=str)
     date_end = request.args.get("date_end", type=str)
 
-    region = region.strip().lower().replace(' ', '_')
+    region = region.strip().lower().replace(' ', '_') \
+        .replace('(unincorporated)', '(uninc)')
     return jsonify(db.get_sentiment(region, date_begin, date_end))
 
 
@@ -30,7 +31,8 @@ def hashtag():
     date_begin = request.args.get("date_start", type=str)
     date_end = request.args.get("date_end", type=str)
 
-    region = region.strip().lower().replace(' ', '_')
+    region = region.strip().lower().replace(' ', '_') \
+        .replace('(unincorporated)', '(uninc)')
     return jsonify(db.get_hashtag(region, date_begin, date_end))
 
 
@@ -40,7 +42,8 @@ def corona_related():
     date_begin = request.args.get("date_start", type=str)
     date_end = request.args.get("date_end", type=str)
 
-    region = region.strip().lower().replace(' ', '_')
+    region = region.strip().lower().replace(' ', '_') \
+        .replace('(unincorporated)', '(uninc)')
     return jsonify(db.get_corona(region, date_begin, date_end))
 
 
@@ -61,7 +64,8 @@ def tweet_count():
     date_begin = request.args.get("date_start", type=str)
     date_end = request.args.get("date_end", type=str)
 
-    region = region.strip().lower().replace(' ', '_')
+    region = region.strip().lower().replace(' ', '_') \
+        .replace('(unincorporated)', '(uninc)')
     return jsonify(db.get_tweet_count(region, date_begin, date_end))
 
 
@@ -71,7 +75,8 @@ def hashtag_overview():
     date_begin = request.args.get("date_start", type=str)
     date_end = request.args.get("date_end", type=str)
 
-    region = region.strip().lower().replace(' ', '_')
+    region = region.strip().lower().replace(' ', '_') \
+        .replace('(unincorporated)', '(uninc)')
     return jsonify(db.get_hashtag_overview(region, date_begin, date_end))
 
 
