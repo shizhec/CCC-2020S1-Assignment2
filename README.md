@@ -17,7 +17,22 @@ Team Members:
 1.
 
 ### Natural Language Processing
-1.
+* Sentiment Analysis
+  1. Remove non-text tweets.
+  2. Use NLTK Vader to do the intensity analysis.
+  3. Gives a compound score of sentiment, and also a label
+     of negative/positive/neutral based on ±0.05 boundry.
+* Topic Modelling
+  1. Remove emails, newline characters and single quotes.
+  2. Using gensim module to continue pre-processing .
+  3. Using bigram and trigram model to enhance word.
+  4. Only keep and Lemmatize NOUN and ADJECTIVE
+  5. latent dirichlet allocation model for topic extraction
+  6. Wordcloud to show the result with top 10 frequent words.
+  
+
+Implement three kinds of analytics on each tweet
+Upload the result to the second level CouchDB (call backend interface)
 
 ### Deployment
 1.
