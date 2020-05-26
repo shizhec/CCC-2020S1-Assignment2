@@ -1,0 +1,7 @@
+nltk
+tqdm
+cloudant
+couchdb
+flask
+gunicorn
+flask_apscheduler

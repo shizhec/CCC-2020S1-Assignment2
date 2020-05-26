@@ -1,7 +1,7 @@
 from datetime import datetime
 from project import app
 import datetime
-
+import time
 from cloudant.database import CloudantDatabase
 
 
@@ -114,7 +114,6 @@ class DB:
                 results[day] = {key: value for key, value in res.items() if key != '_id' and key != '_rev'}
         return results
 
-
     def get_all_overview_lga(self):
         db = CloudantDatabase(self.client, 'daily_increase_lga', partitioned=False)
         results = {}
@@ -123,3 +122,41 @@ class DB:
             results[day_data['_id']] = {key: value for key, value in day_data.items() if key != '_id' and key != '_rev'}
 
         return results
+
+    def get_sentiment_user(self, db, date_begin='2020-04-01', date_end=datetime.datetime.today()):
+        db = CloudantDatabase(self.client, db, partitioned=False)
+        days = get_days(date_begin, date_end)
+
+        while not db.exists():
+            time.sleep(0.1)
+
+        results = {'negative': 0, 'neutral': 0, 'positive': 0}
+        for tweet_data in db:
+            results[tweet_data['simple_sentiment_label']] += 1
+
+        db.delete()
+        return results
+
+    def get_aurin(self, region, type):
+        mapping = {'income': "income_num(aud)",
+                   'labor': "labour_force_num",
+                   'participation': "Participation_rate%",
+                   'unemployment': "Unemployment_rate%",
+                   'highedu': "higher_education_rate%",
+                   'male': "Male",
+                   'female': "Female"}
+        db = CloudantDatabase(self.client, 'aurin', partitioned=False)
+        for key, value in db['aurin_data'].items():
+            if key[:5].lower().replace(' ', '_') == region[:5].lower():
+                return value.get(mapping.get(type, ""), -1)
+
+        return -1
+
+    def get_tweet_count_today(self, region, date=datetime.datetime.today()):
+        db = CloudantDatabase(self.client, region, partitioned=True)
+
+        counts = 0
+
+        for re in db.get_partitioned_view_result(date, '_design/tweet_count', 'tweet_count'):
+            counts += re['value']
+        return {'count': counts}
