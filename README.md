@@ -8,7 +8,7 @@ Team Members:
 
 ## Project Structure
 ### FrontEnd
-1
+1.
 
 ### BackEnd
 1.
@@ -17,6 +17,9 @@ Team Members:
 1.
 
 ### Natural Language Processing
+1.
+
+### Deployment
 1.
 
 ## Server Arrangement
