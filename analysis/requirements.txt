@@ -1,0 +1,14 @@
+json
+pandas
+numpy
+argparse
+tqdm
+gensim
+spacy
+python -m spacy download en
+pprint
+nltk
+wordcould
+matplotlib
+#import nltk
+#nltk.download("vader_lexicon")
