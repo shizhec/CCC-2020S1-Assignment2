@@ -8,8 +8,7 @@ Team Members:
 
 ## Project Structure
 ### FrontEnd
-1.
-
+1
 
 ### BackEnd
 1.

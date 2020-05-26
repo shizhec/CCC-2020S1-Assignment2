@@ -1,0 +1,27 @@
+version: "3.6"
+services:
+  server:
+    container_name: ccc_server
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    command: gunicorn --bind 0.0.0.0:5000 project:app
+    ports:
+      - 5000:5000
+    env_file:
+      - ./server/.env_server
+    expose:
+      - 5000
+    environment:
+      - "COUCHDB_USER={{ couchdb_user }}"
+      - "COUCHDB_PASSWORD={{ couchdb_password }}"
+      - "COUCHDB_IP={{ db_host }}"
+
+  nginx:
+    container_name: ccc_nginx
+    build: ./nginx
+    ports:
+      - 80:80
+      - 443:443
+    depends_on: 
+      - server

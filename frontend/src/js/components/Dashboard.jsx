@@ -1,22 +1,24 @@
 import React, { Component } from "react";
-import { Row, Col, Card } from "antd";
+import { Row, Col } from "antd";
+
 import "antd/dist/antd.min.css";
+
 import { VerticalBarChart } from "./visualisation/VerticalBarChart";
-import { SimplePieChart } from "./visualisation/SimplePieChart";
+import { PieChart } from "./visualisation/PieChart";
+import { LineChart } from "./visualisation/LineChart";
 
 class Dashboard extends Component {
   render() {
     return (
       <Row>
         <Col span={12}>
-          <Card hoverable className="col-6" title="Card One">
-            <VerticalBarChart />
-          </Card>
+          <VerticalBarChart />
         </Col>
         <Col span={12}>
-          <Card hoverable className="col-6" title="Card Two">
-            <SimplePieChart />
-          </Card>
+          <PieChart />
+        </Col>
+        <Col span={12}>
+          <LineChart />
         </Col>
       </Row>
     );

@@ -9,14 +9,14 @@ export user=admin
 export pass=password
 
 echo "==set_enable_cluster=="
-for node in ${nodes}
+for node in ${nodes[@]}
 do 
 curl -X POST "http://${user}:${pass}@${node}:5984/_cluster_setup" -H 'Content-Type: application/json' \
     -d "{\"action\": \"enable_cluster\", \"bind_address\":\"0.0.0.0\", \"username\": \"${user}\", \"password\":\"${pass}\", \"node_count\":\"${size}\"}"
 done
 
 echo "==set_enable_cluster_for_slaves=="
-for node in ${other_nodes} 
+for node in ${other_node[@]} 
 do
     curl -XPOST "http://${user}:${pass}@${master_node}:5984/_cluster_setup" \
       --header "Content-Type: application/json"\
@@ -27,7 +27,7 @@ do
 done
 
 echo "==add node=="
-for node in ${other_nodes}
+for node in ${other_node[@]}
 do
     curl -XPOST "http://${user}:${pass}@${master_node}:5984/_cluster_setup"\
       --header "Content-Type: application/json"\

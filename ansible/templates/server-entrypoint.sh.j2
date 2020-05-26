@@ -1,0 +1,12 @@
+#!/bin/bash
+
+
+echo "Waiting for CouchDB..."
+
+while ! nc -z $COUCHDB_IP 5984; do
+    sleep 0.1
+done
+
+echo "CouchDB started"
+
+exec "$@"

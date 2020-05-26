@@ -1,0 +1,29 @@
+version: "3.6"
+services:
+  spark-master:
+    image: bde2020/spark-master:2.4.5-hadoop2.7
+    container_name: spark-master
+    expose:
+      - 7001
+      - 7002
+      - 7003
+      - 7004
+      - 7005
+      - 7006
+      - 7077
+    ports:
+      - 4040:4040
+      - 6066:6066
+      - 7077:7077
+      - 8080:8080
+    environment:
+      - INIT_DAEMON_STEP=setup_spark
+  spark-worker:
+    image: bde2020/spark-worker:2.4.5-hadoop2.7
+    container_name: spark-worker
+    depends_on:
+      - spark-master
+    ports:
+      - 8081:8081
+    environment:
+      - "SPARK_MASTER=spark://{{ db_host }}:7077"
