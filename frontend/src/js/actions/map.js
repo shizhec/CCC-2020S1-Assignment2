@@ -44,8 +44,11 @@ export const reverseGeocoding = (
   { lat, lng, x, y },
   currentComparingTargetIndex = null,
   datesRange = []
-) => (dispatch) =>
-  fetch(builtReverseGeocodingUrl(lat, lng))
+) => (dispatch) => {
+  dispatch(resetLGAData());
+  dispatch(updateLastClickedInfo());
+  
+  return fetch(builtReverseGeocodingUrl(lat, lng))
     .then((res) => {
       if (res.ok) {
         return res.json();
@@ -84,6 +87,7 @@ export const reverseGeocoding = (
         getDataOfLGA(cityName, datesRange[0], datesRange[1])(dispatch);
       }
     });
+};
 
 export function resetLGAData() {
   return { type: RESET_LGA_DATA };
