@@ -143,7 +143,7 @@
     remote_src: yes
 
 - name: Run npm install
-  command: npm build
+  command: npm install
   args:
     chdir: "{{ server_directory }}/frontend/"
 
