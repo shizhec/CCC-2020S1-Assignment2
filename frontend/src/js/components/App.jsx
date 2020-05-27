@@ -14,6 +14,7 @@ import { Map } from "./Map";
 import { Dashboard } from "./Dashboard";
 import { Header } from "./Header";
 import { ComparisonBoard } from "./comparison/ComparisonBoard";
+import { TweetUserBoard } from "./TweetUserBoard";
 
 class AppComponent extends Component {
   componentDidMount() {
@@ -21,7 +22,7 @@ class AppComponent extends Component {
   }
 
   render() {
-    const { boardVisible } = this.props;
+    const { boardVisible, tweetUserBoardIsOpen } = this.props;
 
     return (
       <>
@@ -30,6 +31,7 @@ class AppComponent extends Component {
         <Map />
         <Dashboard />
         {boardVisible && <ComparisonBoard />}
+        {tweetUserBoardIsOpen && <TweetUserBoard />}
       </>
     );
   }
@@ -38,7 +40,9 @@ class AppComponent extends Component {
 const mapStateToProps = (state) => {
   const { isFullScreen } = state.map;
   const { boardVisible } = state.comparison;
-  return { isFullScreen, boardVisible };
+  const { tweetUserBoardIsOpen } = state.search;
+
+  return { isFullScreen, boardVisible, tweetUserBoardIsOpen };
 };
 
 const mapDispatchToProps = (dispatch) => {

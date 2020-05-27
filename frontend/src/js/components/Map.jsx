@@ -59,8 +59,8 @@ class MapComponent extends Component {
   };
 
   initDataLayer() {
-    console.log("this.map =", this.map);
-    console.log("this.maps =", this.maps);
+    // console.log("this.map =", this.map);
+    // console.log("this.maps =", this.maps);
 
     if (this.maps) {
       this.dataLayer = new this.maps.Data({ map: this.map });
@@ -77,7 +77,11 @@ class MapComponent extends Component {
         const name = capitalizeString(feature.getProperty("vic_lga__3"));
 
         // console.log("in setDataStyle, name =", name);
+<<<<<<< HEAD
         let colors = gradient("#be9283", "#621b47", 7);
+=======
+        let colors = gradient("#ffffff", "#be2026", 7);
+>>>>>>> c6d70ef69658ffe2a3d749d873c484e41138f86f
 
         const valueOfThisLGA = extractedMapData.get(name);
         // console.log("valueOfThisLGA =", valueOfThisLGA);
@@ -95,8 +99,11 @@ class MapComponent extends Component {
 
         // let fillColor = colors[i];
 
+<<<<<<< HEAD
         let fillColor = valueOfThisLGA === undefined ? "#c7b79e" : colors[i];
 
+=======
+>>>>>>> c6d70ef69658ffe2a3d749d873c484e41138f86f
         // console.log(
         //   `valueOfThisLGA =${valueOfThisLGA}, LGA = ${name}, color = ${fillColor} colors = ${colors}, i = ${i}`
         // );
@@ -113,7 +120,7 @@ class MapComponent extends Component {
   };
 
   render() {
-    console.log("Map, this.props = ", this.props);
+    // console.log("Map, this.props = ", this.props);
 
     const {
       isFullScreen,
@@ -165,7 +172,7 @@ class MapComponent extends Component {
                 updateMapCenterAndZoom(center, zoom)
               }
               onClick={(value) => {
-                console.log("onClick trigerred, value =", value);
+                // console.log("onClick trigerred, value =", value);
                 this.getLocationInfo(value);
                 if (hideComparisonPanel) {
                   hideComparisonPanel();
@@ -232,7 +239,7 @@ const mapStateToProps = (state) => {
     minValue,
   ] = extractMostRecentDataOfVicLGA(vicLGAOverviewData, true, datesRange);
 
-  const parsedDateRange = extractStartAndEndDateFromArray(datesRange);
+  const parsedDateRange = extractStartAndEndDateFromArray(datesRange, true);
 
   const showPopup =
     lastClickedInfo &&

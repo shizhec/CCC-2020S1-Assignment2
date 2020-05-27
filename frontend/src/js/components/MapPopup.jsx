@@ -7,7 +7,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Popover, Row, Col } from "antd";
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMapPin } from "@fortawesome/free-solid-svg-icons";
 

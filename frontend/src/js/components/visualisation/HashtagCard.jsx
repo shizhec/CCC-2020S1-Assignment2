@@ -28,7 +28,7 @@ class HashtagCardComponent extends Component {
   }
 
   render() {
-    console.log("In HashtagCard, this.props =", this.props);
+    // console.log("In HashtagCard, this.props =", this.props);
     const { cityName, stateName, hashtagCount, data } = this.props;
 
     let title = "Tweet Sentiment Data";
@@ -43,7 +43,7 @@ class HashtagCardComponent extends Component {
             <span>
               <b>Number of Hashtags: </b>
             </span>
-            {hashtagCount}
+            {hashtagCount || "N/A"}
           </p>
         </div>
         <ResponsiveContainer>
@@ -69,20 +69,28 @@ class HashtagCardComponent extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  const { hashtagCount, hashtagOverview } = state.xhr;
+const mapStateToProps = (state, { hashtagCount, hashtagOverview }) => {
+  if (!hashtagCount && !hashtagOverview) {
+    ({ hashtagCount, hashtagOverview } = state.xhr);
+  }
+
   const { lastClickedInfo } = state.map;
 
   let cityName = "";
   let stateName = "";
 
-  if (lastClickedInfo && lastClickedInfo.address) {
+  if (
+    hashtagCount &&
+    hashtagOverview &&
+    lastClickedInfo &&
+    lastClickedInfo.address
+  ) {
     cityName = getCityName(lastClickedInfo.address);
     stateName = getStateName(lastClickedInfo.address);
   }
 
   let sortedTop10 = [];
-  if (hashtagOverview.length > 0) {
+  if (hashtagOverview && hashtagOverview.length > 0) {
     sortedTop10 = hashtagOverview.sort((a, b) => b[1] - a[1]);
     if (sortedTop10.length > 10) {
       sortedTop10 = sortedTop10.slice(0, 10);

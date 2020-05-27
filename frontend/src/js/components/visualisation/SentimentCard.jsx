@@ -98,7 +98,7 @@ const renderActiveShape = (props) => {
         textAnchor={textAnchor}
         fill="#333"
       >
-        {`(Percent: ${(percent * 100).toFixed(2)}%)`}
+        {`${(percent * 100).toFixed(2)}%`}
       </text>
     </g>
   );
@@ -168,8 +168,11 @@ class SentimentCardComponent extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  const { sentiment } = state.xhr;
+const mapStateToProps = (state, { sentiment }) => {
+  if (!sentiment) {
+    ({ sentiment } = state.xhr);
+  }
+
   const { lastClickedInfo } = state.map;
 
   let cityName = "";

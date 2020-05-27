@@ -24,7 +24,7 @@ import { STATE_MAPPING } from "../../constants/states";
 import { getStateShortName } from "../../utils/googleMap";
 
 function VerticalBarChartComponent({ data, targetState, timeOfData }) {
-  console.log("data =", data);
+  // console.log("data =", data);
 
   return (
     <Card

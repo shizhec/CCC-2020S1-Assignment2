@@ -63,16 +63,16 @@ export const reverseGeocoding = (
       throw res.statusText;
     })
     .then((address) => {
-      console.log("In reverseGeocoding, datesRange =", datesRange);
-      console.log("In reverseGeocoding, address =", address);
-      console.log(
-        "In reverseGeocoding, cityName =",
-        getCityAddressObject(address)
-      );
-      console.log(
-        "In reverseGeocoding, currentComparingTargetIndex =",
-        currentComparingTargetIndex
-      );
+      // console.log("In reverseGeocoding, datesRange =", datesRange);
+      // console.log("In reverseGeocoding, address =", address);
+      // console.log(
+      //   "In reverseGeocoding, cityName =",
+      //   getCityAddressObject(address)
+      // );
+      // console.log(
+      //   "In reverseGeocoding, currentComparingTargetIndex =",
+      //   currentComparingTargetIndex
+      // );
 
       if (currentComparingTargetIndex === null) {
         dispatch(updateLastClickedInfo({ lat, lng, x, y, address }));

@@ -20,3 +20,4 @@ export const API__GET_SENTIMENT_OF_LGA = "/api/sentiment";
 export const API__GET_HASHTAG_OF_LGA = "/api/hashtag";
 export const API__GET_HASHTAG_OVERVIEW_OF_LGA = "/api/hashtag_overview";
 export const API__GET_AURIN_DATA = "/api/aurin";
+export const API__GET_USER_SENTIMENT = "/api/sentiment_user";
