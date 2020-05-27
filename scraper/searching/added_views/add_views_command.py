@@ -1,3 +1,9 @@
+# @Author: Yizhou Zhu
+# @Email:  yizzhu@student.unimelb.edu.au
+# @Filename: add_views_command.py
+# @Last modified by:   Yizhou Zhu
+# @Last modified time: 2020-05-26
+
 import json
 import os
 

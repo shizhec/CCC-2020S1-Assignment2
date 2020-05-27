@@ -1,10 +1,10 @@
 # @Author: Yizhou Zhu
 # @Email:  yizzhu@student.unimelb.edu.au
-# @Filename: daily_increase_lga_level.py
+# @Filename: getFromTopic.py
 # @Last modified by:   Yizhou Zhu
 # @Last modified time: 2020-05-26
 
-import GetOldTweets3 as got
+import GetOldTweets3 as getter
 import json
 
 import argparse
@@ -22,13 +22,13 @@ args = parser.parse_args()
 
 output = open(args.filename, "w+",encoding = "utf-8")
 
-tweetCriteria = got.manager.TweetCriteria()\
+tweetCriteria = getter.manager.TweetCriteria()\
                 .setQuerySearch(args.text)\
                 .setSince(args.startdate)\
                 .setUntil(args.enddate)\
                 .setMaxTweets(args.max)
 
-tweetlist = got.manager.TweetManager.getTweets(tweetCriteria)
+tweetlist = getter.manager.TweetManager.getTweets(tweetCriteria)
 
 
 tweet_json_list = []
