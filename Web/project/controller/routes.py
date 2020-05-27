@@ -23,8 +23,8 @@ def index():
 @app.route('/api/sentiment')
 def sentiment():
     region = request.args.get("region", type=str, default='melbourne')
-    date_begin = request.args.get("date_start", type=str, default='2020-05-01')
-    date_end = request.args.get("date_end", type=str, default='2020-05-10')
+    date_begin = request.args.get("date_start", type=str, default='2020-01-01')
+    date_end = request.args.get("date_end", type=str, default='2020-05-26')
 
     region = region.strip().lower().replace(' ', '_') \
         .replace('(unincorporated)', '(uninc)')
@@ -34,8 +34,8 @@ def sentiment():
 @app.route('/api/hashtag')
 def hashtag():
     region = request.args.get("region", type=str, default='melbourne')
-    date_begin = request.args.get("date_start", type=str, default='2020-05-01')
-    date_end = request.args.get("date_end", type=str, default='2020-05-10')
+    date_begin = request.args.get("date_start", type=str, default='2020-01-01')
+    date_end = request.args.get("date_end", type=str, default='2020-05-26')
 
     region = region.strip().lower().replace(' ', '_') \
         .replace('(unincorporated)', '(uninc)')
@@ -45,8 +45,8 @@ def hashtag():
 @app.route('/api/corona')
 def corona_related():
     region = request.args.get("region", type=str, default='melbourne')
-    date_begin = request.args.get("date_start", type=str, default='2020-05-01')
-    date_end = request.args.get("date_end", type=str, default='2020-05-10')
+    date_begin = request.args.get("date_start", type=str, default='2020-01-01')
+    date_end = request.args.get("date_end", type=str, default='2020-05-26')
 
     region = region.strip().lower().replace(' ', '_') \
         .replace('(unincorporated)', '(uninc)')
@@ -55,8 +55,8 @@ def corona_related():
 
 @app.route('/api/overview')
 def overview():
-    date_begin = request.args.get("date_start", type=str, default='2020-05-01')
-    date_end = request.args.get("date_end", type=str, default='2020-05-10')
+    date_begin = request.args.get("date_start", type=str, default='2020-01-01')
+    date_end = request.args.get("date_end", type=str, default='2020-05-26')
 
     if date_begin is None:
         return jsonify(db.get_all_overview())
@@ -67,8 +67,8 @@ def overview():
 @app.route('/api/tweet_count')
 def tweet_count():
     region = request.args.get("region", type=str, default='melbourne')
-    date_begin = request.args.get("date_start", type=str, default='2020-05-01')
-    date_end = request.args.get("date_end", type=str, default='2020-05-10')
+    date_begin = request.args.get("date_start", type=str, default='2020-01-01')
+    date_end = request.args.get("date_end", type=str, default='2020-05-26')
 
     region = region.strip().lower().replace(' ', '_') \
         .replace('(unincorporated)', '(uninc)')
@@ -78,8 +78,8 @@ def tweet_count():
 @app.route('/api/hashtag_overview')
 def hashtag_overview():
     region = request.args.get("region", type=str, default='melbourne')
-    date_begin = request.args.get("date_start", type=str, default='2020-05-01')
-    date_end = request.args.get("date_end", type=str, default='2020-05-10')
+    date_begin = request.args.get("date_start", type=str, default='2020-01-01')
+    date_end = request.args.get("date_end", type=str, default='2020-05-26')
     top = request.args.get("top", type=int)
 
     region = region.strip().lower().replace(' ', '_') \
@@ -90,7 +90,7 @@ def hashtag_overview():
 @app.route('/api/covid_19_vic_lga_overview')
 def overview_lga():
     date_begin = request.args.get("date_start", type=str)
-    date_end = request.args.get("date_end", type=str, default='2020-05-10')
+    date_end = request.args.get("date_end", type=str, default='2020-05-26')
 
     if date_begin is None:
         return jsonify(db.get_all_overview_lga())
@@ -102,7 +102,7 @@ def overview_lga():
 def sentiment_user():
     user = request.args.get("user", type=str, default='healthgovau')
     date_begin = request.args.get("date_start", type=str, default='2020-05-01')
-    date_end = request.args.get("date_end", type=str, default='2020-05-10')
+    date_end = request.args.get("date_end", type=str, default='2020-05-26')
 
     os.system('python3 ' + ' searching/getFromUsername.py ' +
               ' --address ' + '172.26.130.251' +
