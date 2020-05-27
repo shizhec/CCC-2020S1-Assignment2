@@ -7,6 +7,7 @@ from flask import render_template, request, jsonify
 from project.model.couch import DB
 from project import client
 import os
+from searching.getFromUsername import user_ana
 
 # create CouchDB class
 db = DB(client)
@@ -104,18 +105,33 @@ def sentiment_user():
     date_begin = request.args.get("date_start", type=str, default='2020-05-01')
     date_end = request.args.get("date_end", type=str, default='2020-05-26')
 
-    os.system('python3 ' + ' searching/getFromUsername.py ' +
-              ' --address ' + '172.26.130.251' +
-              ' --database username_' + user.strip().lower() +
-              ' --Tusername ' + user.strip() +
-              ' --startdate ' + date_begin +
-              ' --enddate ' + date_end +
-              ' --filename ' + user.strip() + '.json')
+    results = {'negative': 0, 'neutral': 0, 'positive': 0}
+    cou = 0
+    hash_count = {}
+    related = 0
+    hash_cou = 0
 
-    os.system('rm ' + user.strip() + '.json')
+    for res in user_ana(user, date_begin, date_end):
+        results[res['simple_sentiment_label']] += 1
+        cou += 1
+        flag = 0
+        for hash in res['hashtags']:
+            hash_cou += 1
+            hash = hash.lower()
+            if 'covid' in hash or 'corona' in hash or ('19' in hash and 'co' in hash) \
+                    or 'home' in hash or 'lock' in hash or 'safe' in hash:
+                flag = 1
 
-    return jsonify(db.get_sentiment_user('username_' + user.strip().lower(),
-                                         date_begin, date_end))
+            hash_count[hash] = hash_count.get(hash, 0) + 1
+
+        related += flag
+
+    results['count'] = cou
+    results['hashtags'] = sorted(hash_count.items(), key=lambda item: item[1], reverse=True)
+    results['coronavirus_related'] = related
+    results['hashtag_count'] = hash_cou
+
+    return jsonify(results)
 
 
 @app.route('/api/aurin')
