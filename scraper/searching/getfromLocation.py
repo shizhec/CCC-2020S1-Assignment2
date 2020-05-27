@@ -1,6 +1,6 @@
 # @Author: Yizhou Zhu
 # @Email:  yizzhu@student.unimelb.edu.au
-# @Filename: daily_increase_lga_level.py
+# @Filename: getfromLocaiton.py
 # @Last modified by:   Yizhou Zhu
 # @Last modified time: 2020-05-26
 
