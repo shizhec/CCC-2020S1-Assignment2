@@ -1,5 +1,6 @@
 nltk
 tqdm
+pyquery
 cloudant
 couchdb
 flask
