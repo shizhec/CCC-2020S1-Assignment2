@@ -1,4 +1,9 @@
+# COMP90024 Cluster and Cloud Computer Team 12
+# @Author: Shizhe Cai
+# @student id: 798125
+# @email: shizhec@student.unimelb.edu.au
 ---
+# create working directory for server
 - name: create server directory
   tags: 'server'
   become: yes
@@ -9,6 +14,7 @@
     recurse: yes
     state: directory
 
+# create working directory for nginx
 - name: create nginx directory
   tags: 'nginx'
   become: yes
@@ -19,6 +25,7 @@
     recurse: yes
     state: directory
 
+# render template of the docker compose of server and nginx
 - name: Configure docker compose for server and ngix
   tags: 'nginx'
   become: yes
@@ -28,6 +35,7 @@
     owner: ubuntu
     group: ubuntu
 
+# configure docker file for nginx
 - name: Configure nginx docker file
   tags: 'nginx'
   become: yes
@@ -37,6 +45,7 @@
     owner: ubuntu
     group: ubuntu
 
+# configure configuration file for nginx
 - name: Configure nginx config file
   tags: 'nginx'
   become: yes
@@ -46,6 +55,7 @@
     owner: ubuntu
     group: ubuntu
 
+# configure docker file for server
 - name: Configure server docker file
   tags: 'server'
   become: yes
@@ -55,6 +65,7 @@
     owner: ubuntu
     group: ubuntu
 
+# configure env file for server
 - name: Configure server env file
   tags: 'server'
   become: yes
@@ -64,6 +75,7 @@
     owner: ubuntu
     group: ubuntu
 
+# configure entrypoint for server
 - name: Configure server entrypoint
   tags: 'server'
   become: yes
@@ -73,6 +85,7 @@
     owner: ubuntu
     group: ubuntu
 
+# configure requirements file for nginx
 - name: Configure requirements
   tags: 'server'
   become: yes
@@ -81,6 +94,17 @@
     dest: "{{ server_directory }}/requirements.txt"
     owner: ubuntu
     group: ubuntu
+
+# delete directory first
+- name: delete Web directory
+  file:
+    path: "{{ server_directory }}/Web"
+    state: absent
+
+- name: delete frontend directory
+  file:
+    path: "{{ server_directory }}/frontend"
+    state: absent
 
 - name: Create Web directory
   tags: 'server'
@@ -92,18 +116,51 @@
     recurse: yes
     state: directory
 
+- name: Create Frontend directory
+  tags: 'server'
+  become: yes
+  file:
+    path: "{{ server_directory }}/frontend"
+    owner: ubuntu
+    group: ubuntu
+    recurse: yes
+    state: directory
+
+# copy web file to working directory
 - name: Copy Web File
   copy:
     src: "{{ project_directory }}/Web/"
     dest: "{{ server_directory }}/Web/"
+    force: yes
     remote_src: yes
 
-# - name: Run docker compose for server and nginx
-#   tags: 'nginx'
-#   become: yes
-#   docker_compose:
-#     project_src: "{{ working_directory }}"
-#     pull: yes
-#     state: present
-#     remove_orphans: yes
-#     recreate: always
+# copy frontend file to working directory
+- name: Copy frontend File
+  copy:
+    src: "{{ project_directory }}/frontend/"
+    dest: "{{ server_directory }}/frontend/"
+    force: yes
+    remote_src: yes
+
+- name: Run npm install
+  command: npm build
+  args:
+    chdir: "{{ server_directory }}/frontend/"
+
+- name: Run npm run build
+  command: npm run build
+  args:
+    chdir: "{{ server_directory }}/frontend/"
+
+# docker-compose build
+# docker-compose up
+- name: Run docker compose for server and nginx
+  tags: 'nginx'
+  become: yes
+  docker_compose:
+    project_src: "{{ working_directory }}"
+    pull: yes
+    state: present
+    remove_orphans: yes
+    recreate: always
+    build: yes

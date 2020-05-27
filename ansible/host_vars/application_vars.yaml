@@ -1,4 +1,11 @@
+# COMP90024 Cluster and Cloud Computer Team 12
+# @Author: Shizhe Cai
+# @student id: 798125
+# @email: shizhec@student.unimelb.edu.au
+
+
 # Common Vars
+local: local_script
 remote_directory: /home/ubuntu
 project_directory: /home/ubuntu/CCC-2020S1-Assignment2
 working_directory: /opt/ccc

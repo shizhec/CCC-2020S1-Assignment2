@@ -1,4 +1,9 @@
+# COMP90024 Cluster and Cloud Computer Team 12
+# @Author: Shizhe Cai
+# @student id: 798125
+# @email: shizhec@student.unimelb.edu.au
 ---
+# create working directory for couchdb
 - name: Create couchdb directory
   tags: 'couchdb'
   become: yes
@@ -9,14 +14,14 @@
     recurse: yes
     state: directory
 
-- name: Configure docker compose for couchdb
-  tags: 'couchdb'
-  become: yes
-  template:
-    src: docker-compose-couchdb.yaml.j2
-    dest: "{{ couchdb_directory }}/docker-compose.yaml"
-    owner: ubuntu
-    group: ubuntu
+# - name: Configure docker compose for couchdb
+#   tags: 'couchdb'
+#   become: yes
+#   template:
+#     src: docker-compose-couchdb.yaml.j2
+#     dest: "{{ couchdb_directory }}/docker-compose.yaml"
+#     owner: ubuntu
+#     group: ubuntu
 
 # - name: Run docker compose
 #   tags: "couchdb"
@@ -27,6 +32,8 @@
 #     state: present
 #     remove_orphans: yes
 #     recreate: always
+
+# copy couchdb docker setup shell script to instance
 - name: Configure docker run shell script
   tags: 'couchdb'
   become: yes
@@ -36,3 +43,9 @@
     owner: ubuntu
     group: ubuntu
 
+# run the shell script to setup couchdb
+- name: Run docker couchdb shell
+  tags: 'couchdb'
+  shell: docker-run-couchdb.sh
+  args:
+    chdir: "{{ couchdb_directory }}"

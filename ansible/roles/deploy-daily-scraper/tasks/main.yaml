@@ -1,0 +1,13 @@
+# COMP90024 Cluster and Cloud Computer Team 12
+# @Author: Shizhe Cai
+# @student id: 798125
+# @email: shizhec@student.unimelb.edu.au
+---
+# create schedule tasks for scraper
+- name: Create cron job for daily_increase
+  tags: 'scraper'
+  cron:
+    name: "daily increase"
+    hour: "9"
+    job: "{{ project_directory }}/scraper/daily_increase/run.sh"
+    user: "ubuntu"

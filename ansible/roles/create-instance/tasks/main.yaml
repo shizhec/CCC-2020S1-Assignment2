@@ -1,3 +1,8 @@
+# COMP90024 Cluster and Cloud Computer Team 12
+# @Author: Shizhe Cai
+# @student id: 798125
+# @email: shizhec@student.unimelb.edu.au
+
 ---
 # Create an instance on NeCTAR
 - name: Create an instance
@@ -17,23 +22,26 @@
   loop: '{{ instances }}'
   register: os_instance
 
+# display debug msg
 - debug:
     msg: "Instance {{ item.openstack.name }} has been created. IP address is {{ item.openstack.public_v4 }}"
   loop: '{{ os_instance.results }}'
   when: item.openstack is defined
 
+# collect ip
 - name: Set ip fact
   set_fact:
     ip_addresses: "{{ ip_addresses|default([]) + [ {'name': item.item.name, 'ip': item.openstack.public_v4} ] }}"
   loop: '{{ os_instance.results }}'
   when: item.openstack is defined
 
+# create hosts file
 - name: create inventory file
   copy:
     content: "[all:vars]\nansible_python_interpreter=/usr/bin/python3\nansible_user=ubuntu\nansible_ssh_private_key_file=~/.ssh/CCC-Nectar-Group.pem\nansible_ssh_common_args='-o StrictHostKeyChecking=no'\n"
     dest: "{{project_directory}}/ansible/hosts.ini"
 
-
+# save ip addresses of instances
 - name: write ip addresses to inventory file
   lineinfile:
     line: "[{{ item.name }}]\n{{ item.ip }}\n"

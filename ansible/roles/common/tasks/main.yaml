@@ -1,3 +1,8 @@
+# COMP90024 Cluster and Cloud Computer Team 12
+# @Author: Shizhe Cai
+# @student id: 798125
+# @email: shizhec@student.unimelb.edu.au
+
 ---
 # Install dependencies on the host
 - name: Install pip
