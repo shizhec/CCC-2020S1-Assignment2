@@ -98,7 +98,7 @@ class TweetCardComponent extends Component {
   }
 
   render() {
-    console.log("In TweetCard, this.props =", this.props);
+    // console.log("In TweetCard, this.props =", this.props);
     const { cityName, stateName, tweetCount, coronaCount } = this.props;
 
     let title = "Tweet Data";

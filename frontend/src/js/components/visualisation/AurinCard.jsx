@@ -93,7 +93,7 @@ class AurinCardComponent extends Component {
   }
 
   render() {
-    console.log("In AurinCard, this.props =", this.props);
+    // console.log("In AurinCard, this.props =", this.props);
     const { cityName, stateName, aurin } = this.props;
     const {
       female,

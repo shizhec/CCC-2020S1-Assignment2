@@ -105,7 +105,7 @@ class SentimentCardComponent extends Component {
   }
 
   render() {
-    console.log("In SentimentCard, this.props =", this.props);
+    // console.log("In SentimentCard, this.props =", this.props);
     const { cityName, stateName, sentiment } = this.props;
 
     let title = "Tweet Sentiment Data";
@@ -113,17 +113,13 @@ class SentimentCardComponent extends Component {
       title = `${title} - ${cityName}, ${stateName}`;
     }
 
-    const coronaRelatedName = "Coronavirus-related tweets";
     const data = [];
-
     let sum = 0;
     for (let type in sentiment) {
       const currentCount = sentiment[type];
       data.push({ name: capitalizeString(type), value: currentCount });
       sum += currentCount;
     }
-
-    console.log("In SentimentCard, data =", data);
 
     return (
       <Card hoverable className="col-6 tweet-card xhr-data-card" title={title}>

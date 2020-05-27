@@ -16,7 +16,7 @@ import { DataSourceSwitch } from "./DataSourceSwitch";
 import { ComparisonPanel } from "./comparison/ComparisonPanel";
 
 import "../../css/filter.css";
-import { updateLastClickedInfo } from "../actions/map";
+import { updateLastClickedInfo, resetLGAData } from "../actions/map";
 
 class FilterComponent extends Component {
   render() {
@@ -75,7 +75,7 @@ class FilterComponent extends Component {
     return (
       <Col span={12}>
         <Card hoverable id={"filter-card"} className="col-6" title={"Filters"}>
-          <Card
+          {/* <Card
             hoverable
             type="inner"
             title={
@@ -89,7 +89,7 @@ class FilterComponent extends Component {
             }
           >
             <DataSourceSwitch />
-          </Card>
+          </Card> */}
 
           <Card
             hoverable
@@ -170,7 +170,10 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     updateDateRange: (selectedDateRange) =>
       dispatch(updateDateRange(selectedDateRange)),
-    resetLocationFilter: () => dispatch(updateLastClickedInfo()),
+    resetLocationFilter: () => {
+      dispatch(updateLastClickedInfo());
+      dispatch(resetLGAData());
+    },
   };
 };
 const Filter = connect(mapStateToProps, mapDispatchToProps)(FilterComponent);
