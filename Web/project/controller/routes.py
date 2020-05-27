@@ -121,7 +121,7 @@ def sentiment_user():
 @app.route('/api/aurin')
 def aurin():
     region = request.args.get("region", type=str, default='melbourne')
-    types = request.args.get("type", type=str, default=all)
+    types = request.args.get("type", type=str, default='all')
 
     return jsonify(db.get_aurin(region.strip(), types.lower()))
 
