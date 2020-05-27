@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { connect } from "react-redux";
 
 import { PieChart } from "../visualisation/PieChart";
@@ -37,7 +37,10 @@ function ComparisonSectionComponent({
 
         <PieChart targetState={stateShortName} />
 
-        <LineChart targetState={stateShortName} />
+        <LineChart
+          targetState={stateShortName}
+          visualisationName={`${stateShortName}`}
+        />
       </section>
     );
   }

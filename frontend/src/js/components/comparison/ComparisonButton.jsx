@@ -6,22 +6,16 @@ import {
   updateCurrentComparisonTargetIndex,
   updateComparisonPanelVisibility,
 } from "../../actions/comparison";
-import {
-  getFormattedAddress,
-  getCityName,
-  getStateName,
-} from "../../utils/googleMap";
+import { getCityName, getStateName } from "../../utils/googleMap";
 
 function ComparisonButtonComponent({
   currentComparisonTarget,
   startSelectingTarget,
   isSelecting,
 }) {
-  let formattedAddress = "";
   let cityName = "";
   let stateName = "";
   if (currentComparisonTarget) {
-    formattedAddress = getFormattedAddress(currentComparisonTarget);
     cityName = getCityName(currentComparisonTarget);
     stateName = getStateName(currentComparisonTarget);
   }

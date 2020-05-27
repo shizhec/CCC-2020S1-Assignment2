@@ -10,7 +10,6 @@ import {
   PieChart as RechartPie,
 } from "recharts";
 
-import { CovidLegend } from "./CovidLegend";
 import { extractDataByTypeFromOverview } from "../../utils/overviewDataExtraction";
 import { COLOR_MAPPING } from "../../constants/covid19ColorMapping";
 import { STATE_MAPPING } from "../../constants/states";
@@ -72,7 +71,7 @@ const renderActiveShape = (props) => {
         textAnchor={textAnchor}
         fill={fill}
       >
-        {payload.name}
+        {payload.name} ({`Count: ${payload.value}`})
       </text>
       <text
         x={ex + (cos >= 0 ? 1 : -1) * 12}
@@ -81,16 +80,7 @@ const renderActiveShape = (props) => {
         textAnchor={textAnchor}
         fill="#333"
       >
-        {`Count ${payload.value}`}
-      </text>
-      <text
-        x={ex + (cos >= 0 ? 1 : -1) * 12}
-        y={ey}
-        dy={40}
-        textAnchor={textAnchor}
-        fill="#999"
-      >
-        {`(percent: ${(percent * 100).toFixed(2)}%)`}
+        {`(Percent: ${(percent * 100).toFixed(2)}%)`}
       </text>
     </g>
   );
@@ -103,7 +93,7 @@ class PieChartComponent extends Component {
   }
 
   render() {
-    const { innerData, outerData, targetState } = this.props;
+    const { innerData, outerData, targetState, timeOfData } = this.props;
 
     // console.log("In PieChart, this.props =", this.props);
 
@@ -113,7 +103,7 @@ class PieChartComponent extends Component {
         className="col-6"
         title={`Covid-19 Data Composition In ${
           targetState ? STATE_MAPPING.get(targetState) : "Australia"
-        }`}
+        }${timeOfData ? ` (${timeOfData})` : ""}`}
       >
         <ResponsiveContainer>
           <RechartPie width={400} height={400}>
@@ -155,7 +145,6 @@ class PieChartComponent extends Component {
                 />
               ))}
             </Pie>
-            <CovidLegend />
           </RechartPie>
         </ResponsiveContainer>
         {!innerData && outerData.length === 0 && (
@@ -178,7 +167,7 @@ const mapStateToProps = (state, { targetState }) => {
     targetState = getStateShortName(lastClickedInfo.address);
   }
 
-  const extractedData = extractDataByTypeFromOverview(
+  const [extractedData, timeOfData] = extractDataByTypeFromOverview(
     state.xhr.overviewData,
     targetState || "",
     state.filter.datesRange
@@ -187,7 +176,7 @@ const mapStateToProps = (state, { targetState }) => {
   const innerData = extractedData.find((data) => data.name === "Confirmed");
   const outerData = extractedData.filter((data) => data.name !== "Confirmed");
 
-  return { innerData, outerData, targetState };
+  return { innerData, outerData, targetState, timeOfData };
 };
 
 const PieChart = connect(

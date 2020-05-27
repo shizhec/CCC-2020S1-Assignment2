@@ -3,6 +3,7 @@ import {
   UPDATE_MAP_CENTER_AND_ZOOM,
   UPDATE_LAST_CLICKED_INFO,
 } from "../actionTypes/map";
+import { RESET_LGA_DATA } from "../actionTypes/xhr";
 import { UPDATE_DESIGNATED_COMPARING_TARGET_ADDRESS } from "../actionTypes/comparison";
 
 import {
@@ -10,7 +11,13 @@ import {
   updateComparisonPanelVisibility,
 } from "./comparison";
 
-import {builtReverseGeocodingUrl, getCityAddressObject} from "../utils/googleMap";
+import {
+  builtReverseGeocodingUrl,
+  getCityAddressObject,
+  getStateShortName,
+  getCityName,
+} from "../utils/googleMap";
+import { getDataOfLGA } from "./xhr";
 
 export function updateMapFullScreenStatus(isFullScreen = true) {
   return {
@@ -35,7 +42,8 @@ export function updateLastClickedInfo(lastClickedInfo = null) {
 
 export const reverseGeocoding = (
   { lat, lng, x, y },
-  currentComparingTargetIndex = null
+  currentComparingTargetIndex = null,
+  datesRange = []
 ) => (dispatch) =>
   fetch(builtReverseGeocodingUrl(lat, lng))
     .then((res) => {
@@ -46,9 +54,16 @@ export const reverseGeocoding = (
       throw res.statusText;
     })
     .then((address) => {
-      console.log("address =", address);
-      console.log("cityName =", getCityAddressObject(address));
-      console.log("currentComparingTargetIndex =", currentComparingTargetIndex);
+      console.log("In reverseGeocoding, datesRange =", datesRange);
+      console.log("In reverseGeocoding, address =", address);
+      console.log(
+        "In reverseGeocoding, cityName =",
+        getCityAddressObject(address)
+      );
+      console.log(
+        "In reverseGeocoding, currentComparingTargetIndex =",
+        currentComparingTargetIndex
+      );
 
       if (currentComparingTargetIndex === null) {
         dispatch(updateLastClickedInfo({ lat, lng, x, y, address }));
@@ -63,4 +78,13 @@ export const reverseGeocoding = (
         // Show the comparison panel.
         dispatch(updateComparisonPanelVisibility(true));
       }
+
+      const cityName = getCityName(address, false);
+      if (address && getStateShortName(address) === "VIC") {
+        getDataOfLGA(cityName, datesRange[0], datesRange[1])(dispatch);
+      }
     });
+
+export function resetLGAData() {
+  return { type: RESET_LGA_DATA };
+}

@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { Card } from "antd";
 import {
@@ -12,27 +12,32 @@ import {
 } from "recharts";
 
 import { CovidLegend } from "./CovidLegend";
+import { Covid19DataTypeSwitch } from "../gadgets/Covid19DataTypeSwitch";
 
 import { extractAllDataByDateFromOverview } from "../../utils/overviewDataExtraction";
 import { COLOR_MAPPING } from "../../constants/covid19ColorMapping";
 import { STATE_MAPPING } from "../../constants/states";
 import { getStateShortName } from "../../utils/googleMap";
 
-function LineChartComponent({ data, targetState }) {
+const VISUALISATION_NAME = "trends";
+
+function LineChartComponent({ data, targetState, visualisationName }) {
   return (
     <Card
       hoverable
-      className="col-6"
+      className="col-6 trend-card"
       title={`Covid-19 Trends In ${
         targetState ? STATE_MAPPING.get(targetState) : "Australia"
       }`}
     >
       <div style={{ height: "90%" }}>
+        <Covid19DataTypeSwitch visualisationName={visualisationName} />
+
         <ResponsiveContainer>
           <RechartLine
             data={data}
             width={730}
-            height={250}
+            height={220}
             margin={{ top: 5, right: 10, left: 10, bottom: 5 }}
           >
             <CartesianGrid strokeDasharray="3 3" />
@@ -65,7 +70,10 @@ function LineChartComponent({ data, targetState }) {
   );
 }
 
-const mapStateToProps = (state, { targetState }) => {
+const mapStateToProps = (
+  state,
+  { targetState, visualisationName = VISUALISATION_NAME }
+) => {
   const { datesRange } = state.filter;
   const { lastClickedInfo } = state.map;
 
@@ -77,9 +85,11 @@ const mapStateToProps = (state, { targetState }) => {
     data: extractAllDataByDateFromOverview(
       state.xhr.overviewData,
       targetState,
-      datesRange
+      datesRange,
+      state.filter.dataTypesByVisualisationNames[visualisationName]
     ),
     targetState,
+    visualisationName,
   };
 };
 

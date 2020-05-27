@@ -1,10 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Row, Col, Card, Popover } from "antd";
+import { Row, Col, Card } from "antd";
 import { FullscreenExitOutlined, FullscreenOutlined } from "@ant-design/icons";
 import GoogleMapReact from "google-map-react";
 import debounce from "lodash.debounce";
-// import { Map } from "google-maps-react";
 
 import "../../css/map.css";
 import { FULL_SCREEN_MAP, CARD_MAP } from "../constants/map";
@@ -16,20 +15,34 @@ import {
 import { updateComparisonPanelVisibility } from "../actions/comparison";
 import { Filter } from "./Filter";
 import { GOOGLE_MAP_API_KEY } from "../constants/credentials";
-import mapStyle from "../utils/mapStyle";
 import { ComparisonPanel } from "./comparison/ComparisonPanel";
 import { DataSourceSwitch } from "./DataSourceSwitch";
+import mapStyle from "../utils/mapStyle";
+import { gradient } from "../utils/googleMap";
+import {
+  extractMostRecentDataOfVicLGA,
+  extractStartAndEndDateFromArray,
+} from "../utils/overviewDataExtraction";
+import { capitalizeString } from "../utils/string";
 
 class MapComponent extends Component {
-  getLocationInfo = (clickedLocationInfo) => {
-    const { getTheLocationInfo, currentComparingTargetIndex } = this.props;
-    getTheLocationInfo(clickedLocationInfo, currentComparingTargetIndex);
-  };
-
   constructor(props) {
     super(props);
     this.getLocationInfo = debounce(this.getLocationInfo.bind(this), 500);
   }
+
+  getLocationInfo = (clickedLocationInfo) => {
+    const {
+      getTheLocationInfo,
+      currentComparingTargetIndex,
+      parsedDateRange,
+    } = this.props;
+    getTheLocationInfo(
+      clickedLocationInfo,
+      currentComparingTargetIndex,
+      parsedDateRange
+    );
+  };
 
   handleMapApiLoad = (map, maps) => {
     this.map = map;
@@ -39,68 +52,58 @@ class MapComponent extends Component {
   };
 
   initDataLayer() {
-    this.dataLayer = new this.maps.Data({ map: this.map });
-    this.dataLayer.loadGeoJson(
-      "https://data.gov.au/geoserver/vic-local-government-areas-psma-administrative-boundaries/wfs?request=GetFeature&typeName=ckan_bdf92691_c6fe_42b9_a0e2_a4cd716fa811&outputFormat=json"
-    );
+    console.log("this.map =", this.map);
+    console.log("this.maps =", this.maps);
+
+    if (this.maps) {
+      this.dataLayer = new this.maps.Data({ map: this.map });
+      this.dataLayer.loadGeoJson(
+        "https://data.gov.au/geoserver/vic-local-government-areas-psma-administrative-boundaries/wfs?request=GetFeature&typeName=ckan_bdf92691_c6fe_42b9_a0e2_a4cd716fa811&outputFormat=json"
+      );
+    }
   }
 
   setDataStyle = () => {
-    this.dataLayer.setStyle((feature) => {
-      const name = feature.getProperty("vic_lga__3");
+    if (this.dataLayer) {
+      this.dataLayer.setStyle((feature) => {
+        const { minValue, maxValue, extractedMapData } = this.props;
+        const name = capitalizeString(feature.getProperty("vic_lga__3"));
 
-      let colors = this.gradient("#ffffff", "#be2026", 7);
+        // console.log("in setDataStyle, name =", name);
+        let colors = gradient("#be9283", "#621b47", 7);
 
-      let color = "#000000";
-      // if (total > 0) color = colors[0];
-      // if (total > 1000) color = colors[1];
-      // if (total > 2000) color = colors[2];
-      // if (total > 3000) color = colors[3];
-      // if (total > 4000) color = colors[4];
-      // if (total > 5000) color = colors[5];
-      // if (total > 6000) color = colors[6];
+        const valueOfThisLGA = extractedMapData.get(name);
+        // console.log("valueOfThisLGA =", valueOfThisLGA);
 
-      return {
-        strokeWeight: 0.5,
-        strokeColor: "#ffffff",
-        zIndex: 1,
-        fillOpacity: 0.75,
-        fillColor: colors[6],
-      };
-    });
+        const step = (maxValue - minValue) / 7;
+        let i = 0;
+        for (i = 0; i <= 6; i++) {
+          if (
+            valueOfThisLGA >= minValue + i * step &&
+            valueOfThisLGA <= minValue + (i + 1) * step
+          ) {
+            break;
+          }
+        }
+
+        // let fillColor = colors[i];
+
+        let fillColor = valueOfThisLGA === undefined ? "#c7b79e" : colors[i];
+
+        // console.log(
+        //   `valueOfThisLGA =${valueOfThisLGA}, LGA = ${name}, color = ${fillColor} colors = ${colors}, i = ${i}`
+        // );
+
+        return {
+          fillColor: fillColor,
+          strokeWeight: 0.25,
+          strokeColor: "#ffffff",
+          zIndex: 0,
+          fillOpacity: 0.7,
+        };
+      });
+    }
   };
-
-  rgbToHex(r, g, b) {
-    const hex = ((r << 16) | (g << 8) | b).toString(16);
-    return "#" + new Array(Math.abs(hex.length - 7)).join("0") + hex;
-  }
-
-  hexToRgb(hex) {
-    const rgb = [];
-    for (let i = 1; i < 7; i += 2) {
-      rgb.push(parseInt("0x" + hex.slice(i, i + 2)));
-    }
-    return rgb;
-  }
-
-  gradient(startColor, endColor, step) {
-    const sColor = this.hexToRgb(startColor),
-      eColor = this.hexToRgb(endColor);
-    const rStep = (eColor[0] - sColor[0]) / step,
-      gStep = (eColor[1] - sColor[1]) / step,
-      bStep = (eColor[2] - sColor[2]) / step;
-    const gradientColorArr = [];
-    for (let i = 0; i < step; i++) {
-      gradientColorArr.push(
-        this.rgbToHex(
-          parseInt(rStep * i + sColor[0]),
-          parseInt(gStep * i + sColor[1]),
-          parseInt(bStep * i + sColor[2])
-        )
-      );
-    }
-    return gradientColorArr;
-  }
 
   render() {
     console.log("Map, this.props = ", this.props);
@@ -110,8 +113,8 @@ class MapComponent extends Component {
       enterFullScreen,
       exitFullScreen,
       updateMapCenterAndZoom,
-      panelVisible,
       hideComparisonPanel,
+      extractedMapData,
     } = this.props;
 
     let SwitchComponent = FullscreenExitOutlined;
@@ -135,54 +138,36 @@ class MapComponent extends Component {
     const renderedMapBox = (
       <>
         <div style={containerStyle}>
-          <GoogleMapReact
-            yesIWantToUseGoogleMapApiInternals
-            bootstrapURLKeys={{ key: GOOGLE_MAP_API_KEY }}
-            defaultCenter={this.props.center}
-            defaultZoom={this.props.zoom}
-            options={{
-              gestureHandling: isFullScreen ? "cooperative" : "greedy",
-              zoomControl: false,
-              fullscreenControl: false,
-              maxZoom: mapZoomConstant.max,
-              minZoom: mapZoomConstant.min,
-              styles: mapStyle,
-            }}
-            onChange={({ zoom, center }) =>
-              updateMapCenterAndZoom(center, zoom)
-            }
-            onClick={(value) => {
-              console.log("onClick trigerred, value =", value);
-              this.getLocationInfo(value);
-              if (hideComparisonPanel) {
-                hideComparisonPanel();
-              }
-            }}
-            onGoogleApiLoaded={({ map, maps }) =>
-              this.handleMapApiLoad(map, maps)
-            }
-          ></GoogleMapReact>
-        </div>
-
-        {/* {lastClickedInfo && (
-          <Popover
-            title={"hello world"}
-            content={"HELLO WORLD"}
-            visible={true}
-            
-          >
-            <span
-              style={{
-                left: lastClickedInfo.x,
-                top: lastClickedInfo.y,
-                position: "absolute",
-                width: "1rem",
-                height: "1rem",
-                visibility: "hidden",
+          {extractedMapData && (
+            <GoogleMapReact
+              yesIWantToUseGoogleMapApiInternals
+              bootstrapURLKeys={{ key: GOOGLE_MAP_API_KEY }}
+              defaultCenter={this.props.center}
+              defaultZoom={this.props.zoom}
+              options={{
+                gestureHandling: isFullScreen ? "cooperative" : "greedy",
+                zoomControl: false,
+                fullscreenControl: false,
+                maxZoom: mapZoomConstant.max,
+                minZoom: mapZoomConstant.min,
+                styles: mapStyle,
               }}
-            ></span>
-          </Popover>
-        )} */}
+              onChange={({ zoom, center }) =>
+                updateMapCenterAndZoom(center, zoom)
+              }
+              onClick={(value) => {
+                console.log("onClick trigerred, value =", value);
+                this.getLocationInfo(value);
+                if (hideComparisonPanel) {
+                  hideComparisonPanel();
+                }
+              }}
+              onGoogleApiLoaded={({ map, maps }) =>
+                this.handleMapApiLoad(map, maps)
+              }
+            ></GoogleMapReact>
+          )}
+        </div>
 
         <SwitchComponent
           className={"clickable map-full-screen-switch"}
@@ -194,7 +179,7 @@ class MapComponent extends Component {
         {isFullScreen && (
           <>
             <ComparisonPanel />
-            <DataSourceSwitch />
+            {/* <DataSourceSwitch /> */}
             <Filter />
           </>
         )}
@@ -219,18 +204,38 @@ class MapComponent extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { isFullScreen, center, zoom, lastClickedInfo } = state.map;
-  const { overviewData } = state.xhr;
-  const { panelVisible, currentComparingTargetIndex } = state.comparison;
+  const { isFullScreen, center, zoom } = state.map;
+  const { overviewData, vicLGAOverviewData } = state.xhr;
+  const { currentComparingTargetIndex } = state.comparison;
 
+  const { dataSource, datesRange } = state.filter;
+
+  const renderingData =
+    dataSource === "vicLGAOverviewData" ? vicLGAOverviewData : overviewData;
+
+  // console.log("vicLGAOverviewData =", vicLGAOverviewData);
+  const [
+    extractedMapData,
+    mostRecentDate,
+    maxValue,
+    minValue,
+  ] = extractMostRecentDataOfVicLGA(vicLGAOverviewData, true, datesRange);
+
+  const parsedDateRange = extractStartAndEndDateFromArray(datesRange);
   return {
     isFullScreen,
     center,
     zoom,
     overviewData,
-    lastClickedInfo,
+    vicLGAOverviewData,
     currentComparingTargetIndex,
-    panelVisible,
+    renderingData,
+    dataSource,
+    extractedMapData,
+    mostRecentDate,
+    maxValue,
+    minValue,
+    parsedDateRange,
   };
 };
 
@@ -240,10 +245,15 @@ const mapDispatchToProps = (dispatch) => {
     exitFullScreen: () => dispatch(updateMapFullScreenStatus(false)),
     updateMapCenterAndZoom: (center, zoom) =>
       dispatch(updateMapCenterAndZoom(center, zoom)),
-    getTheLocationInfo: (clickedLocationInfo, currentComparingTargetIndex) =>
+    getTheLocationInfo: (
+      clickedLocationInfo,
+      currentComparingTargetIndex,
+      parsedDateRange
+    ) =>
       reverseGeocoding(
         clickedLocationInfo,
-        currentComparingTargetIndex
+        currentComparingTargetIndex,
+        parsedDateRange
       )(dispatch),
     hideComparisonPanel: () => dispatch(updateComparisonPanelVisibility(false)),
   };

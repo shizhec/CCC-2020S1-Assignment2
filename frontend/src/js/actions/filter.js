@@ -1,6 +1,8 @@
 import {
   UPDATE_DATE_RANGE,
   UPDATE_SELECTED_DATA_SOURCE,
+  UPDATE_DATA_CATEGORY,
+  UPDATE_DATA_TYPE,
 } from "../actionTypes/filter";
 
 export function updateDateRange(datesRange = []) {
@@ -14,5 +16,22 @@ export function updateSelectedDataSource(dataSource) {
   return {
     type: UPDATE_SELECTED_DATA_SOURCE,
     payload: { dataSource },
+  };
+}
+
+export function updateVisualisationDataCategory(
+  visualisationName,
+  dataCategory
+) {
+  return {
+    type: UPDATE_DATA_CATEGORY,
+    payload: { visualisationName, dataCategory },
+  };
+}
+
+export function updateVisualisationDataType(visualisationName, dataType) {
+  return {
+    type: UPDATE_DATA_TYPE,
+    payload: { visualisationName, dataType },
   };
 }

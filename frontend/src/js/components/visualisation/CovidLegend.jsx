@@ -12,11 +12,20 @@ export function CovidLegend({ showTest = false }) {
   });
 
   return (
-    <div style={{ position: "relative", height: "10%", width: "100%" }}>
+    <div
+      style={{
+        position: "relative",
+        height: "10%",
+        width: "100%",
+        marginTop: "1rem",
+      }}
+    >
       <Legend
-        width={"100%"}
-        height={"100%"}
-        wrapperStyle={{ display: "flex", alignItems: "center", justifyContent: "center" }}
+        wrapperStyle={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
         payload={legentData}
       />
     </div>

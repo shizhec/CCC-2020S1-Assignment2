@@ -12,3 +12,46 @@
   -moz-box-shadow: 0px 0px 28px 13px rgba(230, 230, 230, 1);
   box-shadow: 0px 0px 28px 13px rgba(230, 230, 230, 1);
 }
+
+.data-category-selector span,
+.data-type-switch span {
+  margin-right: 0.5rem;
+}
+
+.data-switch-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.trend-card .data-type-switch {
+  margin-bottom: 0.5rem;
+}
+
+.aurin-card .ant-card-body {
+  display: flex;
+  flex-direction: row;
+}
+
+.data-presentation {
+  height: 100%;
+  align-content: space-around;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.aurin-card .data-presentation {
+  width: 50%;
+}
+
+.data-presentation p {
+  width: 100%;
+}
+
+.xhr-data-card .ant-card-body {
+  display: flex;
+}
+
+.tweet-card .data-presentation {
+  width: 40%;
+}

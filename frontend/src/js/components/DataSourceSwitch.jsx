@@ -7,10 +7,8 @@ import { TitleWithTooltip } from "./gadgets/";
 import { updateSelectedDataSource } from "../actions/filter";
 
 const DATA_SOURCES = [
-  { label: "COVID-19", value: "overview" },
-  { label: "Hashtags Count", value: "hashtag" },
-  { label: "Sentiment", value: "sentiment" },
-  { label: "Corona virus", value: "corona" },
+  { label: "Australia COVID-19", value: "overview" },
+  { label: "Victoria COVID-19 By LGA", value: "vicLGAOverviewData" },
 ];
 
 class DataSourceSwitchComponent extends Component {
