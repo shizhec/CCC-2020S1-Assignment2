@@ -23,7 +23,7 @@ def index():
 @app.route('/api/sentiment')
 def sentiment():
     region = request.args.get("region", type=str, default='melbourne')
-    date_begin = request.args.get("date_start", type=str, default='2020-05-01')
+    date_begin = request.args.get("date_start", type=str, default='2020-01-01')
     date_end = request.args.get("date_end", type=str, default='2020-05-26')
 
     region = region.strip().lower().replace(' ', '_') \
@@ -34,7 +34,7 @@ def sentiment():
 @app.route('/api/hashtag')
 def hashtag():
     region = request.args.get("region", type=str, default='melbourne')
-    date_begin = request.args.get("date_start", type=str, default='2020-05-01')
+    date_begin = request.args.get("date_start", type=str, default='2020-01-01')
     date_end = request.args.get("date_end", type=str, default='2020-05-26')
 
     region = region.strip().lower().replace(' ', '_') \
@@ -45,7 +45,7 @@ def hashtag():
 @app.route('/api/corona')
 def corona_related():
     region = request.args.get("region", type=str, default='melbourne')
-    date_begin = request.args.get("date_start", type=str, default='2020-05-01')
+    date_begin = request.args.get("date_start", type=str, default='2020-01-01')
     date_end = request.args.get("date_end", type=str, default='2020-05-26')
 
     region = region.strip().lower().replace(' ', '_') \
@@ -55,7 +55,7 @@ def corona_related():
 
 @app.route('/api/overview')
 def overview():
-    date_begin = request.args.get("date_start", type=str, default='2020-05-01')
+    date_begin = request.args.get("date_start", type=str, default='2020-01-01')
     date_end = request.args.get("date_end", type=str, default='2020-05-26')
 
     if date_begin is None:
@@ -67,7 +67,7 @@ def overview():
 @app.route('/api/tweet_count')
 def tweet_count():
     region = request.args.get("region", type=str, default='melbourne')
-    date_begin = request.args.get("date_start", type=str, default='2020-05-01')
+    date_begin = request.args.get("date_start", type=str, default='2020-01-01')
     date_end = request.args.get("date_end", type=str, default='2020-05-26')
 
     region = region.strip().lower().replace(' ', '_') \
@@ -78,7 +78,7 @@ def tweet_count():
 @app.route('/api/hashtag_overview')
 def hashtag_overview():
     region = request.args.get("region", type=str, default='melbourne')
-    date_begin = request.args.get("date_start", type=str, default='2020-05-01')
+    date_begin = request.args.get("date_start", type=str, default='2020-01-01')
     date_end = request.args.get("date_end", type=str, default='2020-05-26')
     top = request.args.get("top", type=int)
 
