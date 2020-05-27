@@ -3,6 +3,7 @@ tqdm
 pyquery
 cloudant
 couchdb
+http.cookiejar
 flask
 gunicorn
 flask_apscheduler
