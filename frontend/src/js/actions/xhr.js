@@ -1,3 +1,9 @@
+/**
+ * COMP90024 Cluster and Cloud Computing Team 12
+ *
+ * @Author: Haowen Shen
+ * Email: haoshen@student.unimelb.edu.au
+ */
 import { startLoading, stopLoading } from "./loading";
 import {
   API__GET_OVERALL_INFO,

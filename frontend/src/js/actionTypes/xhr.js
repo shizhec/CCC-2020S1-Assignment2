@@ -1,3 +1,9 @@
+/**
+ * COMP90024 Cluster and Cloud Computing Team 12
+ *
+ * @Author: Haowen Shen
+ * Email: haoshen@student.unimelb.edu.au
+ */
 export const OVERVIEW_DATA_RECEIVED = "OVERVIEW_DATA_RECEIVED";
 export const VIC_LGA_OVERVIEW_RECEIVED = "VIC_LGA_OVERVIEW_RECEIVED";
 export const RECEIVE_AURIN_DATA = "RECEIVE_AURIN_DATA";

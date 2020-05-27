@@ -1,4 +1,11 @@
-// Map max boundary.
+/**
+ * COMP90024 Cluster and Cloud Computing Team 12
+ *
+ * @Author: Haowen Shen
+ * Email: haoshen@student.unimelb.edu.au
+ *
+ * Map max boundary.
+ */
 const AUSTRALIA_MAP_SW_BOUND = [98.49663749999871, -44.645685161059006];
 const AUSTRALIA_MAP_NE_BOUND = [172.10503593749945, -7.570101850059672];
 export const AUSTRALIA_MAP_BOUNDS = [
