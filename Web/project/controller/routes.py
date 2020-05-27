@@ -1,3 +1,6 @@
+# @Author：Haoyu Zhang
+# @Email: haoyu1@student.unimelb.edu.au
+
 from project import app, scheduler
 from flask import render_template, request, jsonify
 from project.model.couch import DB
@@ -6,13 +9,13 @@ import os
 
 db = DB(client)
 
-
+# render the index.html
 @app.route('/')
 @app.route('/index')
 def index():
     return render_template('index.html')
 
-
+# API lists
 @app.route('/api/sentiment')
 def sentiment():
     region = request.args.get("region", type=str)
@@ -119,6 +122,7 @@ def aurin():
     return jsonify(db.get_aurin(region.strip(), types.lower() if types else 'all'))
 
 
+# scheduled tasks
 @scheduler.task('interval', id='refresh_data', hours=6, misfire_grace_time=900)
 def refresh_data():
     os.system('python3 ' + ' steaming/getTweetStream.py ')
