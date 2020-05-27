@@ -30,9 +30,23 @@ class DB:
     def __init__(self, client):
         self.client = client
         self.dic = None
+        self.dbnames = client.all_dbs()
+
+    def get_region(self, re):
+        if re:
+            re = re.split('_')
+            if re[0] == 'greater' or re[0] == 'mount':
+                n = 1
+            else:
+                n = 0
+            for region in self.dbnames:
+                if re[n] == region.split('_')[n]:
+                    return region
+        return None
+
 
     def get_sentiment(self, region, date_begin, date_end):
-        db = CloudantDatabase(self.client, region, partitioned=True)
+        db = CloudantDatabase(self.client, self.get_region(region), partitioned=True)
         days = get_days(date_begin, date_end)
 
         counts = {'negative': 0, 'neutral': 0, 'positive': 0}
@@ -42,7 +56,7 @@ class DB:
         return counts
 
     def get_hashtag(self, region, date_begin, date_end):
-        db = CloudantDatabase(self.client, region, partitioned=True)
+        db = CloudantDatabase(self.client, self.get_region(region), partitioned=True)
         days = get_days(date_begin, date_end)
 
         counts = 0
@@ -52,7 +66,7 @@ class DB:
         return {'count': counts}
 
     def get_corona(self, region, date_begin, date_end):
-        db = CloudantDatabase(self.client, region, partitioned=True)
+        db = CloudantDatabase(self.client, self.get_region(region), partitioned=True)
         days = get_days(date_begin, date_end)
 
         counts = 0
@@ -85,7 +99,7 @@ class DB:
         return results
 
     def get_tweet_count(self, region, date_begin, date_end):
-        db = CloudantDatabase(self.client, region, partitioned=True)
+        db = CloudantDatabase(self.client, self.get_region(region), partitioned=True)
         days = get_days(date_begin, date_end)
 
         counts = 0
@@ -95,7 +109,7 @@ class DB:
         return {'count': counts}
 
     def get_hashtag_overview(self, region, date_begin, date_end, top):
-        db = CloudantDatabase(self.client, region, partitioned=True)
+        db = CloudantDatabase(self.client, self.get_region(region), partitioned=True)
         days = get_days(date_begin, date_end)
 
         results = {}
@@ -192,7 +206,7 @@ class DB:
             return -1
 
     def get_tweet_count_today(self, region, date=datetime.datetime.today()):
-        db = CloudantDatabase(self.client, region, partitioned=True)
+        db = CloudantDatabase(self.client, self.get_region(region), partitioned=True)
         counts = 0
 
         for re in db.get_partitioned_view_result(date, '_design/tweet_count', 'tweet_count'):
