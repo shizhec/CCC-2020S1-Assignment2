@@ -166,6 +166,11 @@ class TweetCardComponent extends Component {
             </Pie>
           </RechartPie>
         </ResponsiveContainer>
+        {!tweetCount && !coronaCount && (
+          <div className={"empty-data-cover"}>
+            <h2>Oops, there are no tweet data available...</h2>
+          </div>
+        )}
       </Card>
     );
   }

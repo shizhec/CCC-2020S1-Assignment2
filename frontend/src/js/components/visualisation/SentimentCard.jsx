@@ -119,6 +119,20 @@ class SentimentCardComponent extends Component {
       title = `${title} - ${cityName}, ${stateName}`;
     }
 
+    if (!sentiment || !Object.keys(sentiment).length) {
+      return (
+        <Card
+          hoverable
+          className="col-6 tweet-card xhr-data-card"
+          title={title}
+        >
+          <div className={"empty-data-cover"}>
+            <h2>Oops, there are no Tweet sentiment data available...</h2>
+          </div>
+        </Card>
+      );
+    }
+
     const data = [];
     let sum = 0;
     for (let type in sentiment) {
@@ -157,12 +171,17 @@ class SentimentCardComponent extends Component {
               {data.map((entry, index) => (
                 <Cell
                   key={`slice-${index}`}
-                  fill={SENTIMENT_COLOR_MAPPING.get(entry.name)}
+                  fill={entry ? SENTIMENT_COLOR_MAPPING.get(entry.name) : ""}
                 />
               ))}
             </Pie>
           </RechartPie>
         </ResponsiveContainer>
+        {!Object.keys(sentiment).length && (
+          <div className={"empty-data-cover"}>
+            <h2>Oops, there are no Tweet sentiment data available...</h2>
+          </div>
+        )}
       </Card>
     );
   }

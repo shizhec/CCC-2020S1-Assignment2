@@ -37,12 +37,6 @@ class MapPopupComponent extends Component {
       cityName,
       stateName,
       lastClickedInfo,
-      aurin,
-      tweetCount,
-      coronaCount,
-      sentiment,
-      hashtagCount,
-      hashtagOverview,
       mostRecentDate,
       data,
     } = this.props;
@@ -66,26 +60,19 @@ class MapPopupComponent extends Component {
         }
         content={
           <Row>
-            {aurin && (
-              <Col span={12}>
-                <AurinCard />
-              </Col>
-            )}
-            {tweetCount && coronaCount && (
-              <Col span={12}>
-                <TweetCard />
-              </Col>
-            )}
-            {sentiment && (
-              <Col span={12}>
-                <SentimentCard />
-              </Col>
-            )}
-            {hashtagCount && hashtagOverview && (
-              <Col span={12}>
-                <HashtagCard />
-              </Col>
-            )}
+            <Col span={12}>
+              <AurinCard />
+            </Col>
+            <Col span={12}>
+              <TweetCard />
+            </Col>
+
+            <Col span={12}>
+              <SentimentCard />
+            </Col>
+            <Col span={12}>
+              <HashtagCard />
+            </Col>
           </Row>
         }
       >
@@ -103,16 +90,8 @@ class MapPopupComponent extends Component {
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
-  const {
-    aurin,
-    tweetCount,
-    coronaCount,
-    sentiment,
-    hashtagCount,
-    hashtagOverview,
-    vicLGAOverviewData,
-  } = state.xhr;
+const mapStateToProps = (state) => {
+  const { vicLGAOverviewData } = state.xhr;
   const { lastClickedInfo } = state.map;
 
   let cityName = "";
@@ -136,12 +115,6 @@ const mapStateToProps = (state, ownProps) => {
   const data = extractedMapData.get(cityShortName);
 
   return {
-    aurin,
-    tweetCount,
-    coronaCount,
-    sentiment,
-    hashtagCount,
-    hashtagOverview,
     cityName,
     stateName,
     lastClickedInfo,

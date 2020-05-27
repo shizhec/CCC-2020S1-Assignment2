@@ -21,14 +21,7 @@ import {
   TweetCard,
 } from "./visualisation/";
 
-function DashboardComponent({
-  aurin,
-  tweetCount,
-  coronaCount,
-  sentiment,
-  hashtagCount,
-  hashtagOverview,
-}) {
+function DashboardComponent({ lastClickedInfo }) {
   return (
     <Row>
       <Col span={12}>
@@ -43,48 +36,31 @@ function DashboardComponent({
       <Col span={12}>
         <VerticalBarChart />
       </Col>
-      {aurin && (
-        <Col span={12}>
-          <AurinCard />
-        </Col>
-      )}
-      {tweetCount && coronaCount && (
-        <Col span={12}>
-          <TweetCard />
-        </Col>
-      )}
-      {sentiment && (
-        <Col span={12}>
-          <SentimentCard />
-        </Col>
-      )}
-      {hashtagCount && hashtagOverview && (
-        <Col span={12}>
-          <HashtagCard />
-        </Col>
+
+      {lastClickedInfo && (
+        <>
+          <Col span={12}>
+            <AurinCard />
+          </Col>
+          <Col span={12}>
+            <TweetCard />
+          </Col>
+          <Col span={12}>
+            <SentimentCard />
+          </Col>
+          <Col span={12}>
+            <HashtagCard />
+          </Col>
+        </>
       )}
     </Row>
   );
 }
 
 const mapStateToProps = (state) => {
-  const {
-    aurin,
-    tweetCount,
-    coronaCount,
-    sentiment,
-    hashtagCount,
-    hashtagOverview,
-  } = state.xhr;
+  const { lastClickedInfo } = state.map;
 
-  return {
-    aurin,
-    tweetCount,
-    coronaCount,
-    sentiment,
-    hashtagCount,
-    hashtagOverview,
-  };
+  return { lastClickedInfo };
 };
 
 const Dashboard = connect(mapStateToProps)(DashboardComponent);

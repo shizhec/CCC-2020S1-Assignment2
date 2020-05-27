@@ -28,10 +28,10 @@ class HashtagCardComponent extends Component {
   }
 
   render() {
-    // console.log("In HashtagCard, this.props =", this.props);
+    console.log("In HashtagCard, this.props =", this.props);
     const { cityName, stateName, hashtagCount, data } = this.props;
 
-    let title = "Tweet Sentiment Data";
+    let title = "Tweet Hashtag Data";
     if (cityName && stateName) {
       title = `${title} - ${cityName}, ${stateName}`;
     }
@@ -64,6 +64,11 @@ class HashtagCardComponent extends Component {
             </Bar>
           </BarChart>
         </ResponsiveContainer>
+        {!hashtagCount && (data === null || !data.length) && (
+          <div className={"empty-data-cover"}>
+            <h2>Oops, there are no tweet hashtag data available...</h2>
+          </div>
+        )}
       </Card>
     );
   }
