@@ -45,9 +45,9 @@ class MapComponent extends Component {
       parsedDateRange,
     } = this.props;
     getTheLocationInfo(
-        clickedLocationInfo,
-        currentComparingTargetIndex,
-        parsedDateRange
+      clickedLocationInfo,
+      currentComparingTargetIndex,
+      parsedDateRange
     );
   };
 
@@ -65,7 +65,7 @@ class MapComponent extends Component {
     if (this.maps) {
       this.dataLayer = new this.maps.Data({ map: this.map });
       this.dataLayer.loadGeoJson(
-          "https://data.gov.au/geoserver/vic-local-government-areas-psma-administrative-boundaries/wfs?request=GetFeature&typeName=ckan_bdf92691_c6fe_42b9_a0e2_a4cd716fa811&outputFormat=json"
+        "https://data.gov.au/geoserver/vic-local-government-areas-psma-administrative-boundaries/wfs?request=GetFeature&typeName=ckan_bdf92691_c6fe_42b9_a0e2_a4cd716fa811&outputFormat=json"
       );
     }
   }
@@ -77,7 +77,7 @@ class MapComponent extends Component {
         const name = capitalizeString(feature.getProperty("vic_lga__3"));
 
         // console.log("in setDataStyle, name =", name);
-        let colors = gradient("#ffffff", "#be2026", 7);
+        let colors = gradient("#be9283", "#621b47", 7);
 
         const valueOfThisLGA = extractedMapData.get(name);
         // console.log("valueOfThisLGA =", valueOfThisLGA);
@@ -86,8 +86,8 @@ class MapComponent extends Component {
         let i = 0;
         for (i = 0; i <= 6; i++) {
           if (
-              valueOfThisLGA >= minValue + i * step &&
-              valueOfThisLGA <= minValue + (i + 1) * step
+            valueOfThisLGA >= minValue + i * step &&
+            valueOfThisLGA <= minValue + (i + 1) * step
           ) {
             break;
           }
@@ -145,56 +145,56 @@ class MapComponent extends Component {
     }
 
     const renderedMapBox = (
-        <>
-          <div style={containerStyle}>
-            {extractedMapData && (
-                <GoogleMapReact
-                    yesIWantToUseGoogleMapApiInternals
-                    bootstrapURLKeys={{ key: GOOGLE_MAP_API_KEY }}
-                    defaultCenter={this.props.center}
-                    defaultZoom={this.props.zoom}
-                    options={{
-                      gestureHandling: isFullScreen ? "cooperative" : "greedy",
-                      zoomControl: false,
-                      fullscreenControl: false,
-                      maxZoom: mapZoomConstant.max,
-                      minZoom: mapZoomConstant.min,
-                      styles: mapStyle,
-                    }}
-                    onChange={({ zoom, center }) =>
-                        updateMapCenterAndZoom(center, zoom)
-                    }
-                    onClick={(value) => {
-                      // console.log("onClick trigerred, value =", value);
-                      this.getLocationInfo(value);
-                      if (hideComparisonPanel) {
-                        hideComparisonPanel();
-                      }
-                    }}
-                    onGoogleApiLoaded={({ map, maps }) =>
-                        this.handleMapApiLoad(map, maps)
-                    }
-                ></GoogleMapReact>
-            )}
-          </div>
-
-          <SwitchComponent
-              className={"clickable map-full-screen-switch"}
-              onClick={() => {
-                switchClickHandler();
+      <>
+        <div style={containerStyle}>
+          {extractedMapData && (
+            <GoogleMapReact
+              yesIWantToUseGoogleMapApiInternals
+              bootstrapURLKeys={{ key: GOOGLE_MAP_API_KEY }}
+              defaultCenter={this.props.center}
+              defaultZoom={this.props.zoom}
+              options={{
+                gestureHandling: isFullScreen ? "cooperative" : "greedy",
+                zoomControl: false,
+                fullscreenControl: false,
+                maxZoom: mapZoomConstant.max,
+                minZoom: mapZoomConstant.min,
+                styles: mapStyle,
               }}
-          />
-
-          {showPopup && <MapPopup />}
-
-          {isFullScreen && (
-              <>
-                <ComparisonPanel />
-                {/* <DataSourceSwitch /> */}
-                <Filter />
-              </>
+              onChange={({ zoom, center }) =>
+                updateMapCenterAndZoom(center, zoom)
+              }
+              onClick={(value) => {
+                // console.log("onClick trigerred, value =", value);
+                this.getLocationInfo(value);
+                if (hideComparisonPanel) {
+                  hideComparisonPanel();
+                }
+              }}
+              onGoogleApiLoaded={({ map, maps }) =>
+                this.handleMapApiLoad(map, maps)
+              }
+            ></GoogleMapReact>
           )}
-        </>
+        </div>
+
+        <SwitchComponent
+          className={"clickable map-full-screen-switch"}
+          onClick={() => {
+            switchClickHandler();
+          }}
+        />
+
+        {showPopup && <MapPopup />}
+
+        {isFullScreen && (
+          <>
+            <ComparisonPanel />
+            {/* <DataSourceSwitch /> */}
+            <Filter />
+          </>
+        )}
+      </>
     );
 
     if (isFullScreen) {
@@ -202,14 +202,14 @@ class MapComponent extends Component {
     }
 
     return (
-        <Row id={"map-container"}>
-          <Col span={12}>
-            <Card hoverable className="col-6">
-              {renderedMapBox}
-            </Card>
-          </Col>
-          <Filter />
-        </Row>
+      <Row id={"map-container"}>
+        <Col span={12}>
+          <Card hoverable className="col-6">
+            {renderedMapBox}
+          </Card>
+        </Col>
+        <Filter />
+      </Row>
     );
   }
 }
@@ -222,7 +222,7 @@ const mapStateToProps = (state) => {
   const { dataSource, datesRange } = state.filter;
 
   const renderingData =
-      dataSource === "vicLGAOverviewData" ? vicLGAOverviewData : overviewData;
+    dataSource === "vicLGAOverviewData" ? vicLGAOverviewData : overviewData;
 
   // console.log("vicLGAOverviewData =", vicLGAOverviewData);
   const [
@@ -235,9 +235,9 @@ const mapStateToProps = (state) => {
   const parsedDateRange = extractStartAndEndDateFromArray(datesRange, true);
 
   const showPopup =
-      lastClickedInfo &&
-      isFullScreen &&
-      getStateShortName(lastClickedInfo.address) === "VIC";
+    lastClickedInfo &&
+    isFullScreen &&
+    getStateShortName(lastClickedInfo.address) === "VIC";
 
   return {
     isFullScreen,
@@ -263,17 +263,17 @@ const mapDispatchToProps = (dispatch) => {
     enterFullScreen: () => dispatch(updateMapFullScreenStatus(true)),
     exitFullScreen: () => dispatch(updateMapFullScreenStatus(false)),
     updateMapCenterAndZoom: (center, zoom) =>
-        dispatch(updateMapCenterAndZoom(center, zoom)),
+      dispatch(updateMapCenterAndZoom(center, zoom)),
     getTheLocationInfo: (
+      clickedLocationInfo,
+      currentComparingTargetIndex,
+      parsedDateRange
+    ) =>
+      reverseGeocoding(
         clickedLocationInfo,
         currentComparingTargetIndex,
         parsedDateRange
-    ) =>
-        reverseGeocoding(
-            clickedLocationInfo,
-            currentComparingTargetIndex,
-            parsedDateRange
-        )(dispatch),
+      )(dispatch),
     hideComparisonPanel: () => dispatch(updateComparisonPanelVisibility(false)),
   };
 };
