@@ -1,9 +1,13 @@
+# @Author：Haoyu Zhang
+# @Email: haoyu1@student.unimelb.edu.au
+
 from datetime import datetime
 import datetime
 import time
 from cloudant.database import CloudantDatabase
 
 
+# generate day in string between given days
 def get_days(date_begin, date_end):
     date_list = []
 
@@ -20,6 +24,7 @@ def get_days(date_begin, date_end):
     return date_list
 
 
+# CouchDB Client and related methods
 class DB:
     def __init__(self, client):
         self.client = client
