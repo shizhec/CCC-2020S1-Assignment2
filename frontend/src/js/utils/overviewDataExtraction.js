@@ -6,17 +6,25 @@ var moment = require("moment");
  * of Date objects, or null if the array is empty.
  *
  * @param {*} datesRange An array of moment objects.
+ * @param {boolean} [exportString=false] Flag indicating if we are returning a string.
  * @returns An array of Date objects.
  */
-export function extractStartAndEndDateFromArray(datesRange) {
+export function extractStartAndEndDateFromArray(
+  datesRange,
+  exportString = false
+) {
   try {
     const startDate =
       datesRange.length === 2
-        ? new Date(datesRange[0].format("YYYY-MM-DD"))
+        ? exportString
+          ? datesRange[0].format("YYYY-MM-DD")
+          : new Date(datesRange[0].format("YYYY-MM-DD"))
         : null;
     const endDate =
       datesRange.length === 2
-        ? new Date(datesRange[1].format("YYYY-MM-DD"))
+        ? exportString
+          ? datesRange[1].format("YYYY-MM-DD")
+          : new Date(datesRange[1].format("YYYY-MM-DD"))
         : null;
     return [startDate, endDate];
   } catch {

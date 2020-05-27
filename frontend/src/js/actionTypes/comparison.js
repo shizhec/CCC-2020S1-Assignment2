@@ -1,3 +1,9 @@
+/**
+ * COMP90024 Cluster and Cloud Computing Team 12
+ *
+ * @Author: Haowen Shen
+ * Email: haoshen@student.unimelb.edu.au
+ */
 export const UPDATE_CURRENT_COMPARING_TARGET_INDEX =
   "UPDATE_CURRENT_COMPARING_TARGET_INDEX";
 export const UPDATE_DESIGNATED_COMPARING_TARGET_ADDRESS =

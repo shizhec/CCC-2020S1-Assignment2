@@ -1,3 +1,9 @@
+/**
+ * COMP90024 Cluster and Cloud Computing Team 12
+ *
+ * @Author: Haowen Shen
+ * Email: haoshen@student.unimelb.edu.au
+ */
 export const STATE_MAPPING = new Map([
   ["VIC", "Victoria"],
   ["NSW", "New South Wales"],

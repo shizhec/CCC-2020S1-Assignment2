@@ -1,4 +1,11 @@
-// Google API.
+/**
+ * COMP90024 Cluster and Cloud Computing Team 12
+ *
+ * @Author: Haowen Shen
+ * Email: haoshen@student.unimelb.edu.au
+ *
+ * Google API.
+ */
 export const API__GOOGLE_REVERSE_GEOCODING_FIRST_HALF =
   "https://maps.googleapis.com/maps/api/geocode/json?latlng=";
 export const API__GOOGLE_REVERSE_GEOCODING_SECOND_HALF = "&key=";
@@ -13,3 +20,4 @@ export const API__GET_SENTIMENT_OF_LGA = "/api/sentiment";
 export const API__GET_HASHTAG_OF_LGA = "/api/hashtag";
 export const API__GET_HASHTAG_OVERVIEW_OF_LGA = "/api/hashtag_overview";
 export const API__GET_AURIN_DATA = "/api/aurin";
+export const API__GET_USER_SENTIMENT = "/api/sentiment_user";

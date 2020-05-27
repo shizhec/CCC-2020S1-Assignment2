@@ -1,3 +1,9 @@
+/**
+ * COMP90024 Cluster and Cloud Computing Team 12
+ *
+ * @Author: Haowen Shen
+ * Email: haoshen@student.unimelb.edu.au
+ */
 import {
   UPDATE_MAP_FULL_SCREEN_STATUS,
   UPDATE_MAP_CENTER_AND_ZOOM,
@@ -47,7 +53,7 @@ export const reverseGeocoding = (
 ) => (dispatch) => {
   dispatch(resetLGAData());
   dispatch(updateLastClickedInfo());
-  
+
   return fetch(builtReverseGeocodingUrl(lat, lng))
     .then((res) => {
       if (res.ok) {
@@ -57,16 +63,16 @@ export const reverseGeocoding = (
       throw res.statusText;
     })
     .then((address) => {
-      console.log("In reverseGeocoding, datesRange =", datesRange);
-      console.log("In reverseGeocoding, address =", address);
-      console.log(
-        "In reverseGeocoding, cityName =",
-        getCityAddressObject(address)
-      );
-      console.log(
-        "In reverseGeocoding, currentComparingTargetIndex =",
-        currentComparingTargetIndex
-      );
+      // console.log("In reverseGeocoding, datesRange =", datesRange);
+      // console.log("In reverseGeocoding, address =", address);
+      // console.log(
+      //   "In reverseGeocoding, cityName =",
+      //   getCityAddressObject(address)
+      // );
+      // console.log(
+      //   "In reverseGeocoding, currentComparingTargetIndex =",
+      //   currentComparingTargetIndex
+      // );
 
       if (currentComparingTargetIndex === null) {
         dispatch(updateLastClickedInfo({ lat, lng, x, y, address }));

@@ -1,3 +1,9 @@
+/**
+ * COMP90024 Cluster and Cloud Computing Team 12
+ *
+ * @Author: Haowen Shen
+ * Email: haoshen@student.unimelb.edu.au
+ */
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Card } from "antd";
@@ -85,7 +91,7 @@ const renderActiveShape = (props) => {
         textAnchor={textAnchor}
         fill="#333"
       >
-        {`(Percent: ${(percent * 100).toFixed(2)}%)`}
+        {`${(percent * 100).toFixed(2)}%`}
       </text>
     </g>
   );
@@ -132,7 +138,7 @@ class TweetCardComponent extends Component {
             </p>
           )}
         </div>
-        <ResponsiveContainer height={"100%"} width={"60%"}>
+        <ResponsiveContainer height={"100%"} width={"70%"}>
           <RechartPie width={400} height={150} margin={{ left: 25, right: 25 }}>
             <Pie
               data={data}
@@ -165,8 +171,12 @@ class TweetCardComponent extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  const { tweetCount, coronaCount } = state.xhr;
+const mapStateToProps = (state, { tweetCount, coronaCount }) => {
+  if (tweetCount && coronaCount) {
+    return { tweetCount, coronaCount };
+  }
+
+  ({ tweetCount, coronaCount } = state.xhr);
   const { lastClickedInfo } = state.map;
 
   let cityName = "";

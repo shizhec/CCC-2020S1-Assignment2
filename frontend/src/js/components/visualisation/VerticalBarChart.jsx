@@ -1,3 +1,9 @@
+/**
+ * COMP90024 Cluster and Cloud Computing Team 12
+ *
+ * @Author: Haowen Shen
+ * Email: haoshen@student.unimelb.edu.au
+ */
 import React from "react";
 import { connect } from "react-redux";
 import { Card } from "antd";
@@ -18,7 +24,7 @@ import { STATE_MAPPING } from "../../constants/states";
 import { getStateShortName } from "../../utils/googleMap";
 
 function VerticalBarChartComponent({ data, targetState, timeOfData }) {
-  console.log("data =", data);
+  // console.log("data =", data);
 
   return (
     <Card

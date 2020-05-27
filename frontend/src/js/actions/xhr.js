@@ -1,3 +1,9 @@
+/**
+ * COMP90024 Cluster and Cloud Computing Team 12
+ *
+ * @Author: Haowen Shen
+ * Email: haoshen@student.unimelb.edu.au
+ */
 import { startLoading, stopLoading } from "./loading";
 import {
   API__GET_OVERALL_INFO,
@@ -8,6 +14,7 @@ import {
   API__GET_HASHTAG_OF_LGA,
   API__GET_HASHTAG_OVERVIEW_OF_LGA,
   API__GET_AURIN_DATA,
+  API__GET_USER_SENTIMENT,
 } from "../constants/api";
 import {
   OVERVIEW_DATA_RECEIVED,
@@ -18,6 +25,8 @@ import {
   RECEIVE_SENTIMENT_OF_LGA,
   REVIEW_HASHTAG_OF_LGA,
   REVIEW_HASHTAG_OVERVIEW_OF_LGA,
+  RECEIVE_USER_SENTIMENT,
+  UPDATE_SEARCH_BOX_LOADING_STATUS,
 } from "../actionTypes/xhr";
 
 export function getOverviewData() {
@@ -31,7 +40,7 @@ export function getOverviewData() {
         throw res.statusText;
       })
       .then((overviewData) => {
-        console.log("overviewData =", overviewData);
+        // console.log("overviewData =", overviewData);
         dispatch({ type: OVERVIEW_DATA_RECEIVED, payload: { overviewData } });
       });
   };
@@ -48,7 +57,7 @@ export function getVicLGAOverview() {
         throw res.statusText;
       })
       .then((vicLGAOverviewData) => {
-        console.log("vicLGAOverviewData =", vicLGAOverviewData);
+        // console.log("vicLGAOverviewData =", vicLGAOverviewData);
         dispatch({
           type: VIC_LGA_OVERVIEW_RECEIVED,
           payload: { vicLGAOverviewData },
@@ -141,7 +150,37 @@ export function getHashtagOverviewOfLGA(lgaName, startDate = "", endDate = "") {
     );
 }
 
-// todo: /api/sentiment_user
+function updateSearchBoxLoadingStatus(isSearching = false) {
+  return {
+    type: UPDATE_SEARCH_BOX_LOADING_STATUS,
+    payload: { isSearching },
+  };
+}
+
+export function getUserSentiment(userName, startDate = "", endDate = "") {
+  return (dispatch) => {
+    dispatch(updateSearchBoxLoadingStatus(true));
+    return fetch(
+      `${API__GET_USER_SENTIMENT}?user=${userName}${
+        startDate ? `&date_start=${startDate}` : ""
+      }${endDate ? `&date_end=${endDate}` : ""}`
+    )
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+
+        throw res.statusText;
+      })
+      .then((userSentiment) => {
+        dispatch(updateSearchBoxLoadingStatus());
+        dispatch({
+          type: RECEIVE_USER_SENTIMENT,
+          payload: { userSentiment, options: [{ value: userName }] },
+        });
+      });
+  };
+}
 
 export function getAurinData(lgaName) {
   return (dispatch) => {
