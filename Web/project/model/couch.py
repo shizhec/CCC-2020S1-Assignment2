@@ -13,7 +13,7 @@ def get_days(date_begin, date_end):
     date_list = []
 
     begin_date = datetime.datetime.strptime(date_begin, "%Y-%m-%d") \
-        if date_begin else datetime.datetime.strptime('2020-01-01', "%Y-%m-%d")
+        if date_begin else datetime.datetime.strptime('2020-05-01', "%Y-%m-%d")
 
     end_date = datetime.datetime.strptime(date_end, "%Y-%m-%d") \
         if date_begin else datetime.datetime.today()
