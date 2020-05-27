@@ -8,7 +8,13 @@ Team Members:
 
 ## Project Structure
 ### FrontEnd
-1.
+* React and Redux Frontend Design
+1. React for building UI components
+2. Redux for state management, fetching and storing data
+* Data Visualisation
+1. Google Map API for showing data on the map 
+2. AntD for UI design
+3. Recharts for drawing different charts
 
 ### BackEnd
 * Flask and Cloudant based server
