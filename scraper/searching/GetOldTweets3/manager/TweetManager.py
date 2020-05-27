@@ -1,3 +1,9 @@
+# @Modifier: Yizhou Zhu
+# @Email:  yizzhu@student.unimelb.edu.au
+# @Filename: TweetManager.py
+# @Last modified by:   Yizhou Zhu
+# @Last modified time: 2020-05-26
+
 # -*- coding: utf-8 -*-
 
 import re, datetime, sys, random, http.cookiejar,json
