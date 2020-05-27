@@ -1,3 +1,4 @@
+# COMP90024 Cluster and Cloud Computing Team 12
 # @Author：Haoyu Zhang
 # @Email: haoyu1@student.unimelb.edu.au
 
@@ -12,6 +13,7 @@ class Config(object):
     SCHEDULER_API_ENABLED = True
 
 
+# load templates and static from build of ReactJS
 app = Flask(__name__, static_folder=os.path.abspath("../frontend/build/static"),
             template_folder=os.path.abspath('../frontend/build'))
 

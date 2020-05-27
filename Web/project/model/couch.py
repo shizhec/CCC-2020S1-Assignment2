@@ -1,3 +1,4 @@
+# COMP90024 Cluster and Cloud Computing Team 12
 # @Author：Haoyu Zhang
 # @Email: haoyu1@student.unimelb.edu.au
 
@@ -141,11 +142,13 @@ class DB:
         cou = 0
         hash_count = {}
         related = 0
+        hash_cou = 0
         for tweet_data in db:
             results[tweet_data['simple_sentiment_label']] += 1
             cou += 1
             flag = 0
             for hash in tweet_data['hashtags']:
+                hash_cou += 1
                 hash = hash.lower()
                 if 'covid' in hash or 'corona' in hash or ('19' in hash and 'co' in hash) \
                         or 'home' in hash or 'lock' in hash or 'safe' in hash:
@@ -158,6 +161,7 @@ class DB:
         results['count'] = cou
         results['hashtags'] = sorted(hash_count.items(), key=lambda item: item[1], reverse=True)
         results['coronavirus_related'] = related
+        results['hashtag_count'] = hash_cou
         db.delete()
         return results
 

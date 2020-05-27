@@ -11,8 +11,14 @@ Team Members:
 1.
 
 ### BackEnd
-- Flask
-* API
+* Flask and Cloudant based server
+  1. Use MVC model to design
+  2. Recieve argument from flask request
+  3. Retrieve data and rearrange to a frontend-friendly style
+  4. Error handling and pattern matching of requests
+* Gunicorn and Nginx
+  1. Gunicorn multi-core processing
+  2. Nginx load balancing and file cache
 
 ### Scraper
 * Searching API

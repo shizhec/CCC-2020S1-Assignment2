@@ -1,3 +1,4 @@
+# COMP90024 Cluster and Cloud Computing Team 12
 # @Author：Haoyu Zhang
 # @Email: haoyu1@student.unimelb.edu.au
 
@@ -7,13 +8,16 @@ from project.model.couch import DB
 from project import client
 import os
 
+# create CouchDB class
 db = DB(client)
+
 
 # render the index.html
 @app.route('/')
 @app.route('/index')
 def index():
     return render_template('index.html')
+
 
 # API lists
 @app.route('/api/sentiment')
