@@ -101,6 +101,26 @@ class AurinCardComponent extends Component {
   render() {
     // console.log("In AurinCard, this.props =", this.props);
     const { cityName, stateName, aurin } = this.props;
+
+    let title = "Demographic Data";
+    if (cityName && stateName) {
+      title = `${title} - ${cityName}, ${stateName}`;
+    }
+
+    if (!aurin || !Object.keys(aurin).length) {
+      return (
+        <Card
+          hoverable
+          className="col-6 aurin-card xhr-data-card"
+          title={title}
+        >
+          <div className={"empty-data-cover"}>
+            <h2>Oops, there are no Aurin data available...</h2>
+          </div>
+        </Card>
+      );
+    }
+
     const {
       female,
       highedu,
@@ -115,11 +135,6 @@ class AurinCardComponent extends Component {
       { name: "Female", value: female },
       { name: "Male", value: male },
     ];
-
-    let title = "Demographic Data";
-    if (cityName && stateName) {
-      title = `${title} - ${cityName}, ${stateName}`;
-    }
 
     return (
       <Card hoverable className="col-6 aurin-card xhr-data-card" title={title}>
@@ -193,6 +208,11 @@ class AurinCardComponent extends Component {
               </Pie>
             </RechartPie>
           </ResponsiveContainer>
+        )}
+        {!aurin && (
+          <div className={"empty-data-cover"}>
+            <h2>Oops, there are no Aurin data available...</h2>
+          </div>
         )}
       </Card>
     );

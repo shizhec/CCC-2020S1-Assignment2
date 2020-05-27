@@ -8,6 +8,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { AutoComplete, Input } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
+import debounce from "lodash.debounce";
 
 import {
   updateSearchFieldExpansionStatus,
@@ -17,8 +18,6 @@ import { CollapseButton } from "./gadgets/CollapseButton";
 import { getUserSentiment } from "../actions/xhr";
 import { extractStartAndEndDateFromArray } from "../utils/overviewDataExtraction";
 
-const { Option } = AutoComplete;
-
 class SearchFieldComponent extends Component {
   handleSelect(value, option) {
     this.props.showTweetUserBoard();
@@ -26,14 +25,23 @@ class SearchFieldComponent extends Component {
 
   handleSearch(value) {
     // console.log("in handleSearch, value =", value);
-    const [startDate, endDate] = extractStartAndEndDateFromArray(this.props, true);
-    this.props.searchTweetUser(value, startDate, endDate);
+    const [startDate, endDate] = extractStartAndEndDateFromArray(
+      this.props.datesRange,
+      true
+    );
+    this.props.searchTweetUser(
+      value,
+      startDate || "2020-01-01",
+      endDate || "2020-01-02"
+    );
   }
 
   constructor(props) {
     super(props);
     this.handleSelect = this.handleSelect.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
+
+    this.handleSearch = debounce(this.handleSearch.bind(this), 500);
   }
 
   render() {
@@ -71,11 +79,6 @@ class SearchFieldComponent extends Component {
             enterButton
             loading={isSearching}
           />
-          {/* {options.map((username, index) => (
-            <Option key={`option-${index}`} value={username}>
-              {username}
-            </Option>
-          ))} */}
         </AutoComplete>
       </section>
     );
