@@ -1,3 +1,7 @@
+# COMP90024 Cluster and Cloud Computer Team 12
+# @Author: Shizhe Cai
+# @student id: 798125
+# @email: shizhec@student.unimelb.edu.au
 ---
 # create working directory for server
 - name: create server directory
@@ -60,8 +64,8 @@
     dest: "{{ server_directory }}/Dockerfile"
     owner: ubuntu
     group: ubuntu
-    
-# configure docker file for nginx
+
+# configure env file for server
 - name: Configure server env file
   tags: 'server'
   become: yes
@@ -71,6 +75,7 @@
     owner: ubuntu
     group: ubuntu
 
+# configure entrypoint for server
 - name: Configure server entrypoint
   tags: 'server'
   become: yes
@@ -80,6 +85,7 @@
     owner: ubuntu
     group: ubuntu
 
+# configure requirements file for nginx
 - name: Configure requirements
   tags: 'server'
   become: yes
@@ -89,6 +95,7 @@
     owner: ubuntu
     group: ubuntu
 
+# delete directory first
 - name: delete Web directory
   file:
     path: "{{ server_directory }}/Web"
@@ -119,6 +126,7 @@
     recurse: yes
     state: directory
 
+# copy web file to working directory
 - name: Copy Web File
   copy:
     src: "{{ project_directory }}/Web/"
@@ -126,6 +134,7 @@
     force: yes
     remote_src: yes
 
+# copy frontend file to working directory
 - name: Copy frontend File
   copy:
     src: "{{ project_directory }}/frontend/"
@@ -143,6 +152,8 @@
   args:
     chdir: "{{ server_directory }}/frontend/"
 
+# docker-compose build
+# docker-compose up
 - name: Run docker compose for server and nginx
   tags: 'nginx'
   become: yes

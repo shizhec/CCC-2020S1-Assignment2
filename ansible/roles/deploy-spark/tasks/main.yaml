@@ -1,4 +1,9 @@
+# COMP90024 Cluster and Cloud Computer Team 12
+# @Author: Shizhe Cai
+# @student id: 798125
+# @email: shizhec@student.unimelb.edu.au
 ---
+# create working directory for spark
 - name: Create spark folder
   tags: 'spark'
   become: yes
@@ -9,6 +14,7 @@
     recurse: yes
     state: directory
 
+# configure docker-compose file for spark
 - name: Configure spark docker-compose
   tags: 'spark'
   become: yes
@@ -18,6 +24,7 @@
     owner: ubuntu
     group: ubuntu
 
+# run spark docker compose
 - name: Run docker Compose
   tags: 'spark'
   become: yes

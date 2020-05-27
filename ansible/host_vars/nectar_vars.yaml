@@ -1,3 +1,8 @@
+# COMP90024 Cluster and Cloud Computer Team 12
+# @Author: Shizhe Cai
+# @student id: 798125
+# @email: shizhec@student.unimelb.edu.au
+
 # Common vars
 availability_zone: melbourne-qh2-uom
 instance_image: 45225edb-66d8-4fd0-bf41-132a31a18166 # Ubuntu 18.04 LTS

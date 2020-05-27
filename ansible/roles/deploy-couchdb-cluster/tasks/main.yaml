@@ -1,3 +1,7 @@
+# COMP90024 Cluster and Cloud Computer Team 12
+# @Author: Shizhe Cai
+# @student id: 798125
+# @email: shizhec@student.unimelb.edu.au
 ---
 # create working directory for couchdb
 - name: Create couchdb directory
@@ -28,6 +32,8 @@
 #     state: present
 #     remove_orphans: yes
 #     recreate: always
+
+# copy couchdb docker setup shell script to instance
 - name: Configure docker run shell script
   tags: 'couchdb'
   become: yes
@@ -37,6 +43,7 @@
     owner: ubuntu
     group: ubuntu
 
+# run the shell script to setup couchdb
 - name: Run docker couchdb shell
   tags: 'couchdb'
   shell: docker-run-couchdb.sh

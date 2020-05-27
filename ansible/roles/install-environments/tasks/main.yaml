@@ -1,3 +1,7 @@
+# COMP90024 Cluster and Cloud Computer Team 12
+# @Author: Shizhe Cai
+# @student id: 798125
+# @email: shizhec@student.unimelb.edu.au
 ---
 - name: Gather facts of remote host
   setup:
@@ -30,6 +34,7 @@
     upgrade: yes
     update_cache: yes
 
+# install apt-get dependencies
 - name: Install dependencies
   tags: always
   become: yes
@@ -47,6 +52,7 @@
     name: ['pip']
     state: latest
 
+# install pip dependencies
 - name: Install pip3 dependencies
   become: yes
   pip:
