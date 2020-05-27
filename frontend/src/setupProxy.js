@@ -4,6 +4,7 @@ module.exports = function (app) {
     ["/api"],
     createProxyMiddleware({
       target: "http://localhost:6000",
+      // target: "http://localhost:5000",
     })
   );
 };

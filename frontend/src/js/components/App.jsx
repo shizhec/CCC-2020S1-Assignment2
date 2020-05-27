@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import { getOverviewData } from "../actions/xhr";
+import { getRenderingData } from "../actions/xhr";
 
 import { Spinner } from "./Spinner";
 import { Map } from "./Map";
@@ -11,7 +11,7 @@ import { ComparisonBoard } from "./comparison/ComparisonBoard";
 
 class AppComponent extends Component {
   componentDidMount() {
-    this.props.getOverviewData();
+    this.props.getRenderingData();
   }
 
   render() {
@@ -37,7 +37,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getOverviewData: () => getOverviewData()(dispatch),
+    getRenderingData: () => getRenderingData()(dispatch),
   };
 };
 

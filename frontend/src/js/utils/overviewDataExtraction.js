@@ -1,4 +1,57 @@
+import { capitalizeString } from "./string";
 var moment = require("moment");
+
+/**
+ * Given an array of moment objects, extract and parse it, to get an array
+ * of Date objects, or null if the array is empty.
+ *
+ * @param {*} datesRange An array of moment objects.
+ * @returns An array of Date objects.
+ */
+export function extractStartAndEndDateFromArray(datesRange) {
+  try {
+    const startDate =
+      datesRange.length === 2
+        ? new Date(datesRange[0].format("YYYY-MM-DD"))
+        : null;
+    const endDate =
+      datesRange.length === 2
+        ? new Date(datesRange[1].format("YYYY-MM-DD"))
+        : null;
+    return [startDate, endDate];
+  } catch {
+    return [null, null];
+  }
+}
+
+/**
+ * Given an array of date string (in the format YYYY-MM-DD), and an array of
+ * moment object, find the most recent date within the given range, and return
+ * it as a Date object.
+ *
+ * @param {*} datesStringArray An array of date string (in the format YYYY-MM-DD)
+ * @param {*} datesRange An array of moment objects as a boundary.
+ * @returns The most recent date object.
+ */
+function getMostRecentDateObjectFromArray(datesStringArray, datesRange) {
+  const [startDate, endDate] = extractStartAndEndDateFromArray(datesRange);
+
+  const mostRecentDateObject = new Date(
+    Math.max.apply(
+      null,
+      datesStringArray
+        .map((dateString) => new Date(dateString))
+        .filter(
+          (dateObj) =>
+            true &&
+            (startDate === null || dateObj >= startDate) &&
+            (endDate === null || dateObj <= endDate)
+        )
+    )
+  );
+
+  return mostRecentDateObject;
+}
 
 /**
  * This function extract and aggregate the overview data by type (confirmed, cured, etc), and
@@ -23,20 +76,9 @@ export function extractDataByTypeFromOverview(
   const dataIndex = absoluteData ? 0 : 1;
   const extractedMapData = new Map();
 
-  const [startDate, endDate] = extractStartAndEndDateFromArray(datesRange);
-
-  const mostRecentDateObject = new Date(
-    Math.max.apply(
-      null,
-      Object.keys(overviewData)
-        .map((dateString) => new Date(dateString))
-        .filter(
-          (dateObj) =>
-            true &&
-            (startDate === null || dateObj >= startDate) &&
-            (endDate === null || dateObj <= endDate)
-        )
-    )
+  const mostRecentDateObject = getMostRecentDateObjectFromArray(
+    Object.keys(overviewData),
+    datesRange
   );
 
   const mostRecentDate = mostRecentDateObject
@@ -76,7 +118,7 @@ export function extractDataByTypeFromOverview(
 
   // console.log("aggregatedData", aggregatedData);
 
-  return aggregatedData;
+  return [aggregatedData, mostRecentDate];
 }
 
 /**
@@ -148,24 +190,102 @@ export function extractAllDataByDateFromOverview(
 }
 
 /**
- * Given an array of moment objects, extract and parse it, to get an array
- * of Date objects, or null if the array is empty.
+ * Extract the most recent data, and categorise them by the targeting category.
  *
- * @param {*} datesRange An array of moment objects.
- * @returns An array of Date objects.
+ * @export
+ * @param {*} overviewData Overview data.
+ * @param {*} targetingCategory Target data category (e.g. Confirmed).
+ * @param {boolean} [absoluteData=true] Flag indicating if we are extracting the absolute data, or just the relative data.
+ * @param {*} [datesRange=[]] An array of moment objects.
+ * @returns An array of object in the format { name, value }.
  */
-function extractStartAndEndDateFromArray(datesRange) {
-  try {
-    const startDate =
-      datesRange.length === 2
-        ? new Date(datesRange[0].format("YYYY-MM-DD"))
-        : null;
-    const endDate =
-      datesRange.length === 2
-        ? new Date(datesRange[1].format("YYYY-MM-DD"))
-        : null;
-    return [startDate, endDate];
-  } catch {
-    return [null, null];
+export function extractMostRecentDataOfStateByCategory(
+  overviewData,
+  targetingCategory,
+  absoluteData = true,
+  datesRange = []
+) {
+  const dataIndex = absoluteData ? 0 : 1;
+  const extractedMapData = new Map();
+
+  const mostRecentDateObject = getMostRecentDateObjectFromArray(
+    Object.keys(overviewData),
+    datesRange
+  );
+
+  const mostRecentDate = mostRecentDateObject
+    ? moment(mostRecentDateObject.toString()).format("YYYY-MM-DD")
+    : "";
+
+  if (mostRecentDate) {
+    for (let state in overviewData[mostRecentDate]) {
+      for (let dataCategory in overviewData[mostRecentDate][state]) {
+        if (dataCategory !== targetingCategory) {
+          continue;
+        }
+
+        let dataOfTheState = 0;
+        if (extractedMapData.has(state)) {
+          dataOfTheState = extractedMapData.get(state);
+        }
+
+        if (dataCategory === "Tested") {
+          dataOfTheState += overviewData[mostRecentDate][state][dataCategory];
+        } else {
+          dataOfTheState +=
+            overviewData[mostRecentDate][state][dataCategory][dataIndex];
+        }
+
+        extractedMapData.set(state, dataOfTheState);
+      }
+    }
   }
+
+  const aggregatedData = [];
+  extractedMapData.forEach((value, name) =>
+    aggregatedData.push({ value, name })
+  );
+
+  return [aggregatedData, mostRecentDate];
+}
+
+export function extractMostRecentDataOfVicLGA(
+  vicOverviewData,
+  absoluteData = true,
+  datesRange = []
+) {
+  const dataIndex = absoluteData ? 0 : 1;
+  const extractedMapData = new Map();
+
+  const mostRecentDateObject = getMostRecentDateObjectFromArray(
+    Object.keys(vicOverviewData),
+    datesRange
+  );
+
+  let minValue = 0;
+  let maxValue = 0;
+
+  const mostRecentDate = mostRecentDateObject
+    ? moment(mostRecentDateObject.toString()).format("YYYY-MM-DD")
+    : "";
+
+  if (mostRecentDate) {
+    for (let lga in vicOverviewData[mostRecentDate]) {
+      const data = vicOverviewData[mostRecentDate][lga][dataIndex];
+
+      minValue = Math.min(data, minValue);
+      maxValue = Math.max(data, maxValue);
+
+      extractedMapData.set(capitalizeString(lga), data);
+    }
+  }
+
+  // console.log(
+  //   "In extractMostRecentDataOfVicLGA, extractedMapData =",
+  //   extractedMapData
+  // );
+  // console.log("In extractMostRecentDataOfVicLGA, minValue =", minValue);
+  // console.log("In extractMostRecentDataOfVicLGA, maxValue =", maxValue);
+
+  return [extractedMapData, mostRecentDate, maxValue, minValue];
 }

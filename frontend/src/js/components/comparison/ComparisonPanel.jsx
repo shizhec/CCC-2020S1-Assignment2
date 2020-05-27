@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { DiffOutlined, FileTwoTone } from "@ant-design/icons";
+import { DiffOutlined } from "@ant-design/icons";
 import { Popover, Button } from "antd";
 
 import {

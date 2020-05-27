@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { Card } from "antd";
 import {
@@ -17,7 +17,7 @@ import { COLOR_MAPPING } from "../../constants/covid19ColorMapping";
 import { STATE_MAPPING } from "../../constants/states";
 import { getStateShortName } from "../../utils/googleMap";
 
-function VerticalBarChartComponent({ data, targetState }) {
+function VerticalBarChartComponent({ data, targetState, timeOfData }) {
   console.log("data =", data);
 
   return (
@@ -26,7 +26,7 @@ function VerticalBarChartComponent({ data, targetState }) {
       className="col-6"
       title={`Covid-19 Data In ${
         targetState ? STATE_MAPPING.get(targetState) : "Australia"
-      }`}
+      }${timeOfData ? ` (${timeOfData})` : ""}`}
     >
       <ResponsiveContainer>
         <BarChart width={600} height={250} data={data} layout="vertical">
@@ -68,12 +68,12 @@ const mapStateToProps = (state, { targetState }) => {
     targetState = getStateShortName(lastClickedInfo.address);
   }
 
-  const data = extractDataByTypeFromOverview(
+  const [data, timeOfData] = extractDataByTypeFromOverview(
     state.xhr.overviewData,
     targetState || "",
     state.filter.datesRange
   );
-  return { data, targetState };
+  return { data, targetState, timeOfData };
 };
 
 const VerticalBarChart = connect(
