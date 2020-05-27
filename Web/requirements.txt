@@ -4,6 +4,7 @@ pyquery
 cloudant
 couchdb
 http.cookiejar
+GetOldTweets3
 flask
 gunicorn
 flask_apscheduler
