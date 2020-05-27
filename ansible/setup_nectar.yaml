@@ -1,0 +1,11 @@
+- hosts: localhost
+  vars_files:
+    - host_vars/nectar_vars.yaml
+  gather_facts: true
+
+  roles:
+    - role: common
+    - role: list-images
+    - role: create-volume
+    - role: create-security-group
+    - role: create-instance

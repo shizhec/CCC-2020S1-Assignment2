@@ -1,0 +1,38 @@
+---
+- name: Create couchdb directory
+  tags: 'couchdb'
+  become: yes
+  file:
+    path: "{{ couchdb_directory }}"
+    owner: ubuntu
+    group: ubuntu
+    recurse: yes
+    state: directory
+
+- name: Configure docker compose for couchdb
+  tags: 'couchdb'
+  become: yes
+  template:
+    src: docker-compose-couchdb.yaml.j2
+    dest: "{{ couchdb_directory }}/docker-compose.yaml"
+    owner: ubuntu
+    group: ubuntu
+
+# - name: Run docker compose
+#   tags: "couchdb"
+#   become: yes
+#   docker_compose:
+#     project_src: "{{ couchdb_directory }}"
+#     pull: yes
+#     state: present
+#     remove_orphans: yes
+#     recreate: always
+- name: Configure docker run shell script
+  tags: 'couchdb'
+  become: yes
+  template:
+    src: docker-run-couchdb.sh.j2
+    dest: "{{ couchdb_directory }}/docker-run-couchdb.sh"
+    owner: ubuntu
+    group: ubuntu
+
