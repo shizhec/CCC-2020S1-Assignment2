@@ -39,8 +39,10 @@ class DB:
                 n = 1
             else:
                 n = 0
+
             for region in self.dbnames:
-                if re[n] == region.split('_')[n]:
+                reg = region.split('_')
+                if len(reg) > n and re[n] == reg[n]:
                     return region
         return None
 
