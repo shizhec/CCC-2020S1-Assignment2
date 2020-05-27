@@ -18,12 +18,13 @@ import { GOOGLE_MAP_API_KEY } from "../constants/credentials";
 import { ComparisonPanel } from "./comparison/ComparisonPanel";
 import { DataSourceSwitch } from "./DataSourceSwitch";
 import mapStyle from "../utils/mapStyle";
-import { gradient } from "../utils/googleMap";
+import { gradient, getStateShortName } from "../utils/googleMap";
 import {
   extractMostRecentDataOfVicLGA,
   extractStartAndEndDateFromArray,
 } from "../utils/overviewDataExtraction";
 import { capitalizeString } from "../utils/string";
+import { MapPopup } from "./MapPopup";
 
 class MapComponent extends Component {
   constructor(props) {
@@ -115,6 +116,8 @@ class MapComponent extends Component {
       updateMapCenterAndZoom,
       hideComparisonPanel,
       extractedMapData,
+      lastClickedInfo,
+      showPopup,
     } = this.props;
 
     let SwitchComponent = FullscreenExitOutlined;
@@ -176,6 +179,8 @@ class MapComponent extends Component {
           }}
         />
 
+        {showPopup && <MapPopup />}
+
         {isFullScreen && (
           <>
             <ComparisonPanel />
@@ -204,7 +209,7 @@ class MapComponent extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { isFullScreen, center, zoom } = state.map;
+  const { isFullScreen, center, zoom, lastClickedInfo } = state.map;
   const { overviewData, vicLGAOverviewData } = state.xhr;
   const { currentComparingTargetIndex } = state.comparison;
 
@@ -222,6 +227,12 @@ const mapStateToProps = (state) => {
   ] = extractMostRecentDataOfVicLGA(vicLGAOverviewData, true, datesRange);
 
   const parsedDateRange = extractStartAndEndDateFromArray(datesRange);
+
+  const showPopup =
+    lastClickedInfo &&
+    isFullScreen &&
+    getStateShortName(lastClickedInfo.address) === "VIC";
+
   return {
     isFullScreen,
     center,
@@ -236,6 +247,8 @@ const mapStateToProps = (state) => {
     maxValue,
     minValue,
     parsedDateRange,
+    lastClickedInfo,
+    showPopup,
   };
 };
 

@@ -10,10 +10,10 @@ import {
   PieChart,
   LineChart,
   AurinCard,
-  HashtagCard
+  HashtagCard,
+  SentimentCard,
+  TweetCard,
 } from "./visualisation/";
-import { TweetCard } from "./visualisation/TweetCard";
-import { SentimentCard } from "./visualisation/SentimentCard";
 
 function DashboardComponent({
   aurin,
